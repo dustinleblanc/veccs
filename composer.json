@@ -1,12 +1,12 @@
 {
-    "name": "drupal-composer/drupal-project",
-    "description": "Project template for Drupal 8 projects with composer",
+    "name": "dustinleblanc/recoverdrupal",
+    "description": "Drupal 8 site for RECOVER project",
     "type": "project",
     "license": "GPL-2.0+",
     "authors": [
         {
-            "name": "",
-            "role": ""
+            "name": "Dustin LeBlanc<dustin.m.leblanc@gmail.com",
+            "role": "Developer"
         }
     ],
     "repositories": [
@@ -21,16 +21,15 @@
         "cweagans/composer-patches": "~1.0",
         "drupal/core": "~8.0",
         "drush/drush": "~8.0",
-        "drupal/console": "~0.10"
+        "drupal/console": "~0.10",
+        "vlucas/phpdotenv": "^2.2"
     },
     "require-dev": {
-        "behat/mink": "~1.6",
-        "behat/mink-goutte-driver": "~1.2",
-        "jcalderonzumba/gastonjs": "^1.1@dev",
-        "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
-        "mikey179/vfsStream": "~1.2",
-        "phpunit/phpunit": "~4.8",
-        "symfony/css-selector": "2.7.*"
+        "codeception/codeception": "^2.1",
+        "codegyre/robo": "^0.7.2",
+        "drupal/console": "0.10.*",
+        "drush/drush": "8.1.*",
+        "boedah/robo-drush": "2.2.*"
     },
     "conflict": {
         "drupal/drupal": "*"
