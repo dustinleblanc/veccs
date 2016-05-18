@@ -13,3 +13,5 @@ web/sites/default/files
 .idea
 
 tests/_output/*
+env.json
+.env*
