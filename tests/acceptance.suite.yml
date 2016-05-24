@@ -8,5 +8,32 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost/myapp
+            url: http://localhost:8888
         - \Helper\Acceptance
+        - Db:
+          dsn: 'mysql:host=localhost;dbname=recover_test'
+          user: 'root'
+          password: ''
+          dump: 'tests/_data/dump.sql'
+          populate: true
+          cleanup: true
+          reconnect: true
+        - DrupalUserRegistry:
+            defaultPass: "test"
+            users:
+                administrator:
+                    name: administrator
+                    email: admin@example.com
+                    roles: [ administrator ]
+                    root: true
+                CoChair:
+                    name: TestCoChair
+                    email: CoChair@example.com
+                    roles: [ co_chair ]
+                authenticated:
+                    name: authenticated
+                    email: authenticated@example.com
+                    roles: [ "authenticated user" ]
+            create: true
+            delete: true
+            drush-alias: '@local.test'

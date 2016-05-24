@@ -13,9 +13,14 @@ extensions:
     enabled:
         - Codeception\Extension\RunFailed
 modules:
+    enabled:
+        - Db
     config:
         Db:
-            dsn: ''
-            user: ''
+            dsn: 'mysql:host=localhost;dbname=recover_test'
+            user: 'root'
             password: ''
             dump: tests/_data/dump.sql
+            populate: true
+            cleanup: true
+            reconnect: false

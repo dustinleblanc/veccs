@@ -1,7 +1,7 @@
 <?php
 $aliases["dev"] = array (
   'root' => '/Users/dustinleblanc/code/php/veccs2/web',
-  'uri' => 'http://default',
+  'uri' => 'http://recover.dev:8888',
   'databases' =>
     array (
       'default' =>
@@ -26,7 +26,7 @@ $aliases["dev"] = array (
 
 $aliases["test"] = array (
   'root' => '/Users/dustinleblanc/code/php/veccs2/web',
-  'uri' => 'http://test',
+  'uri' => 'http://localhost:8000',
   'databases' =>
     array (
       'default' =>
