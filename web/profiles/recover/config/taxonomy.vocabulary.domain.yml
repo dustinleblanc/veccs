@@ -1,0 +1,9 @@
+uuid: c606a7ea-c54e-4be2-adff-dadd2ef9720a
+langcode: en
+status: true
+dependencies: {  }
+name: Domain
+vid: domain
+description: 'Research areas of inquiry'
+hierarchy: 0
+weight: 0

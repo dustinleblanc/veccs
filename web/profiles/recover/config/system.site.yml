@@ -1,0 +1,14 @@
+uuid: 0f0063d3-aa97-4d87-8d4b-422513adf8b0
+name: 'RECOVER CPR Initiative'
+mail: dustin.m.leblanc@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
