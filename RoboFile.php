@@ -8,26 +8,45 @@ class RoboFile extends \Robo\Tasks
 {
   use \Boedah\Robo\Task\Drush\loadTasks;
 
+  const CEPT_BIN = __DIR__ . '/vendor/bin/codecept';
   const DRUSH_BIN = __DIR__ . '/vendor/bin/drush';
   const DRUPAL_ROOT = __DIR__ . '/web';
 
-  // define public methods as commands
-  public function install()
+
+  /**
+   * Install Development site.
+   */
+  public function install($uri = 'default')
   {
     $this->buildDrushTask()
-      ->siteInstall();
+         ->uri($uri)
+         ->siteInstall('recover')
+         ->run();
   }
 
-  public function serve()
+  public function serve($uri = 'default')
   {
-    $this->taskServer(8000)
-      ->dir(self::DRUPAL_ROOT)
-      ->env(['PRESSFLOW_SETTINGS' => file_get_contents('env.json')])
-      ->run();
+    $this->buildDrushTask()
+         ->exec('rs')
+         ->uri($uri)
+         ->run();
   }
 
+  /**
+   * Run Test suite.
+   */
+  public function test()
+  {
+    $this->taskCodecept(self::CEPT_BIN)
+         ->run();
+  }
+
+  /**
+   * @return $this
+   */
   protected function buildDrushTask() {
     return $this->taskDrushStack(self::DRUSH_BIN)
-      ->dir(self::DRUPAL_ROOT);
+                ->dir(self::DRUPAL_ROOT);
   }
+
 }
