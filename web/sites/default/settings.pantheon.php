@@ -135,4 +135,3 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
   $config['system.file']['path']['temporary'] = $_SERVER['HOME'] .'/tmp';
 }
 
-

@@ -105,3 +105,14 @@ $settings['rebuild_access'] = TRUE;
  * directory.
  */
 $settings['skip_permissions_hardening'] = TRUE;
+
+$datbases['default']['default'] = [
+  'database' => $db_name,
+  'username' => $db_user,
+  'password' => $db_pass,
+  'host' => 'localhost',
+  'port' => '3306',
+  'driver' => 'mysql',
+  'prefix' => '',
+  'collation' => 'utf8mb4_general_ci',
+];
