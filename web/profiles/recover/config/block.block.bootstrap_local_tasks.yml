@@ -1,4 +1,4 @@
-uuid: bdc38ed7-0f24-467d-9062-bee086916efa
+uuid: 45bb14d9-99a2-4a3c-bd66-5b8f2d184910
 langcode: en
 status: true
 dependencies:
@@ -9,7 +9,7 @@ _core:
 id: bootstrap_local_tasks
 theme: bootstrap
 region: header
-weight: 10
+weight: -7
 provider: null
 plugin: local_tasks_block
 settings:

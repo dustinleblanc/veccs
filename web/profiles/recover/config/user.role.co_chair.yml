@@ -1,10 +1,10 @@
-uuid: 1b26a1f0-c0b9-4fa8-9fd8-11e3929bcb60
+uuid: 09080b64-2acc-4329-8486-15370a13a34c
 langcode: en
 status: true
 dependencies: {  }
 id: co_chair
 label: Co-Chair
-weight: 3
+weight: 2
 is_admin: null
 permissions:
   - 'delete terms in domain'

@@ -1,4 +1,4 @@
-uuid: f6e16b75-2faf-48bd-a2eb-115b3377649d
+uuid: b5b4972d-4434-4a72-996b-7ff1d3b7ef8c
 langcode: en
 status: true
 dependencies: {  }
@@ -10,7 +10,5 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
-  - 'use text format restricted_html'
   - 'access comments'
-  - 'access site-wide contact form'
   - 'search content'

@@ -1,10 +1,9 @@
-uuid: 51821d20-e467-463f-b101-b14e00f9708e
+uuid: 15795246-7015-4a02-a0ba-ccd632574f43
 langcode: en
 status: true
 dependencies:
   module:
     - comment
-    - node
     - user
 _core:
   default_config_hash: jmfZ73IDUpneecqVXUK3whGzTcvwLBBll9U3ZTCzndo
