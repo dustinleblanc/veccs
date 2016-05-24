@@ -1,9 +1,5 @@
 <?php
 
-if (file_exists(DRUPAL_ROOT . '/../env.json')) {
-  $_SERVER['PRESSFLOW_SETTINGS'] = file_get_contents(DRUPAL_ROOT . '/../env.json');
-}
-
 /**
  * Include the Pantheon-specific settings file.
  *
@@ -36,3 +32,4 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
    include __DIR__ . '/settings.local.php';
  }
 
+$settings['install_profile'] = 'recover';
