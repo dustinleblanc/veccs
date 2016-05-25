@@ -1,6 +1,7 @@
 <?php
 
 
+use Step\Acceptance\Authenticated;
 use Step\Acceptance\CoChair;
 
 class CoChairManageDomainsCest
@@ -12,6 +13,7 @@ class CoChairManageDomainsCest
 
     public function _after(AcceptanceTester $I)
     {
+        $I->logout();
     }
 
     // tests
@@ -24,4 +26,10 @@ class CoChairManageDomainsCest
         $I->see('Created new term Basic Life Support.');
     }
 
+    public function testAuthenticatedCantManageDomains(Authenticated $I)
+    {
+        $I->loginAsAuthenticated();
+        $I->amOnPage('/admin/structure/taxonomy/manage/domain/add');
+        $I->seeResponseCodeIs(403);
+    }
 }

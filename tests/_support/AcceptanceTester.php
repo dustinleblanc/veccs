@@ -23,4 +23,17 @@ class AcceptanceTester extends \Codeception\Actor
    /**
     * Define custom actions here
     */
+    public function login($userName, $pass)
+    {
+        $I = $this;
+        $I->amOnPage('/user/login');
+        $I->fillField('//*[@id="edit-name"]', $userName);
+        $I->fillField('//*[@id="edit-pass"]', $pass);
+        $I->click('//*[@id="edit-submit"]');
+    }
+
+    public function logout()
+    {
+        $this->amOnPage('/user/logout');
+    }
 }
