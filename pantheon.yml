@@ -3,3 +3,10 @@ api_version: 1
 
 environment:
     DOCROOT: web
+
+workflows:
+    sync_code:
+        after:
+            - type: webphp
+              description: Install composer dependencies
+              script: scripts/Pantheon/InstallDependencies.php
