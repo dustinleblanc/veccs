@@ -1,0 +1,17 @@
+uuid: f962de9d-00ac-4152-b3bd-6d0db4b68904
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access comments'
+  - 'post comments'
+  - 'skip comment approval'
+  - 'access shortcuts'
+  - 'search content'
