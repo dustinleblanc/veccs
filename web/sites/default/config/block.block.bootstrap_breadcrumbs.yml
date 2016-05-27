@@ -1,4 +1,4 @@
-uuid: ff441146-17ad-491b-bde9-472463970a51
+uuid: a8df46a9-7188-4f30-8ece-eb671acf534e
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ _core:
 id: bootstrap_breadcrumbs
 theme: bootstrap
 region: header
-weight: -100
+weight: -7
 provider: null
 plugin: system_breadcrumb_block
 settings:
