@@ -1,5 +1,4 @@
 name: Recover
-description: 'Features for Recover site'
 type: profile
 core: 8.x
 dependencies:
@@ -30,9 +29,9 @@ dependencies:
   - page_cache
   - path
   - quickedit
-  - rdf
   - recover_core
   - recover_site
+  - rdf
   - search
   - shortcut
   - taxonomy
@@ -41,9 +40,8 @@ dependencies:
   - views
   - views_ui
 themes:
-  - bartik
-  - seven
+  - bootstrap
+  - adminimal_theme
 package: Recover
 distribution:
   name: Recover
-version: 8.0.1

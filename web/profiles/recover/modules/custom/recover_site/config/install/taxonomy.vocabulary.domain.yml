@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Domain
+vid: domain
+description: ''
+hierarchy: 0
+weight: 0
