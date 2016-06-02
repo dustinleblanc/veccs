@@ -8,16 +8,16 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost:8888
+            url: http://localhost:8000
         - \Helper\Acceptance
         - Db:
-          dsn: 'mysql:host=localhost;dbname=recover_test'
-          user: 'root'
-          password: ''
-          dump: 'tests/_data/dump.sql'
-          populate: true
-          cleanup: true
-          reconnect: true
+            dsn: 'mysql:host=localhost;dbname=recover_test'
+            user: 'root'
+            password: ''
+            dump: tests/_data/dump.sql
+            populate: true
+            cleanup: true
+            reconnect: false
         - DrupalUserRegistry:
             defaultPass: "test"
             users:

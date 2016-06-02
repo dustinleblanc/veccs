@@ -11,24 +11,41 @@ class RoboFile extends \Robo\Tasks
   const CEPT_BIN = __DIR__ . '/vendor/bin/codecept';
   const DRUSH_BIN = __DIR__ . '/vendor/bin/drush';
   const DRUPAL_ROOT = __DIR__ . '/web';
+  const DB_DUMP = __DIR__ . '/tests/_data/dump.sql';
 
+  /**
+   *
+   * Dump the current database and load a dump file.
+   *
+   * @param string $dumpFile
+   */
+  public function dbLoad($dumpFile = '', $uri = 'default')
+  {
+    if (empty($dumpFile)) {
+      $dumpFile = __DIR__ . "/dump.sql";
+    }
+    $this->buildDrushTask($uri)
+         ->stopOnFail(true)
+         ->exec("sql-dump --result-file=" . __DIR__ . "/{$uri}.dump.sql")
+         ->exec("sql-cli < $dumpFile")
+         ->run();
+  }
 
   /**
    * Install Development site.
    */
   public function install($uri = 'default')
   {
-    $this->buildDrushTask()
-         ->uri($uri)
+    $this->buildDrushTask($uri)
          ->siteInstall('recover')
          ->run();
   }
 
   public function serve($uri = 'default')
   {
-    $this->buildDrushTask()
-         ->exec('rs')
-         ->uri($uri)
+    $port = ($uri == 'test') ? 8000 : 8888;
+    $this->buildDrushTask($uri)
+         ->exec("rs $port")
          ->run();
   }
 
@@ -37,6 +54,10 @@ class RoboFile extends \Robo\Tasks
    */
   public function test()
   {
+    $this->dbLoad(self::DB_DUMP, 'test');
+    $this->buildDrushTask('test')
+         ->exec('config-import')
+         ->run();
     $this->taskCodecept(self::CEPT_BIN)
          ->run();
   }
@@ -44,9 +65,11 @@ class RoboFile extends \Robo\Tasks
   /**
    * @return $this
    */
-  protected function buildDrushTask() {
+  protected function buildDrushTask($uri = 'default') {
     return $this->taskDrushStack(self::DRUSH_BIN)
+                ->uri($uri)
                 ->dir(self::DRUPAL_ROOT);
   }
+
 
 }

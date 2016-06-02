@@ -1,0 +1,14 @@
+uuid: 4bf9a55c-7b2a-48fc-bd49-01c952ed2e55
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.co_chair
+  module:
+    - user
+id: user_remove_role_action.co_chair
+label: 'Remove the Co-Chair role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: co_chair

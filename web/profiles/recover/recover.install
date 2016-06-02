@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Install, update and uninstall functions for the standard installation profile.
+ * Install, update and uninstall functions for the recover installation profile.
  */
 
 use Drupal\user\Entity\User;
@@ -22,10 +22,6 @@ function recover_install() {
   // Allow visitor account creation with administrative approval.
   $user_settings = \Drupal::configFactory()->getEditable('user.settings');
   $user_settings->set('register', USER_REGISTER_ADMINISTRATORS_ONLY)->save(TRUE);
-
-  // Enable default permissions for system roles.
-  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, array('access comments'));
-  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, array('access comments', 'post comments', 'skip comment approval'));
 
   // Assign user 1 the "administrator" role.
   $user = User::load(1);
@@ -59,7 +55,4 @@ function recover_install() {
   // Allow all users to use search.
   user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, array('search content'));
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, array('search content'));
-
-  // Enable the admin theme.
-  \Drupal::configFactory()->getEditable('node.settings')->set('use_admin_theme', TRUE)->save(TRUE);
 }

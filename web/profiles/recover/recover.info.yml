@@ -1,37 +1,49 @@
 name: Recover
+description: 'Features for Recover site'
 type: profile
-description: 'Install with commonly used features pre-configured.'
-version: VERSION
 core: 8.x
 dependencies:
-  - node
-  - history
+  - automated_cron
   - block
+  - block_content
   - breakpoint
   - ckeditor
   - color
-  - config
   - comment
+  - config
+  - contact
   - contextual
-  - help
-  - menu_link_content
   - datetime
-  - block_content
-  - editor
-  - image
-  - menu_ui
-  - options
-  - path
-  - page_cache
-  - dynamic_page_cache
-  - taxonomy
   - dblog
+  - dynamic_page_cache
+  - editor
+  - features
+  - field_ui
+  - file
+  - help
+  - history
+  - image
+  - menu_link_content
+  - menu_ui
+  - node
+  - options
+  - page_cache
+  - path
+  - quickedit
+  - rdf
+  - recover_core
+  - recover_site
   - search
   - shortcut
+  - taxonomy
   - toolbar
-  - file
+  - tour
   - views
-  - automated_cron
+  - views_ui
 themes:
-  - bootstrap
-  - adminimal_theme
+  - bartik
+  - seven
+package: Recover
+distribution:
+  name: Recover
+version: 8.0.1
