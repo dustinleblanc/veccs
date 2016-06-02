@@ -1,9 +1,0 @@
-uuid: 6241907a-76e1-4d47-8f46-5b694bf6261f
-langcode: en
-status: true
-dependencies: {  }
-name: Domain
-vid: domain
-description: ''
-hierarchy: 0
-weight: 0
