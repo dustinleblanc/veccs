@@ -25,7 +25,8 @@
         "vlucas/phpdotenv": "^2.2",
         "drupal/bootstrap": "8.3.*",
         "drupal/adminimal_theme": "^8.1",
-        "drupal/features": "8.3.*"
+        "drupal/features": "8.3.*",
+        "guzzlehttp/guzzle": "6.1.*@stable"
     },
     "require-dev": {
         "codeception/codeception": "^2.1",
@@ -36,7 +37,8 @@
         "drush/drush": "8.1.*",
         "boedah/robo-drush": "2.2.*",
         "ixis/codeception-module-drupal-user-registry": "~0.2.1",
-        "ixis/codeception-drupal-content-types": "~1.4"
+        "ixis/codeception-drupal-content-types": "~1.4",
+        "pantheon-systems/terminus": "^0.11.1"
 
     },
     "conflict": {
