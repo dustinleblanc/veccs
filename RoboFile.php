@@ -54,7 +54,7 @@ class RoboFile extends \Robo\Tasks
    */
   public function test()
   {
-    $this->dbLoad(self::DB_DUMP, 'test');
+    $this->install('test');
     $this->buildDrushTask('test')
          ->exec('config-import')
          ->run();
