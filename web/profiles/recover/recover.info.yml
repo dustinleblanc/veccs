@@ -29,19 +29,21 @@ dependencies:
   - page_cache
   - path
   - quickedit
+  - rdf
   - recover_core
   - recover_site
-  - rdf
   - search
   - shortcut
+  - system
   - taxonomy
   - toolbar
   - tour
+  - user
   - views
   - views_ui
 themes:
-  - bootstrap
   - adminimal_theme
+  - bootstrap
 package: Recover
 distribution:
   name: Recover
