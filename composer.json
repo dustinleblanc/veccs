@@ -36,10 +36,9 @@
         "drupal/console": "0.10.*",
         "drush/drush": "8.1.*",
         "boedah/robo-drush": "2.2.*",
-        "ixis/codeception-module-drupal-user-registry": "~0.2.1",
-        "ixis/codeception-drupal-content-types": "~1.4",
-        "pantheon-systems/terminus": "^0.11.1"
-
+        "pantheon-systems/terminus": "^0.11.1",
+        "drupal/devel":"dev-8.x-1.x",
+        "dustinleblanc/codeception-drupal-8": "0.0.*"
     },
     "conflict": {
         "drupal/drupal": "*"
