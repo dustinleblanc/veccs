@@ -53,5 +53,5 @@
  * @see \Drupal\Core\DrupalKernel::getSitePath()
  * @see https://www.drupal.org/documentation/install/multi-site
  */
-$sites['8000.localhost'] = 'test';
-$sites['8888.localhost'] = 'default';
+$sites['8889.localhost'] = 'test';
+$sites['8888.veccs.dev'] = 'default';

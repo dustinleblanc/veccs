@@ -19,15 +19,11 @@ class RoboFile extends \Robo\Tasks
    *
    * @param string $dumpFile
    */
-  public function dbLoad($dumpFile = '', $uri = 'default')
+  public function dbLoad($uri = 'default')
   {
-    if (empty($dumpFile)) {
-      $dumpFile = __DIR__ . "/dump.sql";
-    }
     $this->buildDrushTask($uri)
          ->stopOnFail(true)
-         ->exec("sql-dump --result-file=" . __DIR__ . "/{$uri}.dump.sql")
-         ->exec("sql-cli < $dumpFile")
+         ->exec("sql-cli < " . __DIR__ . "/{$uri}.dump.sql")
          ->run();
   }
 
@@ -43,7 +39,7 @@ class RoboFile extends \Robo\Tasks
 
   public function serve($uri = 'default')
   {
-    $port = ($uri == 'test') ? 8000 : 8888;
+    $port = ($uri == 'test') ? 8889 : 8888;
     $this->buildDrushTask($uri)
          ->exec("rs $port")
          ->run();
@@ -54,12 +50,16 @@ class RoboFile extends \Robo\Tasks
    */
   public function test()
   {
-    $this->install('test');
-    $this->buildDrushTask('test')
-         ->exec('config-import')
-         ->run();
-    $this->taskCodecept(self::CEPT_BIN)
-         ->run();
+    if ($this->testSiteIsLoading()) {
+      $this->dbDump('test');
+      if ($this->taskCodecept(self::CEPT_BIN)
+               ->run()
+               ->wasSuccessful()) {
+        $this->dbLoad('test');
+      }
+    } else {
+      $this->say('Test site is not loading, make sure you have a server running!');
+    }
   }
 
   /**
@@ -71,5 +71,16 @@ class RoboFile extends \Robo\Tasks
                 ->dir(self::DRUPAL_ROOT);
   }
 
-
+  protected function testSiteIsLoading()
+  {
+    $ch = curl_init('http://localhost:8889');
+    $data = curl_exec($ch);
+    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if($httpcode >= 200 && $httpcode < 300){
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

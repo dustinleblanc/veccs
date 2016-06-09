@@ -9,7 +9,7 @@ use Codeception\Module\Db;
 class Acceptance extends \Codeception\Module
 {
   public function _beforeSuite($settings = []) {
-    shell_exec('drush config-import');
+    parent::_beforeSuite($settings);
   }
 
   public function _afterSuite() {
