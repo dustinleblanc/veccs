@@ -1,13 +1,13 @@
 <?php
-$aliases["dev"] = array (
+$aliases["dev"] = [
   'root' => '/Users/dustinleblanc/code/php/veccs2/web',
-  'uri' => 'http://recover.dev:8888',
+  'uri' => 'default',
   'databases' =>
-    array (
+    [
       'default' =>
-        array (
+        [
           'default' =>
-            array (
+            [
               'database' => 'recover_dev',
               'username' => 'root',
               'password' => '',
@@ -15,24 +15,24 @@ $aliases["dev"] = array (
               'port' => '3306',
               'driver' => 'mysql',
               'prefix' =>
-                array (
+                [
                   'default' => '',
-                ),
+                ],
               'collation' => 'utf8mb4_general_ci',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
 
-$aliases["test"] = array (
+$aliases["test"] = [
   'root' => '/Users/dustinleblanc/code/php/veccs2/web',
-  'uri' => 'http://localhost:8000',
+  'uri' => 'test',
   'databases' =>
-    array (
+    [
       'default' =>
-        array (
+        [
           'default' =>
-            array (
+            [
               'database' => 'recover_test',
               'username' => 'root',
               'password' => '',
@@ -40,11 +40,11 @@ $aliases["test"] = array (
               'port' => '3306',
               'driver' => 'mysql',
               'prefix' =>
-                array (
+                [
                   'default' => '',
-                ),
+                ],
               'collation' => 'utf8mb4_general_ci',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
