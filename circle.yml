@@ -1,3 +1,22 @@
 machine:
   php:
     version: 7.0.4
+dependencies:
+  post:
+    - cp ~/veccs/conf/apache.conf /etc/apache2/sites-available
+    - a2ensite apache.conf
+    - sudo service apache2 restart
+database:
+  override:
+    - ./vendor/bin/drush si --db-url=mysql://ubuntu@localhost/circle_test
+test:
+  pre:
+    - curl -I http://localhost:8889
+  override:
+    - php vendor/codeception/codeception/codecept run
+
+deployment:
+  dev:
+    branch: master
+    commands:
+     - php vendor/codegyre/robo/robo deploy
