@@ -3,7 +3,7 @@ machine:
     version: 7.0.4
 database:
   override:
-    - cd web && ../vendor/bin/drush si
+    - cd web && ../vendor/bin/drush si -y
 test:
   pre:
     - ../vendor/bin/drush rs 8889
