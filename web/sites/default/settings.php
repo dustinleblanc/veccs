@@ -34,7 +34,7 @@ if (file_exists(__DIR__ . '/settings.local.php')) {
 
 $settings['install_profile'] = 'recover';
 
-if (defined('CIRCLECI')) {
+if ($_ENV['CIRCLECI'] === ['CIRCLECI']) {
   $databases['default']['default'] = [
     'database' => 'circle_test',
     'username' => 'ubuntu',
