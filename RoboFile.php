@@ -12,7 +12,7 @@ class RoboFile extends \Robo\Tasks
     const DRUSH_BIN = __DIR__ . '/vendor/bin/drush';
     const DRUPAL_ROOT = __DIR__ . '/web';
     const DB_DUMP = __DIR__ . '/tests/_data/dump.sql';
-    const TARGET_DIR = '../pantheon';
+    const TARGET_DIR = '../pantheon_veccs';
     const PANTHEON_REPO = "ssh://codeserver.dev.66a2727f-da39-4586-a2bb-ba803695ca4a@codeserver.dev.66a2727f-da39-4586-a2bb-ba803695ca4a.drush.in:2222/~/repository.git";
 
     /**
@@ -20,16 +20,28 @@ class RoboFile extends \Robo\Tasks
      */
     public function buildArtifact()
     {
-        $this->taskMirrorDir([__DIR__, self::TARGET_DIR]);
+        $this->taskRsync()
+            ->fromPath(__DIR__ . "/")
+            ->toPath(self::TARGET_DIR)
+            ->excludeVcs()
+            ->exclude('vendor/')
+            ->recursive()
+            ->run();
         $this->taskComposerInstall()
              ->noDev()
              ->dir(self::TARGET_DIR)
              ->run();
 
         $this->taskGitStack()
+            ->dir(self::TARGET_DIR)
             ->add('-A')
+            ->add('vendor -f')
+            ->add('web/core -f')
+            ->add('web/sites/default/settings.php -f')
+          ->add('web/sites/default/settings.pantheon.php -f')
+            ->add('web/themes/contrib -f')
+            ->add('web/modules/contrib -f')
             ->commit('Compile Dependencies')
-            ->push(self::PANTHEON_REPO, 'master')
             ->run();
     }
 
@@ -38,7 +50,12 @@ class RoboFile extends \Robo\Tasks
      */
     public function cleanTargetRepository()
     {
-        $this->taskCleanDir(self::TARGET_DIR)->run();
+        $this->taskGitStack()
+            ->dir(self::TARGET_DIR)
+            ->exec("rm -rf .")
+            ->exec("clean -fxd")
+            ->run();
+
     }
 
     /**
@@ -99,6 +116,14 @@ class RoboFile extends \Robo\Tasks
              ->run();
     }
 
+    public function pushToTarget()
+    {
+        $this->taskGitStack()
+             ->dir(self::TARGET_DIR)
+             ->push(self::PANTHEON_REPO, 'master')
+             ->run();
+    }
+
     public function serve($uri = 'default')
     {
         $port = ($uri == 'test') ? 8889 : 8888;
@@ -113,10 +138,12 @@ class RoboFile extends \Robo\Tasks
     public function test()
     {
         if ($this->testSiteIsLoading()) {
-            $this->dbDump('test');
+            if (!defined('CI')) {
+                $this->dbDump('test');
+            }
             if ($this->taskCodecept(self::CEPT_BIN)
                      ->run()
-                     ->wasSuccessful()) {
+                     ->wasSuccessful() && !defined('CI')) {
                 $this->dbLoad('test');
             }
         } else {
@@ -146,7 +173,7 @@ class RoboFile extends \Robo\Tasks
         // Ping our test url
         $ch = curl_init('http://localhost:8889');
         // Hide curl's output
-        curl_setopt(CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
