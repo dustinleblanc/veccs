@@ -12,6 +12,7 @@
 include __DIR__ . "/settings.pantheon.php";
 
 $settings['update_free_access'] = FALSE;
+$settings['hash_salt'] = 'mmm...salty';
 
 /**
  * Load services definition file.
