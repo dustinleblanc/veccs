@@ -3,12 +3,12 @@ machine:
     version: 7.0.4
 database:
   override:
-    - ./vendor/bin/drush si --db-url=mysql://ubuntu@localhost/circle_test
+    - cd web && ../vendor/bin/drush si
 test:
   pre:
-    - ./vendor/bin/drush rs 8889
+    - ../vendor/bin/drush rs 8889
   override:
-    - php vendor/codegyre/robo/robo test
+    - cd .. && php vendor/codegyre/robo/robo test
 
 deployment:
   dev:
