@@ -33,16 +33,3 @@ if (file_exists(__DIR__ . '/settings.local.php')) {
 }
 
 $settings['install_profile'] = 'recover';
-
-if ($_ENV['CIRCLECI'] === ['CIRCLECI']) {
-  $databases['default']['default'] = [
-    'database' => 'circle_test',
-    'username' => 'ubuntu',
-    'password' => '',
-    'host' => 'localhost',
-    'port' => '3306',
-    'driver' => 'mysql',
-    'prefix' => '',
-    'collation' => 'utf8mb4_general_ci',
-  ];
-}
