@@ -1,4 +1,8 @@
 <?php
+// Stub hash salt in CI/LOCAL...
+if (!defined('PANTHEON_ENVIRONMENT')) {
+  $settings['hash_salt'] = 'mmm...salty';
+}
 
 /**
  * Include the Pantheon-specific settings file.
@@ -12,7 +16,6 @@
 include __DIR__ . "/settings.pantheon.php";
 
 $settings['update_free_access'] = FALSE;
-$settings['hash_salt'] = 'mmm...salty';
 
 /**
  * Load services definition file.

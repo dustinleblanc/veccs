@@ -121,8 +121,8 @@ if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
  * Issue: https://github.com/pantheon-systems/drops-8/issues/10
  *
  */
-if ($_SERVER['DRUPAL_HASH_SALT'] !== null)  {
-  $settings['hash_salt'] = $_SERVER['DRUPAL_HASH_SALT'];
+if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
+  $settings['hash_salt'] = $_ENV['DRUPAL_HASH_SALT'];
 }
 
 /**
