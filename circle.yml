@@ -3,7 +3,7 @@ machine:
     version: 7.0.4
 database:
   override:
-    - mysql -p circle_test < tests/_data/dump.sql
+    - mysql circle_test < tests/_data/dump.sql
 test:
   pre:
     - cp web/sites/example.setting.local.php web/sites/default/settings.local.php
