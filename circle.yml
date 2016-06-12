@@ -6,13 +6,13 @@ database:
     - mysql circle_test < tests/_data/dump.sql
 test:
   pre:
-    - cp ~/veccs/web/sites/example.setting.local.php ~/veccs/web/sites/default/settings.local.php
-    - cd web && ../vendor/bin/drush rs 8889 -y
+    - cp ~/veccs/web/sites/example.settings.local.php ~/veccs/web/sites/default/settings.local.php
+    - cd ~/veccs/web && ../vendor/bin/drush rs 8889 -y
   override:
-    - cd veccs && php vendor/codegyre/robo/robo test
+    - cd ~/veccs && php vendor/codegyre/robo/robo test
 
 deployment:
   dev:
     branch: master
     commands:
-     - cd veccs && php vendor/codegyre/robo/robo deploy
+     - cd ~/veccs && php vendor/codegyre/robo/robo deploy
