@@ -106,7 +106,7 @@ $settings['rebuild_access'] = TRUE;
  */
 $settings['skip_permissions_hardening'] = TRUE;
 
-$datbases['default']['default'] = [
+$databases['default']['default'] = [
   'database' => 'circle_test',
   'username' => 'ubuntu',
   'password' => '',

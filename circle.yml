@@ -3,13 +3,13 @@ machine:
     version: 7.0.4
 database:
   override:
-    - mysql < tests/_data/dump.sql
+    - mysql -p circle_test < tests/_data/dump.sql
 test:
   pre:
     - cp web/sites/example.setting.local.php web/sites/default/settings.local.php
     - cd web && ../vendor/bin/drush rs 8889 -y
   override:
-    - cd .. && php vendor/codegyre/robo/robo test
+    - php vendor/codegyre/robo/robo test
 
 deployment:
   dev:
