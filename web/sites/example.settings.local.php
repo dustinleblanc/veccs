@@ -107,9 +107,9 @@ $settings['rebuild_access'] = TRUE;
 $settings['skip_permissions_hardening'] = TRUE;
 
 $datbases['default']['default'] = [
-  'database' => $db_name,
-  'username' => $db_user,
-  'password' => $db_pass,
+  'database' => 'circle_test',
+  'username' => 'ubuntu',
+  'password' => '',
   'host' => 'localhost',
   'port' => '3306',
   'driver' => 'mysql',

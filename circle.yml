@@ -3,10 +3,11 @@ machine:
     version: 7.0.4
 database:
   override:
-    - cd web && ../vendor/bin/drush si recover -y
+    - mysql < tests/_data/dump.sql
 test:
   pre:
-    - ../vendor/bin/drush rs 8889 -y
+    - cp web/sites/example.setting.local.php web/sites/default/settings.local.php
+    - cd web && ../vendor/bin/drush rs 8889 -y
   override:
     - cd .. && php vendor/codegyre/robo/robo test
 
