@@ -1,0 +1,26 @@
+# PICO Question menu items definition
+entity.pico_question.collection:
+  title: 'PICO Question list'
+  route_name: entity.pico_question.collection
+  description: 'List PICO Question entities'
+  parent: system.admin_structure
+  weight: 100
+
+pico_question.admin.structure.settings:
+  title: PICO Question settings
+  description: 'Configure PICO Question entities'
+  route_name: pico_question.settings
+  parent: system.admin_structure
+# Species menu items definition
+entity.species.collection:
+  title: 'Species list'
+  route_name: entity.species.collection
+  description: 'List Species entities'
+  parent: system.admin_structure
+  weight: 100
+
+species.admin.structure.settings:
+  title: Species settings
+  description: 'Configure Species entities'
+  route_name: species.settings
+  parent: system.admin_structure

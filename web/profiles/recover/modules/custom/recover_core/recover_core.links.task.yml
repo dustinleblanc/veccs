@@ -1,0 +1,41 @@
+# PICO Question routing definition
+pico_question.settings_tab:
+  route_name: pico_question.settings
+  title: 'Settings'
+  base_route: pico_question.settings
+entity.pico_question.canonical:
+  route_name: entity.pico_question.canonical
+  base_route: entity.pico_question.canonical
+  title: 'View'
+
+entity.pico_question.edit_form:
+  route_name: entity.pico_question.edit_form
+  base_route: entity.pico_question.canonical
+  title: Edit
+
+entity.pico_question.delete_form:
+  route_name:  entity.pico_question.delete_form
+  base_route:  entity.pico_question.canonical
+  title: Delete
+  weight: 10
+
+# Species routing definition
+species.settings_tab:
+  route_name: species.settings
+  title: 'Settings'
+  base_route: species.settings
+entity.species.canonical:
+  route_name: entity.species.canonical
+  base_route: entity.species.canonical
+  title: 'View'
+
+entity.species.edit_form:
+  route_name: entity.species.edit_form
+  base_route: entity.species.canonical
+  title: Edit
+
+entity.species.delete_form:
+  route_name:  entity.species.delete_form
+  base_route:  entity.species.canonical
+  title: Delete
+  weight: 10

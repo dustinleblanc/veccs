@@ -1,0 +1,57 @@
+add pico question entities:
+  title: 'Create new PICO Question entities'
+
+administer pico question entities:
+  title: 'Administer PICO Question entities'
+  description: 'Allow to access the administration form to configure PICO Question entities.'
+  restrict access: true
+
+delete pico question entities:
+  title: 'Delete PICO Question entities'
+
+edit pico question entities:
+  title: 'Edit PICO Question entities'
+
+view published pico question entities:
+  title: 'View published PICO Question entities'
+
+view unpublished pico question entities:
+  title: 'View unpublished PICO Question entities'
+add species entities:
+  title: 'Create new Species entities'
+
+administer species entities:
+  title: 'Administer Species entities'
+  description: 'Allow to access the administration form to configure Species entities.'
+  restrict access: true
+
+delete species entities:
+  title: 'Delete Species entities'
+
+edit species entities:
+  title: 'Edit Species entities'
+
+view published species entities:
+  title: 'View published Species entities'
+
+view unpublished species entities:
+  title: 'View unpublished Species entities'
+add condition entities:
+  title: 'Create new Condition entities'
+
+administer condition entities:
+  title: 'Administer Condition entities'
+  description: 'Allow to access the administration form to configure Condition entities.'
+  restrict access: true
+
+delete condition entities:
+  title: 'Delete Condition entities'
+
+edit condition entities:
+  title: 'Edit Condition entities'
+
+view published condition entities:
+  title: 'View published Condition entities'
+
+view unpublished condition entities:
+  title: 'View unpublished Condition entities'

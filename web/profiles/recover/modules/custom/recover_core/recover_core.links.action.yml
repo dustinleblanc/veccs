@@ -1,0 +1,10 @@
+entity.pico_question.add_form:
+  route_name: entity.pico_question.add_form
+  title: 'Add PICO Question'
+  appears_on:
+    - entity.pico_question.collection
+entity.species.add_form:
+  route_name: entity.species.add_form
+  title: 'Add Species'
+  appears_on:
+    - entity.species.collection
