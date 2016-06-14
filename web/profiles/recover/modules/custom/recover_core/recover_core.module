@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Includes all Drupal hooks for Recover core module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function recover_core_theme($existing, $type, $theme, $path) {
+  return [
+    'species' => [
+      'render element' => 'elements',
+      'file' => 'species.page.inc',
+      'template' => 'species',
+    ]
+  ];
+}
