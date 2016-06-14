@@ -74,3 +74,22 @@ view published medical condition entities:
 
 view unpublished medical condition entities:
   title: 'View unpublished Medical Condition entities'
+add outcome entities:
+  title: 'Create new Outcome entities'
+
+administer outcome entities:
+  title: 'Administer Outcome entities'
+  description: 'Allow to access the administration form to configure Outcome entities.'
+  restrict access: true
+
+delete outcome entities:
+  title: 'Delete Outcome entities'
+
+edit outcome entities:
+  title: 'Edit Outcome entities'
+
+view published outcome entities:
+  title: 'View published Outcome entities'
+
+view unpublished outcome entities:
+  title: 'View unpublished Outcome entities'

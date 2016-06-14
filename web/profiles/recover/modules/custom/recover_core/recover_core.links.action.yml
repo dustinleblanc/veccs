@@ -13,3 +13,8 @@ entity.medical_condition.add_form:
   title: 'Add Medical Condition'
   appears_on:
     - entity.medical_condition.collection
+entity.outcome.add_form:
+  route_name: entity.outcome.add_form
+  title: 'Add Outcome'
+  appears_on:
+    - entity.outcome.collection

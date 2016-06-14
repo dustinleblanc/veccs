@@ -37,3 +37,16 @@ medical_condition.admin.structure.settings:
   description: 'Configure Medical Condition entities'
   route_name: medical_condition.settings
   parent: system.admin_structure
+# Outcome menu items definition
+entity.outcome.collection:
+  title: 'Outcome list'
+  route_name: entity.outcome.collection
+  description: 'List Outcome entities'
+  parent: system.admin_structure
+  weight: 100
+
+outcome.admin.structure.settings:
+  title: Outcome settings
+  description: 'Configure Outcome entities'
+  route_name: outcome.settings
+  parent: system.admin_structure

@@ -1,0 +1,22 @@
+{#
+/**
+ * @file outcome.html.twig
+ * Default theme implementation to present Outcome data.
+ *
+ * This template is used when viewing Outcome pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_outcome()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('outcome') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

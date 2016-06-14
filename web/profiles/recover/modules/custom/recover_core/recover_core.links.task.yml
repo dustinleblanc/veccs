@@ -60,3 +60,24 @@ entity.medical_condition.delete_form:
   title: Delete
   weight: 10
 
+# Outcome routing definition
+outcome.settings_tab:
+  route_name: outcome.settings
+  title: 'Settings'
+  base_route: outcome.settings
+entity.outcome.canonical:
+  route_name: entity.outcome.canonical
+  base_route: entity.outcome.canonical
+  title: 'View'
+
+entity.outcome.edit_form:
+  route_name: entity.outcome.edit_form
+  base_route: entity.outcome.canonical
+  title: Edit
+
+entity.outcome.delete_form:
+  route_name:  entity.outcome.delete_form
+  base_route:  entity.outcome.canonical
+  title: Delete
+  weight: 10
+
