@@ -55,3 +55,22 @@ view published condition entities:
 
 view unpublished condition entities:
   title: 'View unpublished Condition entities'
+add medical condition entities:
+  title: 'Create new Medical Condition entities'
+
+administer medical condition entities:
+  title: 'Administer Medical Condition entities'
+  description: 'Allow to access the administration form to configure Medical Condition entities.'
+  restrict access: true
+
+delete medical condition entities:
+  title: 'Delete Medical Condition entities'
+
+edit medical condition entities:
+  title: 'Edit Medical Condition entities'
+
+view published medical condition entities:
+  title: 'View published Medical Condition entities'
+
+view unpublished medical condition entities:
+  title: 'View unpublished Medical Condition entities'

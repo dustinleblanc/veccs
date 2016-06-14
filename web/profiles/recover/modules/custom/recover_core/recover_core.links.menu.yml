@@ -24,3 +24,16 @@ species.admin.structure.settings:
   description: 'Configure Species entities'
   route_name: species.settings
   parent: system.admin_structure
+# Medical Condition menu items definition
+entity.medical_condition.collection:
+  title: 'Medical Condition list'
+  route_name: entity.medical_condition.collection
+  description: 'List Medical Condition entities'
+  parent: system.admin_structure
+  weight: 100
+
+medical_condition.admin.structure.settings:
+  title: Medical Condition settings
+  description: 'Configure Medical Condition entities'
+  route_name: medical_condition.settings
+  parent: system.admin_structure

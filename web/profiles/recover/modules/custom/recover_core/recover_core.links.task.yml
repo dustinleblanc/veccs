@@ -39,3 +39,24 @@ entity.species.delete_form:
   base_route:  entity.species.canonical
   title: Delete
   weight: 10
+# Medical Condition routing definition
+medical_condition.settings_tab:
+  route_name: medical_condition.settings
+  title: 'Settings'
+  base_route: medical_condition.settings
+entity.medical_condition.canonical:
+  route_name: entity.medical_condition.canonical
+  base_route: entity.medical_condition.canonical
+  title: 'View'
+
+entity.medical_condition.edit_form:
+  route_name: entity.medical_condition.edit_form
+  base_route: entity.medical_condition.canonical
+  title: Edit
+
+entity.medical_condition.delete_form:
+  route_name:  entity.medical_condition.delete_form
+  base_route:  entity.medical_condition.canonical
+  title: Delete
+  weight: 10
+

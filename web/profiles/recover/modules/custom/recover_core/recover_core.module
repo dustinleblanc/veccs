@@ -10,10 +10,20 @@
  */
 function recover_core_theme($existing, $type, $theme, $path) {
   return [
+    'pico_question' => [
+      'render element' => 'elements',
+      'file' => 'pico_question.page.inc',
+      'template' => 'species',
+    ],
     'species' => [
       'render element' => 'elements',
       'file' => 'species.page.inc',
       'template' => 'species',
-    ]
+    ],
+    'medical_condition' => [
+      'render element' => 'elements',
+      'file' => 'medical_condition.page.inc',
+      'template' => 'medical_condition',
+    ],
   ];
 }
