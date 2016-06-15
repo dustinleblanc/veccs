@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - recover_core
+id: pico_question.field_condition
+field_name: field_condition
+entity_type: pico_question
+type: entity_reference
+settings:
+  target_type: medical_condition
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

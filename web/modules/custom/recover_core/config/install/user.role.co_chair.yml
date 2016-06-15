@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: co_chair
+label: Co-Chair
+weight: 2
+is_admin: null
+permissions: {  }

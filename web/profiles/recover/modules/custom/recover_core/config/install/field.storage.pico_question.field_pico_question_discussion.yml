@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+    - recover_core
+id: pico_question.field_pico_question_discussion
+field_name: field_pico_question_discussion
+entity_type: pico_question
+type: comment
+settings:
+  comment_type: pico_question_discussion
+module: comment
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

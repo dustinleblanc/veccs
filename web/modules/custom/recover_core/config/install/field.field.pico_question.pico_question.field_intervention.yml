@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.pico_question.field_intervention
+  module:
+    - recover_core
+    - text
+id: pico_question.pico_question.field_intervention
+field_name: field_intervention
+entity_type: pico_question
+bundle: pico_question
+label: Intervention
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
