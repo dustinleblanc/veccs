@@ -21,40 +21,48 @@ class RoboFile extends \Robo\Tasks
     public function buildArtifact()
     {
         $this->taskRsync()
-            ->fromPath(__DIR__ . "/")
-            ->toPath(self::TARGET_DIR)
-            ->excludeVcs()
-            ->exclude('vendor/')
-            ->recursive()
-            ->run();
+             ->fromPath(__DIR__ . "/")
+             ->toPath(self::TARGET_DIR)
+             ->excludeVcs()
+             ->exclude('vendor/')
+             ->recursive()
+             ->run();
         $this->taskComposerInstall()
              ->noDev()
              ->dir(self::TARGET_DIR)
              ->run();
 
         $this->taskGitStack()
-            ->dir(self::TARGET_DIR)
-            ->add('-A')
-            ->add('vendor -f')
-            ->add('web/core -f')
-            ->add('web/sites/default/settings.php -f')
-          ->add('web/sites/default/settings.pantheon.php -f')
-            ->add('web/themes/contrib -f')
-            ->add('web/modules/contrib -f')
-            ->commit('Compile Dependencies')
-            ->run();
+             ->dir(self::TARGET_DIR)
+             ->add('-A')
+             ->add('vendor -f')
+             ->add('web/core -f')
+             ->add('web/sites/default/settings.php -f')
+             ->add('web/sites/default/settings.pantheon.php -f')
+             ->add('web/themes/contrib -f')
+             ->add('web/modules/contrib -f')
+             ->commit('Compile Dependencies')
+             ->run();
     }
 
+    public function checkFeatures()
+    {
+        $this->dbDump();
+        $this->syncDb('dev');
+        $this->buildDrushTask()
+             ->exec('fia')
+             ->run();
+    }
     /**
      * Cleans out target repo to replace with our build files.
      */
     public function cleanTargetRepository()
     {
         $this->taskGitStack()
-            ->dir(self::TARGET_DIR)
-            ->exec("rm -rf .")
-            ->exec("clean -fxd")
-            ->run();
+             ->dir(self::TARGET_DIR)
+             ->exec("rm -rf .")
+             ->exec("clean -fxd")
+             ->run();
 
     }
 
@@ -132,6 +140,13 @@ class RoboFile extends \Robo\Tasks
              ->run();
     }
 
+    public function syncDb($env = 'dev')
+    {
+        $alias = "@pantheon.veccs.{$env}";
+        $this->buildDrushTask()
+             ->exec("sql-sync {$alias} @self")
+             ->run();
+    }
     /**
      * Run Test suite.
      */
