@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: domain_chair
-label: 'Domain Chair'
-weight: 3
-is_admin: null
-permissions: {  }
