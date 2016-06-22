@@ -23,7 +23,6 @@ class PicoQuestionListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('PICO Question ID');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
@@ -33,11 +32,10 @@ class PicoQuestionListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\recover_core\Entity\PicoQuestion */
-    $row['id'] = $entity->id();
     $row['name'] = $this->l(
       $entity->label(),
       new Url(
-        'entity.pico_question.edit_form', array(
+        'entity.pico_question.canonical', array(
           'pico_question' => $entity->id(),
         )
       )

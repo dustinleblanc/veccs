@@ -23,7 +23,6 @@ class MedicalConditionListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Medical Condition ID');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
@@ -33,11 +32,10 @@ class MedicalConditionListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\recover_core\Entity\MedicalCondition */
-    $row['id'] = $entity->id();
     $row['name'] = $this->l(
       $entity->label(),
       new Url(
-        'entity.medical_condition.edit_form', array(
+        'entity.medical_condition.canonical', array(
           'medical_condition' => $entity->id(),
         )
       )

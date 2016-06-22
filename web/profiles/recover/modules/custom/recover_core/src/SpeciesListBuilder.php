@@ -23,7 +23,6 @@ class SpeciesListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Species ID');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }
@@ -33,11 +32,10 @@ class SpeciesListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\recover_core\Entity\Species */
-    $row['id'] = $entity->id();
     $row['name'] = $this->l(
       $entity->label(),
       new Url(
-        'entity.species.edit_form', array(
+        'entity.species.canonical', array(
           'species' => $entity->id(),
         )
       )
