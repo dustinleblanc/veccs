@@ -152,17 +152,13 @@ class RoboFile extends \Robo\Tasks
      */
     public function test()
     {
-        if ($this->testSiteIsLoading()) {
-            if (!defined('CI')) {
-                $this->dbDump('test');
-            }
-            if ($this->taskCodecept(self::CEPT_BIN)
-                     ->run()
-                     ->wasSuccessful() && !defined('CI')) {
-                $this->dbLoad('test');
-            }
-        } else {
-            $this->say('Test site is not loading, make sure you have a server running!');
+        if (!defined('CI')) {
+            $this->dbDump('test');
+        }
+        if ($this->taskCodecept(self::CEPT_BIN)
+                 ->run()
+                 ->wasSuccessful() && !defined('CI')) {
+            $this->dbLoad('test');
         }
     }
 

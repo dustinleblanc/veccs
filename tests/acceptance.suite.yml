@@ -8,7 +8,7 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost:8889
+            url: https://veccs_test.dev
         - \Helper\Acceptance
         - Drupal8:
             drupal_root: web
