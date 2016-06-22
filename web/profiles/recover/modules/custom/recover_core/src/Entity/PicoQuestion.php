@@ -185,11 +185,11 @@ class PicoQuestion extends ContentEntityBase implements PicoQuestionInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['question'] = BaseFieldDefinition::create('string')
+    $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Question'))
       ->setDescription(t('The question being asked.'))
       ->setSettings(array(
-        'max_length' => 50,
+        'max_length' => 256,
         'text_processing' => 0,
       ))
       ->setDefaultValue('')
