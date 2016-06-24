@@ -1,15 +1,19 @@
 machine:
   php:
     version: 7.0.4
-database:
-  override:
-    - mysql circle_test < tests/_data/dump.sql
+dependencies:
+  pre:
+    - echo "memory_limit = 256M" > /opt/circleci/php/$(phpenv global)/etc/conf.d/memory.ini
+  post:
+    - cp ~/veccs/ci/apache.conf /etc/apache2/sites-available
+    - a2ensite apache.conf
+    - sudo service apache2 restart
 test:
   pre:
-    - cp ~/veccs/web/sites/example.settings.local.php ~/veccs/web/sites/default/settings.local.php
-    - cd ~/veccs/web && ../vendor/bin/drush rs 8889 -y
+    - cp ~/veccs/ci/example.settings.local.php ~/veccs/web/sites/default/settings.local.php
+    - php ~/veccs/vendor/codegyre/robo/robo install
   override:
-    - cd ~/veccs && php vendor/codegyre/robo/robo test
+    - php ~/veccs/vendor/codegyre/robo/robo test
 
 deployment:
   dev:
