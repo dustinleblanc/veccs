@@ -5,8 +5,8 @@ dependencies:
   pre:
     - echo "memory_limit = 256M" > ~/.phpenv/versions/$(phpenv global)/etc/php.ini
   post:
-    - cp ~/veccs/ci/apache.conf /etc/apache2/sites-available
-    - a2ensite apache.conf
+    - cp ~/veccs/ci/drupal.conf /etc/apache2/sites-available
+    - a2ensite drupal.conf
     - sudo service apache2 restart
 test:
   pre:
