@@ -3,7 +3,7 @@ machine:
     version: 7.0.4
 dependencies:
   pre:
-    - echo "memory_limit = 256M" > /opt/circleci/php/$(phpenv global)/etc/conf.d/memory.ini
+    - echo "memory_limit = 256M" > ~/.phpenv/versions/$(phpenv global)/etc/php.ini
   post:
     - cp ~/veccs/ci/apache.conf /etc/apache2/sites-available
     - a2ensite apache.conf
