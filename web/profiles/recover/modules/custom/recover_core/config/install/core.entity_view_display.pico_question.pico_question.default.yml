@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.pico_question.pico_question.field_comments
     - field.field.pico_question.pico_question.field_condition
     - field.field.pico_question.pico_question.field_evidence_evaluator
     - field.field.pico_question.pico_question.field_information_specialist
@@ -95,4 +96,5 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_comments: true

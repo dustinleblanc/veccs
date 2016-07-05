@@ -47,3 +47,4 @@ themes:
 package: Recover
 distribution:
   name: Recover
+version: 8.0.2
