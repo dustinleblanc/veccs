@@ -29,7 +29,6 @@
         "codeception/specify": "0.4.*",
         "codeception/verify": "0.3.*",
         "codegyre/robo": "^0.7.2",
-        "drupal/console": "0.10.*",
         "drush/drush": "8.1.*",
         "boedah/robo-drush": "2.2.*",
         "pantheon-systems/terminus": "dev-master",

@@ -1,0 +1,5 @@
+name: Research Paper Import
+type: module
+description: Handles importation and querying of research papers from scholarly sources
+core: 8.x
+package: Custom

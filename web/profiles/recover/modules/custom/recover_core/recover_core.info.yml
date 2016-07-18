@@ -3,8 +3,10 @@ description: 'Provides core components required by other features.'
 type: module
 core: 8.x
 dependencies:
+  - block_content
   - comment
   - field
+  - node
   - recover_core
   - shortcut
   - text
