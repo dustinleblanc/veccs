@@ -1,0 +1,13 @@
+# Research paper menu items definition
+entity.research_paper.collection:
+  title: 'Research paper list'
+  route_name: entity.research_paper.collection
+  description: 'List Research paper entities'
+  parent: system.admin_structure
+  weight: 100
+
+research_paper.admin.structure.settings:
+  title: Research paper settings
+  description: 'Configure Research paper entities'
+  route_name: research_paper.settings
+  parent: system.admin_structure

@@ -1,0 +1,22 @@
+add research paper entities:
+  title: 'Create new Research paper entities'
+
+administer research paper entities:
+  title: 'Administer Research paper entities'
+  description: 'Allow to access the administration form to configure Research paper entities.'
+  restrict access: true
+
+delete research paper entities:
+  title: 'Delete Research paper entities'
+
+edit research paper entities:
+  title: 'Edit Research paper entities'
+
+access research paper overview:
+  title: 'Access the Research paper overview page'
+
+view published research paper entities:
+  title: 'View published Research paper entities'
+
+view unpublished research paper entities:
+  title: 'View unpublished Research paper entities'
