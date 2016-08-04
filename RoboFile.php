@@ -50,7 +50,8 @@ class RoboFile extends \Robo\Tasks
         $this->dbDump();
         $this->syncDb('dev');
         $this->buildDrushTask()
-             ->exec('fia')
+             ->exec('updb --entity-updates')
+             ->exec('features-import recover core ')
              ->run();
     }
     /**
@@ -140,10 +141,10 @@ class RoboFile extends \Robo\Tasks
              ->run();
     }
 
-    public function syncDb($env = 'dev')
+    public function syncDb($env = 'dev', $uri = 'default')
     {
         $alias = "@pantheon.veccs.{$env}";
-        $this->buildDrushTask()
+        $this->buildDrushTask($uri)
              ->exec("sql-sync {$alias} @self")
              ->run();
     }
@@ -152,14 +153,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function test()
     {
-        if (!defined('CI')) {
-            $this->dbDump('test');
-        }
-        if ($this->taskCodecept(self::CEPT_BIN)
-                 ->run()
-                 ->wasSuccessful() && !defined('CI')) {
-            $this->dbLoad('test');
-        }
+        $this->taskCodecept(self::CEPT_BIN)->run();
     }
 
     /**
