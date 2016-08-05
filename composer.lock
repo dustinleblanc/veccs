@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7ece1aafeb277a3d920c0639ed20ca56",
-    "content-hash": "50c24e391386c593b23fc8c8b35cab64",
+    "hash": "1533bca91caeb5d9bcef42ccac24215e",
+    "content-hash": "9d0a3f64d23366c8fcff8f2afcdf7eaa",
     "packages": [
         {
             "name": "codegyre/robo",
@@ -989,15 +989,15 @@
         },
         {
             "name": "drupal/features",
-            "version": "8.3.0-beta6",
+            "version": "8.3.0-beta7",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/features",
-                "reference": "245b7175b971e4239e3ee5685ca7c92942bf8a6e"
+                "reference": "fd22277b68a2aa06ff0d86af954e694db68677a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/features-8.x-3.0-beta6.zip",
+                "url": "https://ftp.drupal.org/files/projects/features-8.x-3.0-beta7.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1024,7 +1024,7 @@
             ],
             "description": "Enables administrators to package configuration into modules.",
             "homepage": "https://www.drupal.org/project/features",
-            "time": "2016-07-08 12:53:14"
+            "time": "2016-08-04 18:45:56"
         },
         {
             "name": "easyrdf/easyrdf",
@@ -4446,12 +4446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pantheon-systems/terminus.git",
-                "reference": "549cd3186a4eff3a4d8605652e564c28b71d8eac"
+                "reference": "5b8f0de5f492a26cbbfa9c7e0c8cb3bced7ce006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pantheon-systems/terminus/zipball/549cd3186a4eff3a4d8605652e564c28b71d8eac",
-                "reference": "549cd3186a4eff3a4d8605652e564c28b71d8eac",
+                "url": "https://api.github.com/repos/pantheon-systems/terminus/zipball/5b8f0de5f492a26cbbfa9c7e0c8cb3bced7ce006",
+                "reference": "5b8f0de5f492a26cbbfa9c7e0c8cb3bced7ce006",
                 "shasum": ""
             },
             "require": {
@@ -4505,7 +4505,7 @@
                 "terminus",
                 "wordpress"
             ],
-            "time": "2016-08-04 00:21:15"
+            "time": "2016-08-04 22:20:15"
         },
         {
             "name": "pear/console_table",
