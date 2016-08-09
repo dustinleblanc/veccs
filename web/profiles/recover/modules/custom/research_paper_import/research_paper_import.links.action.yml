@@ -1,5 +1,0 @@
-entity.research_paper.add_form:
-  route_name: entity.research_paper.add_form
-  title: 'Add Research paper'
-  appears_on:
-    - entity.research_paper.collection
