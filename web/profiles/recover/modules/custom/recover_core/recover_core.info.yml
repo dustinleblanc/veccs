@@ -5,11 +5,20 @@ core: 8.x
 dependencies:
   - block_content
   - comment
+  - datetime
   - field
+  - file
+  - image
+  - link
+  - menu_ui
   - node
+  - page_manager
+  - path
   - recover_core
   - shortcut
+  - taxonomy
   - text
   - user
-version: 8.0.2
+  - zotero_import
+version: 8.0.4
 package: Recover
