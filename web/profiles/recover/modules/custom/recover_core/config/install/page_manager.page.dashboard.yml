@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: dashboard
+label: Dashboard
+description: 'Dashboard upon login'
+use_admin_theme: false
+path: /dashboard
+access_logic: and
+access_conditions: {  }
+parameters: {  }

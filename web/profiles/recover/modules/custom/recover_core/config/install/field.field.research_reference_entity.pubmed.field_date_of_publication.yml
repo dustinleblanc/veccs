@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.research_reference_entity.field_date_of_publication
+    - zotero_import.research_reference_entity_type.pubmed
+  module:
+    - datetime
+id: research_reference_entity.pubmed.field_date_of_publication
+field_name: field_date_of_publication
+entity_type: research_reference_entity
+bundle: pubmed
+label: 'Date of Publication'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

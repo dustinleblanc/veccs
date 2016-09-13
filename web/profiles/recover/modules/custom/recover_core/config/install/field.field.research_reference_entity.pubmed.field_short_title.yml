@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.research_reference_entity.field_short_title
+    - zotero_import.research_reference_entity_type.pubmed
+id: research_reference_entity.pubmed.field_short_title
+field_name: field_short_title
+entity_type: research_reference_entity
+bundle: pubmed
+label: 'Short Title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

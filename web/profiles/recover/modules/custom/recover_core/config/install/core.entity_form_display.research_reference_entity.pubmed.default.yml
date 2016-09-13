@@ -1,0 +1,133 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.research_reference_entity.pubmed.field_abstract
+    - field.field.research_reference_entity.pubmed.field_attachments
+    - field.field.research_reference_entity.pubmed.field_author
+    - field.field.research_reference_entity.pubmed.field_date_of_publication
+    - field.field.research_reference_entity.pubmed.field_doi
+    - field.field.research_reference_entity.pubmed.field_extra
+    - field.field.research_reference_entity.pubmed.field_issn
+    - field.field.research_reference_entity.pubmed.field_item_type
+    - field.field.research_reference_entity.pubmed.field_publication_language
+    - field.field.research_reference_entity.pubmed.field_publication_name
+    - field.field.research_reference_entity.pubmed.field_short_title
+    - field.field.research_reference_entity.pubmed.field_tags
+    - field.field.research_reference_entity.pubmed.field_url
+    - zotero_import.research_reference_entity_type.pubmed
+  module:
+    - datetime
+    - link
+id: research_reference_entity.pubmed.default
+targetEntityType: research_reference_entity
+bundle: pubmed
+mode: default
+content:
+  field_abstract:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  field_attachments:
+    weight: 18
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  field_author:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_date_of_publication:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+  field_doi:
+    weight: 12
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_extra:
+    weight: 16
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_issn:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_item_type:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_publication_language:
+    weight: 11
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_publication_name:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_short_title:
+    weight: 14
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_tags:
+    weight: 17
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  field_url:
+    weight: 15
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+  name:
+    type: string_textfield
+    weight: -4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }
