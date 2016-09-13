@@ -93,3 +93,25 @@ view published outcome entities:
 
 view unpublished outcome entities:
   title: 'View unpublished Outcome entities'
+add research evaluation entities:
+  title: 'Create new Research Evaluation entities'
+
+administer research evaluation entities:
+  title: 'Administer Research Evaluation entities'
+  description: 'Allow to access the administration form to configure Research Evaluation entities.'
+  restrict access: true
+
+delete research evaluation entities:
+  title: 'Delete Research Evaluation entities'
+
+edit research evaluation entities:
+  title: 'Edit Research Evaluation entities'
+
+access research evaluation overview:
+  title: 'Access the Research Evaluation overview page'
+
+view published research evaluation entities:
+  title: 'View published Research Evaluation entities'
+
+view unpublished research evaluation entities:
+  title: 'View unpublished Research Evaluation entities'

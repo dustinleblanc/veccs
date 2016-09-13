@@ -18,3 +18,8 @@ entity.outcome.add_form:
   title: 'Add Outcome'
   appears_on:
     - entity.outcome.collection
+entity.research_evalutation_entity.add_form:
+  route_name: entity.research_evalutation_entity.add_form
+  title: 'Add Research Evaluation'
+  appears_on:
+    - entity.research_evalutation_entity.collection

@@ -50,3 +50,16 @@ outcome.admin.structure.settings:
   description: 'Configure Outcome entities'
   route_name: outcome.settings
   parent: system.admin_structure
+# Research Evaluation menu items definition
+entity.research_evalutation_entity.collection:
+  title: 'Research Evaluation list'
+  route_name: entity.research_evalutation_entity.collection
+  description: 'List Research Evaluation entities'
+  parent: system.admin_structure
+  weight: 100
+
+research_evalutation_entity.admin.structure.settings:
+  title: Research Evaluation settings
+  description: 'Configure Research Evaluation entities'
+  route_name: research_evalutation_entity.settings
+  parent: system.admin_structure
