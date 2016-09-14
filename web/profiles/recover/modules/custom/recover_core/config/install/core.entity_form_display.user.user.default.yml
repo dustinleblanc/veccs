@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.user.user.field_zotero_api_key
+    - field.field.user.user.field_zotero_user_id
   module:
     - user
 id: user.user.default
@@ -25,6 +26,13 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_zotero_user_id:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
   language:
     weight: 1
     settings: {  }
