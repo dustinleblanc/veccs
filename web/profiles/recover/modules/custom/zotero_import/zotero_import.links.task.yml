@@ -1,0 +1,38 @@
+# Research Reference routing definition
+entity.research_reference_entity.canonical:
+  route_name: entity.research_reference_entity.canonical
+  base_route: entity.research_reference_entity.canonical
+  title: 'View'
+
+entity.research_reference_entity.edit_form:
+  route_name: entity.research_reference_entity.edit_form
+  base_route: entity.research_reference_entity.canonical
+  title: Edit
+
+entity.research_reference_entity.delete_form:
+  route_name:  entity.research_reference_entity.delete_form
+  base_route:  entity.research_reference_entity.canonical
+  title: Delete
+  weight: 10
+
+# Research Attachment routing definition
+research_attachment_entity.settings_tab:
+  route_name: research_attachment_entity.settings
+  title: 'Settings'
+  base_route: research_attachment_entity.settings
+entity.research_attachment_entity.canonical:
+  route_name: entity.research_attachment_entity.canonical
+  base_route: entity.research_attachment_entity.canonical
+  title: 'View'
+
+entity.research_attachment_entity.edit_form:
+  route_name: entity.research_attachment_entity.edit_form
+  base_route: entity.research_attachment_entity.canonical
+  title: Edit
+
+entity.research_attachment_entity.delete_form:
+  route_name:  entity.research_attachment_entity.delete_form
+  base_route:  entity.research_attachment_entity.canonical
+  title: Delete
+  weight: 10
+

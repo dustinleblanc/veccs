@@ -1,0 +1,26 @@
+{
+    "name": "dustinleblanc/zotero_import",
+    "type": "drupal-module",
+    "description": "Handles importation and querying of documents from Zotero",
+    "keywords": ["Drupal"],
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Dustin LeBlanc (dustinleblanc)",
+            "homepage": "https://www.dustinleblanc.com",
+            "role": "Maintainer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Drupal\\zotero_import\\": "src/"
+        }
+    },
+    "require": {
+        "dustinleblanc/zotero-api": "0.0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    }
+}

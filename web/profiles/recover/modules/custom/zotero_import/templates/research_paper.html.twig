@@ -1,0 +1,22 @@
+{#
+/**
+ * @file research_paper.html.twig
+ * Default theme implementation to present Research paper data.
+ *
+ * This template is used when viewing Research paper pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_research_paper()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('research_paper') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

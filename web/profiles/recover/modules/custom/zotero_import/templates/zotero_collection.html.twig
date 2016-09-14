@@ -1,0 +1,13 @@
+{{ attach_library('zotero_import/zotero-collection') }}
+<div id="zotero-collections">
+    <ul class="zotero-items">
+        {% for item in elements['elements'] %}
+            <li class="zotero-item" id="zotero-item-{{ item['key'] }}">
+                <a href="{{ item['links']["alternate"]['href'] }}"><h4 class="zotero-item__title">{{ item['data']['title']}}</h4></a>
+                <ul class="actions">
+                    <li><a href="{{ path('zotero_import.import', {item: item}) }}" class="zotero-item__import use-ajax">Import this item</a></li>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

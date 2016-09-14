@@ -1,0 +1,12 @@
+zotero_import.research_reference_entity_type.*:
+  type: config_entity
+  label: 'Research Reference type config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string

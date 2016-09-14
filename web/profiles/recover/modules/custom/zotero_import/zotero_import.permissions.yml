@@ -1,0 +1,44 @@
+add research reference entities:
+  title: 'Create new Research Reference entities'
+
+administer research reference entities:
+  title: 'Administer Research Reference entities'
+  description: 'Allow to access the administration form to configure Research Reference entities.'
+  restrict access: true
+
+delete research reference entities:
+  title: 'Delete Research Reference entities'
+
+edit research reference entities:
+  title: 'Edit Research Reference entities'
+
+access research reference overview:
+  title: 'Access the Research Reference overview page'
+
+view published research reference entities:
+  title: 'View published Research Reference entities'
+
+view unpublished research reference entities:
+  title: 'View unpublished Research Reference entities'
+add research attachment entities:
+  title: 'Create new Research Attachment entities'
+
+administer research attachment entities:
+  title: 'Administer Research Attachment entities'
+  description: 'Allow to access the administration form to configure Research Attachment entities.'
+  restrict access: true
+
+delete research attachment entities:
+  title: 'Delete Research Attachment entities'
+
+edit research attachment entities:
+  title: 'Edit Research Attachment entities'
+
+access research attachment overview:
+  title: 'Access the Research Attachment overview page'
+
+view published research attachment entities:
+  title: 'View published Research Attachment entities'
+
+view unpublished research attachment entities:
+  title: 'View unpublished Research Attachment entities'

@@ -1,0 +1,4 @@
+zotero-collection:
+  version: 1.x
+  js:
+    assets/js/zotero-collection.js: {}

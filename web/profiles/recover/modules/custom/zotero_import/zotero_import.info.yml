@@ -1,0 +1,5 @@
+name: Zotero Import
+type: module
+description: Handles importation and querying of research resources from Zotero.
+core: 8.x
+package: Other

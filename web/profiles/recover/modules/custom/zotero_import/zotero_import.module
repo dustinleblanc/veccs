@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Contains zotero_import.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function zotero_import_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the zotero_import module.
+    case 'help.page.zotero_import':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function zotero_import_theme() {
+  $theme = [];
+  $theme['research_reference_entity'] = [
+    'render element' => 'elements',
+    'file' => 'research_reference_entity.page.inc',
+    'template' => 'research_reference_entity',
+  ];
+  $theme['research_reference_entity_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => 'research_reference_entity.page.inc',
+  ];
+  $theme['zotero_collection'] = [
+    'render element' => 'elements',
+    'template' => 'zotero_collection',
+  ];
+  return $theme;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function zotero_import_theme_suggestions_research_reference_entity(array $variables) {
+  $suggestions = array();
+  $entity = $variables['elements']['#research_reference_entity'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'research_reference_entity__' . $sanitized_view_mode;
+  $suggestions[] = 'research_reference_entity__' . $entity->bundle();
+  $suggestions[] = 'research_reference_entity__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'research_reference_entity__' . $entity->id();
+  $suggestions[] = 'research_reference_entity__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}
+

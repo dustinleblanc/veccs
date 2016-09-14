@@ -1,0 +1,29 @@
+# Research Reference menu items definition
+entity.research_reference_entity.collection:
+  title: 'Research Reference list'
+  route_name: entity.research_reference_entity.collection
+  description: 'List Research Reference entities'
+  parent: system.admin_content
+  weight: 100
+
+# Research Reference type menu items definition
+entity.research_reference_entity_type.collection:
+  title: 'Research Reference type'
+  route_name: entity.research_reference_entity_type.collection
+  description: 'List Research Reference type (bundles)'
+  parent: system.admin_structure
+  weight: 99
+
+# Research Attachment menu items definition
+entity.research_attachment_entity.collection:
+  title: 'Research Attachment list'
+  route_name: entity.research_attachment_entity.collection
+  description: 'List Research Attachment entities'
+  parent: system.admin_content
+  weight: 100
+
+research_attachment_entity.admin.structure.settings:
+  title: Research Attachment settings
+  description: 'Configure Research Attachment entities'
+  route_name: research_attachment_entity.settings
+  parent: system.admin_structure
