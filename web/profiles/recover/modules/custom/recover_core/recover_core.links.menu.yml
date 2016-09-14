@@ -3,7 +3,7 @@ entity.pico_question.collection:
   title: 'PICO Question list'
   route_name: entity.pico_question.collection
   description: 'List PICO Question entities'
-  parent: system.admin_structure
+  parent: system.admin_content
   weight: 100
 
 pico_question.admin.structure.settings:
@@ -16,7 +16,7 @@ entity.species.collection:
   title: 'Species list'
   route_name: entity.species.collection
   description: 'List Species entities'
-  parent: system.admin_structure
+  parent: system.admin_content
   weight: 100
 
 species.admin.structure.settings:
@@ -29,7 +29,7 @@ entity.medical_condition.collection:
   title: 'Medical Condition list'
   route_name: entity.medical_condition.collection
   description: 'List Medical Condition entities'
-  parent: system.admin_structure
+  parent: system.admin_content
   weight: 100
 
 medical_condition.admin.structure.settings:
@@ -42,7 +42,7 @@ entity.outcome.collection:
   title: 'Outcome list'
   route_name: entity.outcome.collection
   description: 'List Outcome entities'
-  parent: system.admin_structure
+  parent: system.admin_content
   weight: 100
 
 outcome.admin.structure.settings:
@@ -55,7 +55,7 @@ entity.research_evalutation_entity.collection:
   title: 'Research Evaluation list'
   route_name: entity.research_evalutation_entity.collection
   description: 'List Research Evaluation entities'
-  parent: system.admin_structure
+  parent: system.admin_content
   weight: 100
 
 research_evalutation_entity.admin.structure.settings:
