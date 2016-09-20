@@ -27,3 +27,16 @@ research_attachment_entity.admin.structure.settings:
   description: 'Configure Research Attachment entities'
   route_name: research_attachment_entity.settings
   parent: system.admin_structure
+# Research Author menu items definition
+entity.research_author.collection:
+  title: 'Research Author list'
+  route_name: entity.research_author.collection
+  description: 'List Research Author entities'
+  parent: system.admin_structure
+  weight: 100
+
+research_author.admin.structure.settings:
+  title: Research Author settings
+  description: 'Configure Research Author entities'
+  route_name: research_author.settings
+  parent: system.admin_structure

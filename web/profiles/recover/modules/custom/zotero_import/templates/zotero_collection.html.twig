@@ -1,13 +1,16 @@
-{{ attach_library('zotero_import/zotero-collection') }}
+{{ kint() }}
 <div id="zotero-collections">
-    <ul class="zotero-items">
-        {% for item in elements['elements'] %}
-            <li class="zotero-item" id="zotero-item-{{ item['key'] }}">
-                <a href="{{ item['links']["alternate"]['href'] }}"><h4 class="zotero-item__title">{{ item['data']['title']}}</h4></a>
-                <ul class="actions">
-                    <li><a href="{{ path('zotero_import.import', {item: item}) }}" class="zotero-item__import use-ajax">Import this item</a></li>
-                </ul>
-            </li>
-        {% endfor %}
-    </ul>
+  <ul class="zotero-items list-group">
+    {% for item in elements['elements'] %}
+      <li class="zotero-item list-group-item" id="zotero-item-{{ item['key'] }}">
+        <h4 class="zotero-item__title list-group-item-heading"><a href="{{ item['links']["alternate"]['href'] }}">{{ item['data']['title']}}</a></h4>
+        <p class="list-group-item-text">
+          {% if item['data']['abstractNote'] is not empty %}
+            {{ item['data']['abstractNote']|length > 600 ? item['data']['abstractNote']|slice(0, 600) ~ '...' : item['data']['abstractNote'] }}
+          {% endif %}
+        </p>
+        <a href="{{ path('zotero_import.import', {item: item}) }}" class="zotero-item__import use-ajax btn btn-default">Import this item</a>
+      </li>
+    {% endfor %}
+  </ul>
 </div>

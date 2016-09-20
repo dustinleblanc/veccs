@@ -36,3 +36,24 @@ entity.research_attachment_entity.delete_form:
   title: Delete
   weight: 10
 
+# Research Author routing definition
+research_author.settings_tab:
+  route_name: research_author.settings
+  title: 'Settings'
+  base_route: research_author.settings
+entity.research_author.canonical:
+  route_name: entity.research_author.canonical
+  base_route: entity.research_author.canonical
+  title: 'View'
+
+entity.research_author.edit_form:
+  route_name: entity.research_author.edit_form
+  base_route: entity.research_author.canonical
+  title: Edit
+
+entity.research_author.delete_form:
+  route_name:  entity.research_author.delete_form
+  base_route:  entity.research_author.canonical
+  title: Delete
+  weight: 10
+

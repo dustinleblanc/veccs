@@ -42,3 +42,25 @@ view published research attachment entities:
 
 view unpublished research attachment entities:
   title: 'View unpublished Research Attachment entities'
+add research author entities:
+  title: 'Create new Research Author entities'
+
+administer research author entities:
+  title: 'Administer Research Author entities'
+  description: 'Allow to access the administration form to configure Research Author entities.'
+  restrict access: true
+
+delete research author entities:
+  title: 'Delete Research Author entities'
+
+edit research author entities:
+  title: 'Edit Research Author entities'
+
+access research author overview:
+  title: 'Access the Research Author overview page'
+
+view published research author entities:
+  title: 'View published Research Author entities'
+
+view unpublished research author entities:
+  title: 'View unpublished Research Author entities'

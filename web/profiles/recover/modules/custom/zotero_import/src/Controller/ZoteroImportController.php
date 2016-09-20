@@ -3,6 +3,7 @@ namespace Drupal\zotero_import\Controller;
 
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\user\Entity\User;
 use Drupal\zotero_import\Entity\ResearchReferenceEntity;
@@ -17,6 +18,37 @@ use GuzzleHttp\Psr7\Response;
  * @package Drupal\zotero_import\Controller
  */
 class ZoteroImportController extends ControllerBase {
+  const FIELD_KEY = [
+    'key' => 'field_zotero_key',
+    'itemType' => '',
+    'title' => '',
+    'creators' => '',
+    'abstractNote' => '',
+    'publicationTitle' => '',
+    'volume' => '',
+    'issue' => '',
+    'pages' => '',
+    'date' => '',
+    'series' => '',
+    'seriesTitle' => '',
+    'seriesText' => '',
+    'journalAbbreviation' => '',
+    'language' => '',
+    'DOI' => '',
+    'ISSN' => '',
+    'shortTitle' => '',
+    'url' => '',
+    'accessDate' => '',
+    'archive' => '',
+    'archiveLocation' => '',
+    'libraryCatalog' => '',
+    'callNumber' => '',
+    'rights' => '',
+    'extra' => '',
+    'tags' => '',
+    'dateAdded' => '',
+    'dateModified' => ''
+  ];
   /**
    * @var Response Response object returned from Zotero API.
    */
@@ -48,11 +80,19 @@ class ZoteroImportController extends ControllerBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    */
   public function importItem(Request $request) {
-    eval(\Psy\sh($request));
     $values = $request->query->get('item');
-    $entity = new ResearchReferenceEntity($values, 'research_reference');
+//    $fields = $this->fieldify($values);
+    $entity = new ResearchReferenceEntity([], 'research_reference_entity', 'pubmed');
+
+    if ($entity->validate()) {
+//      $entity->save();
+      $message = '<span>Item successfully imported!</span>';
+    }
+    else {
+      $message = '<span>Unable to import!</span>';
+    }
     $response = new AjaxResponse();
-    $response->addCommand(new AppendCommand("#zotero-collections",'<h3>' . print_r($request) .'</h3>'));
+    $response->addCommand(new ReplaceCommand("#zotero-item-{$values['key']} .zotero-item__import", $message));
     return $response;
   }
 
@@ -121,9 +161,30 @@ class ZoteroImportController extends ControllerBase {
     $contents = json_decode($response->getBody()->getContents(), true);
     return array_filter($contents, function($item) {
       // We only want to return top level items, we can retrieve children manually.
-      if (!isset($item['data']['parentItem'])) {
+      if (!isset($item['data']['parentItem']) || $this->needsImport($item)) {
         return $item;
       }
     });
+  }
+
+  /**
+   * Check if an item has already been imported.
+   *
+   * @param $item
+   * @return bool
+   */
+  private function needsImport($item) {
+    return !empty(\Drupal::entityQuery('research_reference_entity')
+      ->condition('field_zotero_item_key', $item['key'], '=')
+      ->execute()
+    );
+  }
+
+  private function fieldify(array $values) {
+//    $fields = [];
+//    foreach ($values['data'] as $value) {
+//      if (array_key_exists(array_keys($value), self::FIELD_KEY))
+//      $fields[self::FIELD_KEY[array_keys($value)]] = $value
+//    }
   }
 }
