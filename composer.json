@@ -28,22 +28,24 @@
         "drupal/adminimal_theme": "^8.1",
         "drupal/features": "8.3.*",
         "drupal/page_manager": "1.0.0-alpha24",
-        "drupal/panels": "3.0.0-beta4",
+        "drupal/panels": "3.0.0-beta5",
         "drupal/radix": "dev-3.x",
         "dustinleblanc/zotero-api": "0.0.*",
-        "drupal/file_entity": "^8.2@beta"
+        "drupal/file_entity": "^8.2@beta",
+        "drupal/field_validation": "^8.1"
     },
     "require-dev": {
         "codeception/codeception": "^2.1",
         "codeception/specify": "0.4.*",
         "codeception/verify": "0.3.*",
         "codegyre/robo": "^0.7.2",
-        "drush/drush": "8.1.*",
+        "drush/drush": "8.*",
         "boedah/robo-drush": "2.2.*",
         "pantheon-systems/terminus": "@stable",
         "drupal/devel":"dev-8.x-1.x",
         "dustinleblanc/codeception-drupal-8": "0.0.*",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "drupal/console": "~1.0"
     },
     "conflict": {
         "drupal/drupal": "*"
