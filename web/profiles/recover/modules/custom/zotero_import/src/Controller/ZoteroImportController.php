@@ -5,7 +5,9 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\AppendCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\system\MachineNameController;
 use Drupal\user\Entity\User;
+use Drupal\zotero_import\Entity\ResearchAuthor;
 use Drupal\zotero_import\Entity\ResearchReferenceEntity;
 use DustinLeblanc\Zotero\Client;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,37 +20,7 @@ use GuzzleHttp\Psr7\Response;
  * @package Drupal\zotero_import\Controller
  */
 class ZoteroImportController extends ControllerBase {
-  const FIELD_KEY = [
-    'key' => 'field_zotero_key',
-    'itemType' => '',
-    'title' => '',
-    'creators' => '',
-    'abstractNote' => '',
-    'publicationTitle' => '',
-    'volume' => '',
-    'issue' => '',
-    'pages' => '',
-    'date' => '',
-    'series' => '',
-    'seriesTitle' => '',
-    'seriesText' => '',
-    'journalAbbreviation' => '',
-    'language' => '',
-    'DOI' => '',
-    'ISSN' => '',
-    'shortTitle' => '',
-    'url' => '',
-    'accessDate' => '',
-    'archive' => '',
-    'archiveLocation' => '',
-    'libraryCatalog' => '',
-    'callNumber' => '',
-    'rights' => '',
-    'extra' => '',
-    'tags' => '',
-    'dateAdded' => '',
-    'dateModified' => ''
-  ];
+
   /**
    * @var Response Response object returned from Zotero API.
    */
@@ -80,19 +52,20 @@ class ZoteroImportController extends ControllerBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    */
   public function importItem(Request $request) {
-    $values = $request->query->get('item');
-//    $fields = $this->fieldify($values);
-    $entity = new ResearchReferenceEntity([], 'research_reference_entity', 'pubmed');
-
+    $data   = $request->query->get('item')['data'];
+    $author = $this->extractAuthors($data);
+    $creators = ResearchAuthor::create();
+    $values = $this->fieldify($data);
+    $entity = ResearchReferenceEntity::create($values);
     if ($entity->validate()) {
-//      $entity->save();
-      $message = '<span>Item successfully imported!</span>';
+      $entity->save();
+      $message = '<p class="alert alert-success alert-dismissable" role="alert">Item successfully imported!</p>';
     }
     else {
-      $message = '<span>Unable to import!</span>';
+      $message = '<p class="alert alert-danger alert-dismissable" role="alert">Unable to import!</p>';
     }
     $response = new AjaxResponse();
-    $response->addCommand(new ReplaceCommand("#zotero-item-{$values['key']} .zotero-item__import", $message));
+    $response->addCommand(new ReplaceCommand("#zotero-item-{$values['zoteroKey']} .zotero-item__import", $message));
     return $response;
   }
 
@@ -175,16 +148,35 @@ class ZoteroImportController extends ControllerBase {
    */
   private function needsImport($item) {
     return !empty(\Drupal::entityQuery('research_reference_entity')
-      ->condition('field_zotero_item_key', $item['key'], '=')
-      ->execute()
+                         ->condition('zoteroKey', $item['key'], '=')
+                         ->execute()
     );
   }
 
-  private function fieldify(array $values) {
-//    $fields = [];
-//    foreach ($values['data'] as $value) {
-//      if (array_key_exists(array_keys($value), self::FIELD_KEY))
-//      $fields[self::FIELD_KEY[array_keys($value)]] = $value
-//    }
+  /**
+   * Format incoming values from Zotero API for saving into database.
+   *
+   * @param array $values
+   *
+   * @return array
+   */
+  private function fieldify(array $values = []) {
+    $rekeyed_values = ['type' => 'pubmed'];
+    foreach ($values as $key => $value) {
+      $rekeyed_values['zotero' . ucfirst($key)] = $value;
+    }
+    return $rekeyed_values;
+  }
+
+  /**
+   * Extracts the author metadata of a Zotero item data set.
+   *
+   * @param $data
+   *
+   * @return array
+   */
+  private function extractAuthors($data) {
+
+    return [];
   }
 }

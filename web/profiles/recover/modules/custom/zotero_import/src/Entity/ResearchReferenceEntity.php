@@ -42,7 +42,7 @@ use Drupal\user\UserInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "bundle" = "type",
- *     "label" = "title",
+ *     "label" = "zoteroTitle",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
  *     "langcode" = "langcode",
@@ -69,9 +69,9 @@ class ResearchReferenceEntity extends ContentEntityBase implements ResearchRefer
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
-    $values += array(
+    $values += [
       'user_id' => \Drupal::currentUser()->id(),
-    );
+    ];
   }
 
   /**
@@ -85,14 +85,14 @@ class ResearchReferenceEntity extends ContentEntityBase implements ResearchRefer
    * {@inheritdoc}
    */
   public function getTitle() {
-    return $this->get('title')->value;
+    return $this->get('zoteroTitle')->value;
   }
 
   /**
    * {@inheritdoc}
    */
   public function setTitle($title) {
-    $this->set('title', $title);
+    $this->set('zoteroTitle', $title);
     return $this;
   }
 
@@ -187,25 +187,25 @@ class ResearchReferenceEntity extends ContentEntityBase implements ResearchRefer
                                             ->setDisplayConfigurable('form', TRUE)
                                             ->setDisplayConfigurable('view', TRUE);
 
-    $fields['title'] = BaseFieldDefinition::create('string')
-                                          ->setLabel(t('Title'))
-                                          ->setDescription(t('The title of the referenced research piece.'))
-                                          ->setSettings(array(
-                                            'max_length' => 50,
-                                            'text_processing' => 0,
-                                          ))
-                                          ->setDefaultValue('')
-                                          ->setDisplayOptions('view', array(
-                                            'label' => 'above',
-                                            'type' => 'string',
-                                            'weight' => -4,
-                                          ))
-                                          ->setDisplayOptions('form', array(
-                                            'type' => 'string_textfield',
-                                            'weight' => -4,
-                                          ))
-                                          ->setDisplayConfigurable('form', TRUE)
-                                          ->setDisplayConfigurable('view', TRUE);
+    $fields['zoteroTitle'] = BaseFieldDefinition::create('string')
+                                                ->setLabel(t('Title'))
+                                                ->setDescription(t('The title of the referenced research piece.'))
+                                                ->setSettings(array(
+                                                  'max_length' => 256,
+                                                  'text_processing' => 0,
+                                                ))
+                                                ->setDefaultValue('')
+                                                ->setDisplayOptions('view', array(
+                                                  'label' => 'above',
+                                                  'type' => 'string',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayOptions('form', array(
+                                                  'type' => 'string_textfield',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayConfigurable('form', TRUE)
+                                                ->setDisplayConfigurable('view', TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
                                            ->setLabel(t('Publishing status'))
@@ -220,138 +220,632 @@ class ResearchReferenceEntity extends ContentEntityBase implements ResearchRefer
                                             ->setLabel(t('Changed'))
                                             ->setDescription(t('The time that the entity was last edited.'));
 
-    $fields['zotero_key'] = BaseFieldDefinition::create('string')
-                                               ->setLabel(t('Zotero Item Key'))
-                                               ->setDescription(t('The unique identifier in Zotero.'));
+    $fields['zoteroKey'] = BaseFieldDefinition::create('string')
+                                              ->setLabel(t('Zotero Item Key'))
+                                              ->setDescription(t('The unique identifier in Zotero.'))
+                                              ->setSettings(array(
+                                                'max_length' => 50,
+                                                'text_processing' => 0,
+                                              ))
+                                              ->setDefaultValue('')
+                                              ->setDisplayOptions('view', array(
+                                                'label' => 'inline',
+                                                'type' => 'string',
+                                                'weight' => -4,
+                                              ))
+                                              ->setDisplayOptions('form', array(
+                                                'type' => 'string_textfield',
+                                              ))
+                                              ->setDisplayConfigurable('form', TRUE)
+                                              ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_version'] = BaseFieldDefinition::create('integer')
-                                                   ->setLabel(t('Zotero Item Version'))
-                                                   ->setDescription(t('The version of a Zotero item.'));
+    $fields['zoteroVersion'] = BaseFieldDefinition::create('integer')
+                                                  ->setLabel(t('Zotero Item Version'))
+                                                  ->setDescription(t('The version of a Zotero item.'))
+                                                  ->setSettings(array(
+                                                    'max_length' => 50,
+                                                    'text_processing' => 0,
+                                                  ))
+                                                  ->setDefaultValue('')
+                                                  ->setDisplayOptions('view', array(
+                                                    'label' => 'above',
+                                                    'type' => 'string',
+                                                    'weight' => -4,
+                                                  ))
+                                                  ->setDisplayOptions('form', array(
+                                                    'type' => 'string_textfield',
+                                                    'weight' => -4,
+                                                  ))
+                                                  ->setDisplayConfigurable('form', TRUE)
+                                                  ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_item_type'] = BaseFieldDefinition::create('string')
-                                                     ->setLabel(t('Zotero Item Type'))
-                                                     ->setDescription(t('The type of Zotero item.'));
+    $fields['zoteroItemType'] = BaseFieldDefinition::create('string')
+                                                   ->setLabel(t('Zotero Item Type'))
+                                                   ->setDescription(t('The type of Zotero item.'))
+                                                   ->setSettings(array(
+                                                     'max_length' => 256,
+                                                     'text_processing' => 0,
+                                                   ))
+                                                   ->setDefaultValue('')
+                                                   ->setDisplayOptions('view', array(
+                                                     'label' => 'above',
+                                                     'type' => 'string',
+                                                     'weight' => -4,
+                                                   ))
+                                                   ->setDisplayOptions('form', array(
+                                                     'type' => 'string_textfield',
+                                                     'weight' => -4,
+                                                   ))
+                                                   ->setDisplayConfigurable('form', TRUE)
+                                                   ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_creators'] = BaseFieldDefinition::create('entity_reference')
-                                                    ->setLabel(t('Zotero Item Creators'))
-                                                    ->setDescription(t('The creators of Zotero item.'))
-                                                    ->setSettings([
-                                                      'target_type' => 'research_author',
-                                                      'default_value' => 0,
-                                                    ]);
+    $fields['zoteroCreators'] = BaseFieldDefinition::create('entity_reference')
+                                                   ->setLabel(t('Zotero Item Creators'))
+                                                   ->setDescription(t('The creators of Zotero item.'))
+                                                   ->setSettings([
+                                                     'target_type' => 'research_author',
+                                                     'default_value' => 0,
+                                                   ])
+                                                   ->setSettings(array(
+                                                     'max_length' => 256,
+                                                     'text_processing' => 0,
+                                                   ))
+                                                   ->setDefaultValue('')
+                                                   ->setDisplayOptions('view', array(
+                                                     'label' => 'above',
+                                                     'type' => 'string',
+                                                     'weight' => -4,
+                                                   ))
+                                                   ->setDisplayOptions('form', array(
+                                                     'type' => 'string_textfield',
+                                                     'weight' => -4,
+                                                   ))
+                                                   ->setDisplayConfigurable('form', TRUE)
+                                                   ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_abstract_note'] = BaseFieldDefinition::create('string')
-                                                         ->setLabel(t('Zotero Abstract Note'))
-                                                         ->setDescription(t('The abstract note of a Zotero item.'));
+    $fields['zoteroAbstractNote'] = BaseFieldDefinition::create('string')
+                                                       ->setLabel(t('Zotero Abstract Note'))
+                                                       ->setDescription(t('The abstract note of a Zotero item.'))
+                                                       ->setSettings(array(
+                                                         'max_length' => 5000,
+                                                         'text_processing' => 0,
+                                                       ))
+                                                       ->setDefaultValue('')
+                                                       ->setDisplayOptions('view', array(
+                                                         'label' => 'above',
+                                                         'type' => 'string',
+                                                         'weight' => -4,
+                                                       ))
+                                                       ->setDisplayOptions('form', array(
+                                                         'type' => 'string_textfield',
+                                                         'weight' => -4,
+                                                       ))
+                                                       ->setDisplayConfigurable('form', TRUE)
+                                                       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_publication_title'] = BaseFieldDefinition::create('string')
-                                                             ->setLabel(t('Zotero Publication Title'))
-                                                             ->setDescription(t('The publication title of a Zotero item.'));
+    $fields['zoteroPublicationTitle'] = BaseFieldDefinition::create('string')
+                                                           ->setLabel(t('Zotero Publication Title'))
+                                                           ->setDescription(t('The publication title of a Zotero item.'))
+                                                           ->setSettings(array(
+                                                             'max_length' => 256,
+                                                             'text_processing' => 0,
+                                                           ))
+                                                           ->setDefaultValue('')
+                                                           ->setDisplayOptions('view', array(
+                                                             'label' => 'above',
+                                                             'type' => 'string',
+                                                             'weight' => -4,
+                                                           ))
+                                                           ->setDisplayOptions('form', array(
+                                                             'type' => 'string_textfield',
+                                                             'weight' => -4,
+                                                           ))
+                                                           ->setDisplayConfigurable('form', TRUE)
+                                                           ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_volume'] = BaseFieldDefinition::create('string')
-                                                  ->setLabel(t('Zotero Publication Volume'))
-                                                  ->setDescription(t('The publication volume of a Zotero item.'));
+    $fields['zoteroVolume'] = BaseFieldDefinition::create('string')
+                                                 ->setLabel(t('Zotero Publication Volume'))
+                                                 ->setDescription(t('The publication volume of a Zotero item.'))
+                                                 ->setSettings(array(
+                                                   'max_length' => 50,
+                                                   'text_processing' => 0,
+                                                 ))
+                                                 ->setDefaultValue('')
+                                                 ->setDisplayOptions('view', array(
+                                                   'label' => 'above',
+                                                   'type' => 'string',
+                                                   'weight' => -4,
+                                                 ))
+                                                 ->setDisplayOptions('form', array(
+                                                   'type' => 'string_textfield',
+                                                   'weight' => -4,
+                                                 ))
+                                                 ->setDisplayConfigurable('form', TRUE)
+                                                 ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_issue'] = BaseFieldDefinition::create('string')
-                                                 ->setLabel(t('Zotero Publication Issue'))
-                                                 ->setDescription(t('The publication issue of a Zotero item.'));
+    $fields['zoteroIssue'] = BaseFieldDefinition::create('string')
+                                                ->setLabel(t('Zotero Publication Issue'))
+                                                ->setDescription(t('The publication issue of a Zotero item.'))
+                                                ->setSettings(array(
+                                                  'max_length' => 50,
+                                                  'text_processing' => 0,
+                                                ))
+                                                ->setDefaultValue('')
+                                                ->setDisplayOptions('view', array(
+                                                  'label' => 'above',
+                                                  'type' => 'string',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayOptions('form', array(
+                                                  'type' => 'string_textfield',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayConfigurable('form', TRUE)
+                                                ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_pages'] = BaseFieldDefinition::create('string')
-                                                 ->setLabel(t('Zotero Publication Pages'))
-                                                 ->setDescription(t('The publication pages of a Zotero item.'));
+    $fields['zoteroPages'] = BaseFieldDefinition::create('string')
+                                                ->setLabel(t('Zotero Publication Pages'))
+                                                ->setDescription(t('The publication pages of a Zotero item.'))
+                                                ->setSettings(array(
+                                                  'max_length' => 50,
+                                                  'text_processing' => 0,
+                                                ))
+                                                ->setDefaultValue('')
+                                                ->setDisplayOptions('view', array(
+                                                  'label' => 'above',
+                                                  'type' => 'string',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayOptions('form', array(
+                                                  'type' => 'string_textfield',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayConfigurable('form', TRUE)
+                                                ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_date'] = BaseFieldDefinition::create('string')
-                                                ->setLabel(t('Zotero Publication Date'))
-                                                ->setDescription(t('The publication date of a Zotero item.'));
+    $fields['zoteroDate'] = BaseFieldDefinition::create('string')
+                                               ->setLabel(t('Zotero Publication Date'))
+                                               ->setDescription(t('The publication date of a Zotero item.'))
+                                               ->setSettings(array(
+                                                 'max_length' => 50,
+                                                 'text_processing' => 0,
+                                               ))
+                                               ->setDefaultValue('')
+                                               ->setDisplayOptions('view', array(
+                                                 'label' => 'above',
+                                                 'type' => 'string',
+                                                 'weight' => -4,
+                                               ))
+                                               ->setDisplayOptions('form', array(
+                                                 'type' => 'string_textfield',
+                                                 'weight' => -4,
+                                               ))
+                                               ->setDisplayConfigurable('form', TRUE)
+                                               ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_series'] = BaseFieldDefinition::create('string')
-                                                  ->setLabel(t('Zotero Publication Series'))
-                                                  ->setDescription(t('The publication series of a Zotero item.'));
+    $fields['zoteroSeries'] = BaseFieldDefinition::create('string')
+                                                 ->setLabel(t('Zotero Publication Series'))
+                                                 ->setDescription(t('The publication series of a Zotero item.'))
+                                                 ->setSettings(array(
+                                                   'max_length' => 50,
+                                                   'text_processing' => 0,
+                                                 ))
+                                                 ->setDefaultValue('')
+                                                 ->setDisplayOptions('view', array(
+                                                   'label' => 'above',
+                                                   'type' => 'string',
+                                                   'weight' => -4,
+                                                 ))
+                                                 ->setDisplayOptions('form', array(
+                                                   'type' => 'string_textfield',
+                                                   'weight' => -4,
+                                                 ))
+                                                 ->setDisplayConfigurable('form', TRUE)
+                                                 ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_series_title'] = BaseFieldDefinition::create('string')
-                                                        ->setLabel(t('Zotero Publication Series Title'))
-                                                        ->setDescription(t('The publication series title of a Zotero item.'));
+    $fields['zoteroSeriesTitle'] = BaseFieldDefinition::create('string')
+                                                      ->setLabel(t('Zotero Publication Series Title'))
+                                                      ->setDescription(t('The publication series title of a Zotero item.'))
+                                                      ->setSettings(array(
+                                                        'max_length' => 256,
+                                                        'text_processing' => 0,
+                                                      ))
+                                                      ->setDefaultValue('')
+                                                      ->setDisplayOptions('view', array(
+                                                        'label' => 'above',
+                                                        'type' => 'string',
+                                                        'weight' => -4,
+                                                      ))
+                                                      ->setDisplayOptions('form', array(
+                                                        'type' => 'string_textfield',
+                                                        'weight' => -4,
+                                                      ))
+                                                      ->setDisplayConfigurable('form', TRUE)
+                                                      ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_series_text'] = BaseFieldDefinition::create('string')
-                                                       ->setLabel(t('Zotero Publication Series Text'))
-                                                       ->setDescription(t('The publication series text of a Zotero item.'));
+    $fields['zoteroSeriesText'] = BaseFieldDefinition::create('string')
+                                                     ->setLabel(t('Zotero Publication Series Text'))
+                                                     ->setDescription(t('The publication series text of a Zotero item.'))
+                                                     ->setSettings(array(
+                                                       'max_length' => 5000,
+                                                       'text_processing' => 0,
+                                                     ))
+                                                     ->setDefaultValue('')
+                                                     ->setDisplayOptions('view', array(
+                                                       'label' => 'above',
+                                                       'type' => 'string',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayOptions('form', array(
+                                                       'type' => 'string_textfield',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayConfigurable('form', TRUE)
+                                                     ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_journal_abbreviation'] = BaseFieldDefinition::create('string')
-                                                                ->setLabel(t('Zotero Journal Abbreviation'))
-                                                                ->setDescription(t('The abbeviated journal name of a Zotero item.'));
+    $fields['zoteroJournalAbbreviation'] = BaseFieldDefinition::create('string')
+                                                              ->setLabel(t('Zotero Journal Abbreviation'))
+                                                              ->setDescription(t('The abbeviated journal name of a Zotero item.'))
+                                                              ->setSettings(array(
+                                                                'max_length' => 256,
+                                                                'text_processing' => 0,
+                                                              ))
+                                                              ->setDefaultValue('')
+                                                              ->setDisplayOptions('view', array(
+                                                                'label' => 'above',
+                                                                'type' => 'string',
+                                                                'weight' => -4,
+                                                              ))
+                                                              ->setDisplayOptions('form', array(
+                                                                'type' => 'string_textfield',
+                                                                'weight' => -4,
+                                                              ))
+                                                              ->setDisplayConfigurable('form', TRUE)
+                                                              ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_language'] = BaseFieldDefinition::create('string')
-                                                    ->setLabel(t('Zotero Language'))
-                                                    ->setDescription(t('The original language of a Zotero item.'));
+    $fields['zoteroLanguage'] = BaseFieldDefinition::create('string')
+                                                   ->setLabel(t('Zotero Language'))
+                                                   ->setDescription(t('The original language of a Zotero item.'))
+                                                   ->setSettings(array(
+                                                     'max_length' => 50,
+                                                     'text_processing' => 0,
+                                                   ))
+                                                   ->setDefaultValue('')
+                                                   ->setDisplayOptions('view', array(
+                                                     'label' => 'above',
+                                                     'type' => 'string',
+                                                     'weight' => -4,
+                                                   ))
+                                                   ->setDisplayOptions('form', array(
+                                                     'type' => 'string_textfield',
+                                                     'weight' => -4,
+                                                   ))
+                                                   ->setDisplayConfigurable('form', TRUE)
+                                                   ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_doi'] = BaseFieldDefinition::create('string')
-                                               ->setLabel(t('Zotero DOI'))
-                                               ->setDescription(t('The DOI code of a Zotero item.'));
+    $fields['zoteroDOI'] = BaseFieldDefinition::create('string')
+                                              ->setLabel(t('Zotero DOI'))
+                                              ->setDescription(t('The DOI code of a Zotero item.'))
+                                              ->setSettings(array(
+                                                'max_length' => 50,
+                                                'text_processing' => 0,
+                                              ))
+                                              ->setDefaultValue('')
+                                              ->setDisplayOptions('view', array(
+                                                'label' => 'above',
+                                                'type' => 'string',
+                                                'weight' => -4,
+                                              ))
+                                              ->setDisplayOptions('form', array(
+                                                'type' => 'string_textfield',
+                                                'weight' => -4,
+                                              ))
+                                              ->setDisplayConfigurable('form', TRUE)
+                                              ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_issn'] = BaseFieldDefinition::create('string')
-                                                ->setLabel(t('Zotero ISSN'))
-                                                ->setDescription(t('The ISSN of a Zotero item.'));
+    $fields['zoteroISSN'] = BaseFieldDefinition::create('string')
+                                               ->setLabel(t('Zotero ISSN'))
+                                               ->setDescription(t('The ISSN of a Zotero item.'))
+                                               ->setSettings(array(
+                                                 'max_length' => 50,
+                                                 'text_processing' => 0,
+                                               ))
+                                               ->setDefaultValue('')
+                                               ->setDisplayOptions('view', array(
+                                                 'label' => 'above',
+                                                 'type' => 'string',
+                                                 'weight' => -4,
+                                               ))
+                                               ->setDisplayOptions('form', array(
+                                                 'type' => 'string_textfield',
+                                                 'weight' => -4,
+                                               ))
+                                               ->setDisplayConfigurable('form', TRUE)
+                                               ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_short_title'] = BaseFieldDefinition::create('string')
-                                                       ->setLabel(t('Zotero Short Title'))
-                                                       ->setDescription(t('The shortened title of a Zotero item.'));
+    $fields['zoteroShortTitle'] = BaseFieldDefinition::create('string')
+                                                     ->setLabel(t('Zotero Short Title'))
+                                                     ->setDescription(t('The shortened title of a Zotero item.'))
+                                                     ->setSettings(array(
+                                                       'max_length' => 256,
+                                                       'text_processing' => 0,
+                                                     ))
+                                                     ->setDefaultValue('')
+                                                     ->setDisplayOptions('view', array(
+                                                       'label' => 'above',
+                                                       'type' => 'string',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayOptions('form', array(
+                                                       'type' => 'string_textfield',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayConfigurable('form', TRUE)
+                                                     ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_url'] = BaseFieldDefinition::create('string')
-                                               ->setLabel(t('Zotero URL'))
-                                               ->setDescription(t('The URL of a Zotero item (if the publication has one).'));
+    $fields['zoteroUrl'] = BaseFieldDefinition::create('string')
+                                              ->setLabel(t('Zotero URL'))
+                                              ->setDescription(t('The URL of a Zotero item (if the publication has one).'))
+                                              ->setSettings(array(
+                                                'max_length' => 512,
+                                                'text_processing' => 0,
+                                              ))
+                                              ->setDefaultValue('')
+                                              ->setDisplayOptions('view', array(
+                                                'label' => 'above',
+                                                'type' => 'string',
+                                                'weight' => -4,
+                                              ))
+                                              ->setDisplayOptions('form', array(
+                                                'type' => 'string_textfield',
+                                                'weight' => -4,
+                                              ))
+                                              ->setDisplayConfigurable('form', TRUE)
+                                              ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_access_date'] = BaseFieldDefinition::create('string')
-                                                       ->setLabel(t('Zotero Access Date'))
-                                                       ->setDescription(t('The date a Zotero item was originally accessed.'));
+    $fields['zoteroAccessDate'] = BaseFieldDefinition::create('string')
+                                                     ->setLabel(t('Zotero Access Date'))
+                                                     ->setDescription(t('The date a Zotero item was originally accessed.'))
+                                                     ->setSettings(array(
+                                                       'max_length' => 50,
+                                                       'text_processing' => 0,
+                                                     ))
+                                                     ->setDefaultValue('')
+                                                     ->setDisplayOptions('view', array(
+                                                       'label' => 'above',
+                                                       'type' => 'string',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayOptions('form', array(
+                                                       'type' => 'string_textfield',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayConfigurable('form', TRUE)
+                                                     ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_archive'] = BaseFieldDefinition::create('string')
-                                                   ->setLabel(t('Zotero Archive'))
-                                                   ->setDescription(t('The archive of a Zotero item.'));
+    $fields['zoteroArchive'] = BaseFieldDefinition::create('string')
+                                                  ->setLabel(t('Zotero Archive'))
+                                                  ->setDescription(t('The archive of a Zotero item.'))
+                                                  ->setSettings(array(
+                                                    'max_length' => 256,
+                                                    'text_processing' => 0,
+                                                  ))
+                                                  ->setDefaultValue('')
+                                                  ->setDisplayOptions('view', array(
+                                                    'label' => 'above',
+                                                    'type' => 'string',
+                                                    'weight' => -4,
+                                                  ))
+                                                  ->setDisplayOptions('form', array(
+                                                    'type' => 'string_textfield',
+                                                    'weight' => -4,
+                                                  ))
+                                                  ->setDisplayConfigurable('form', TRUE)
+                                                  ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_archive_location'] = BaseFieldDefinition::create('string')
-                                                            ->setLabel(t('Zotero Archive Location'))
-                                                            ->setDescription(t('The archive location of a Zotero item.'));
+    $fields['zoteroArchiveLocation'] = BaseFieldDefinition::create('string')
+                                                          ->setLabel(t('Zotero Archive Location'))
+                                                          ->setDescription(t('The archive location of a Zotero item.'))
+                                                          ->setSettings(array(
+                                                            'max_length' => 256,
+                                                            'text_processing' => 0,
+                                                          ))
+                                                          ->setDefaultValue('')
+                                                          ->setDisplayOptions('view', array(
+                                                            'label' => 'above',
+                                                            'type' => 'string',
+                                                            'weight' => -4,
+                                                          ))
+                                                          ->setDisplayOptions('form', array(
+                                                            'type' => 'string_textfield',
+                                                            'weight' => -4,
+                                                          ))
+                                                          ->setDisplayConfigurable('form', TRUE)
+                                                          ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_library_catalog'] = BaseFieldDefinition::create('string')
-                                                           ->setLabel(t('Zotero Library Catalog'))
-                                                           ->setDescription(t('The library catalog of a Zotero item.'));
+    $fields['zoteroLibraryCatalog'] = BaseFieldDefinition::create('string')
+                                                         ->setLabel(t('Zotero Library Catalog'))
+                                                         ->setDescription(t('The library catalog of a Zotero item.'))
+                                                         ->setSettings(array(
+                                                           'max_length' => 256,
+                                                           'text_processing' => 0,
+                                                         ))
+                                                         ->setDefaultValue('')
+                                                         ->setDisplayOptions('view', array(
+                                                           'label' => 'above',
+                                                           'type' => 'string',
+                                                           'weight' => -4,
+                                                         ))
+                                                         ->setDisplayOptions('form', array(
+                                                           'type' => 'string_textfield',
+                                                           'weight' => -4,
+                                                         ))
+                                                         ->setDisplayConfigurable('form', TRUE)
+                                                         ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_call_number'] = BaseFieldDefinition::create('string')
-                                                       ->setLabel(t('Zotero Call Number'))
-                                                       ->setDescription(t('The call number of a Zotero item.'));
+    $fields['zoteroCallNumber'] = BaseFieldDefinition::create('string')
+                                                     ->setLabel(t('Zotero Call Number'))
+                                                     ->setDescription(t('The call number of a Zotero item.'))
+                                                     ->setSettings(array(
+                                                       'max_length' => 256,
+                                                       'text_processing' => 0,
+                                                     ))
+                                                     ->setDefaultValue('')
+                                                     ->setDisplayOptions('view', array(
+                                                       'label' => 'above',
+                                                       'type' => 'string',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayOptions('form', array(
+                                                       'type' => 'string_textfield',
+                                                       'weight' => -4,
+                                                     ))
+                                                     ->setDisplayConfigurable('form', TRUE)
+                                                     ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_rights'] = BaseFieldDefinition::create('string')
-                                                  ->setLabel(t('Zotero Rights'))
-                                                  ->setDescription(t('The rights associated with a Zotero item.'));
+    $fields['zoteroRights'] = BaseFieldDefinition::create('string')
+                                                 ->setLabel(t('Zotero Rights'))
+                                                 ->setDescription(t('The rights associated with a Zotero item.'))
+                                                 ->setSettings(array(
+                                                   'max_length' => 256,
+                                                   'text_processing' => 0,
+                                                 ))
+                                                 ->setDefaultValue('')
+                                                 ->setDisplayOptions('view', array(
+                                                   'label' => 'above',
+                                                   'type' => 'string',
+                                                   'weight' => -4,
+                                                 ))
+                                                 ->setDisplayOptions('form', array(
+                                                   'type' => 'string_textfield',
+                                                   'weight' => -4,
+                                                 ))
+                                                 ->setDisplayConfigurable('form', TRUE)
+                                                 ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_extra'] = BaseFieldDefinition::create('string')
-                                                 ->setLabel(t('Zotero Extra'))
-                                                 ->setDescription(t('The extra data attached to a Zotero item that doesn\'t fit other fields.'));
+    $fields['zoteroExtra'] = BaseFieldDefinition::create('string')
+                                                ->setLabel(t('Zotero Extra'))
+                                                ->setDescription(t('The extra data attached to a Zotero item that doesn\'t fit other fields.'))
+                                                ->setSettings(array(
+                                                  'max_length' => 256,
+                                                  'text_processing' => 0,
+                                                ))
+                                                ->setDefaultValue('')
+                                                ->setDisplayOptions('view', array(
+                                                  'label' => 'above',
+                                                  'type' => 'string',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayOptions('form', array(
+                                                  'type' => 'string_textfield',
+                                                  'weight' => -4,
+                                                ))
+                                                ->setDisplayConfigurable('form', TRUE)
+                                                ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_tags'] = BaseFieldDefinition::create('entity_reference')
-                                                ->setLabel(t('Zotero Item Creators'))
-                                                ->setDescription(t('The creators of Zotero item.'))
-                                                ->setSettings([
-                                                  'target_type' => 'taxonomy_term',
-                                                  'target_bundle' => 'tags',
-                                                  'default_value' => 0,
-                                                ]);
-    $fields['zotero_collections'] = BaseFieldDefinition::create('map')
-                                                       ->setLabel(t('Zotero Collections'))
-                                                       ->setDescription(t('The Zotero collections that an item is part of.'));
+    $fields['zoteroTags'] = BaseFieldDefinition::create('entity_reference')
+                                               ->setLabel(t('Zotero Item Creators'))
+                                               ->setDescription(t('The creators of Zotero item.'))
+                                               ->setSettings([
+                                                 'target_type' => 'taxonomy_term',
+                                                 'target_bundle' => 'tags',
+                                                 'default_value' => 0,
+                                               ])
+                                               ->setSettings(array(
+                                                 'max_length' => 256,
+                                                 'text_processing' => 0,
+                                               ))
+                                               ->setDefaultValue('')
+                                               ->setDisplayOptions('view', array(
+                                                 'label' => 'above',
+                                                 'type' => 'string',
+                                                 'weight' => -4,
+                                               ))
+                                               ->setDisplayOptions('form', array(
+                                                 'type' => 'string_textfield',
+                                                 'weight' => -4,
+                                               ))
+                                               ->setDisplayConfigurable('form', TRUE)
+                                               ->setDisplayConfigurable('view', TRUE);
+    $fields['zoteroCollections'] = BaseFieldDefinition::create('map')
+                                                      ->setLabel(t('Zotero Collections'))
+                                                      ->setDescription(t('The Zotero collections that an item is part of.'))
+                                                      ->setSettings(array(
+                                                        'max_length' => 256,
+                                                        'text_processing' => 0,
+                                                      ))
+                                                      ->setDefaultValue('')
+                                                      ->setDisplayOptions('view', array(
+                                                        'label' => 'above',
+                                                        'type' => 'string',
+                                                        'weight' => -4,
+                                                      ))
+                                                      ->setDisplayOptions('form', array(
+                                                        'type' => 'string_textfield',
+                                                        'weight' => -4,
+                                                      ))
+                                                      ->setDisplayConfigurable('form', TRUE)
+                                                      ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_relations'] = BaseFieldDefinition::create('map')
-                                                     ->setLabel(t('Zotero Relations'))
-                                                     ->setDescription(t('The related items to a Zotero item.'));
+    $fields['zoteroRelations'] = BaseFieldDefinition::create('map')
+                                                    ->setLabel(t('Zotero Relations'))
+                                                    ->setDescription(t('The related items to a Zotero item.'))
+                                                    ->setSettings(array(
+                                                      'max_length' => 256,
+                                                      'text_processing' => 0,
+                                                    ))
+                                                    ->setDefaultValue('')
+                                                    ->setDisplayOptions('view', array(
+                                                      'label' => 'above',
+                                                      'type' => 'string',
+                                                      'weight' => -4,
+                                                    ))
+                                                    ->setDisplayOptions('form', array(
+                                                      'type' => 'string_textfield',
+                                                      'weight' => -4,
+                                                    ))
+                                                    ->setDisplayConfigurable('form', TRUE)
+                                                    ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_date_added'] = BaseFieldDefinition::create('string')
-                                                      ->setLabel(t('Zotero Date Added'))
-                                                      ->setDescription(t('The date an item was added to Zotero library.'));
+    $fields['zoteroDateAdded'] = BaseFieldDefinition::create('string')
+                                                    ->setLabel(t('Zotero Date Added'))
+                                                    ->setDescription(t('The date an item was added to Zotero library.'))
+                                                    ->setSettings(array(
+                                                      'max_length' => 50,
+                                                      'text_processing' => 0,
+                                                    ))
+                                                    ->setDefaultValue('')
+                                                    ->setDisplayOptions('view', array(
+                                                      'label' => 'above',
+                                                      'type' => 'string',
+                                                      'weight' => -4,
+                                                    ))
+                                                    ->setDisplayOptions('form', array(
+                                                      'type' => 'string_textfield',
+                                                      'weight' => -4,
+                                                    ))
+                                                    ->setDisplayConfigurable('form', TRUE)
+                                                    ->setDisplayConfigurable('view', TRUE);
 
-    $fields['zotero_date_modified'] = BaseFieldDefinition::create('string')
-                                                         ->setLabel(t('Zotero Date Modified'))
-                                                         ->setDescription(t('The last modified date of a Zotero item (before imported).'));
+    $fields['zoteroDateModified'] = BaseFieldDefinition::create('string')
+                                                       ->setLabel(t('Zotero Date Modified'))
+                                                       ->setDescription(t('The last modified date of a Zotero item (before imported).'))
+                                                       ->setSettings(array(
+                                                         'max_length' => 50,
+                                                         'text_processing' => 0,
+                                                       ))
+                                                       ->setDefaultValue('')
+                                                       ->setDisplayOptions('view', array(
+                                                         'label' => 'above',
+                                                         'type' => 'string',
+                                                         'weight' => -4,
+                                                       ))
+                                                       ->setDisplayOptions('form', array(
+                                                         'type' => 'string_textfield',
+                                                         'weight' => -4,
+                                                       ))
+                                                       ->setDisplayConfigurable('form', TRUE)
+                                                       ->setDisplayConfigurable('view', TRUE);
     return $fields;
   }
-
 }
