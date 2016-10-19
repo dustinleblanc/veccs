@@ -7,6 +7,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -281,24 +282,25 @@ class ResearchReferenceEntity extends ContentEntityBase implements ResearchRefer
 
     $fields['zoteroCreators'] = BaseFieldDefinition::create('entity_reference')
                                                    ->setLabel(t('Zotero Item Creators'))
-                                                   ->setDescription(t('The creators of Zotero item.'))
-                                                   ->setSettings([
-                                                     'target_type' => 'research_author',
-                                                     'default_value' => 0,
-                                                   ])
-                                                   ->setSettings(array(
-                                                     'max_length' => 256,
-                                                     'text_processing' => 0,
-                                                   ))
-                                                   ->setDefaultValue('')
+                                                   ->setDescription(t('The creators of the Zotero item.'))
+                                                   ->setRevisionable(TRUE)
+                                                   ->setSetting('target_type', 'research_author')
+                                                   ->setSetting('handler', 'default')
+                                                   ->setTranslatable(TRUE)
+                                                   ->setCardinality(FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED)
                                                    ->setDisplayOptions('view', array(
                                                      'label' => 'above',
-                                                     'type' => 'string',
-                                                     'weight' => -4,
+                                                     'type' => 'author',
+                                                     'weight' => 0,
                                                    ))
                                                    ->setDisplayOptions('form', array(
-                                                     'type' => 'string_textfield',
-                                                     'weight' => -4,
+                                                     'type' => 'entity_reference_autocomplete',
+                                                     'settings' => array(
+                                                       'match_operator' => 'CONTAINS',
+                                                       'size' => '60',
+                                                       'autocomplete_type' => 'tags',
+                                                       'placeholder' => '',
+                                                     ),
                                                    ))
                                                    ->setDisplayConfigurable('form', TRUE)
                                                    ->setDisplayConfigurable('view', TRUE);
