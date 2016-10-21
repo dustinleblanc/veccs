@@ -101,6 +101,7 @@ class RoboFile extends \Robo\Tasks {
   }
 
   public function syncDb($env = 'dev', $uri = 'default') {
+    $this->_exec('./vendor/bin/terminus sites aliases');
     $alias = "@pantheon.veccs.{$env}";
     $this->buildDrushTask($uri)
          ->exec("sql-sync {$alias} @self")
@@ -117,6 +118,7 @@ class RoboFile extends \Robo\Tasks {
    * Run Test suite.
    */
   public function test() {
+    $this->syncDb('dev');
     $this->taskCodecept(self::CEPT_BIN)
          ->env('dev')
          ->run();

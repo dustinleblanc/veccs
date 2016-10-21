@@ -17,6 +17,7 @@ test:
     - composer update -n
     - composer update -n -d ./scripts
     - sudo chown -R 82:82 .
-    - docker-compose run --user 82 php vendor/bin/robo install
+    - docker-compose run --user 82 php vendor/bin/terminus sites aliases
+    - docker-compose run --user 82 php vendor/bin/robo sync:db
   override:
     - docker-compose run --user 82 php vendor/bin/robo ci:test
