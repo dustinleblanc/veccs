@@ -1,0 +1,8 @@
+modules:
+    enabled:
+        - PhpBrowser:
+            url: http://nginx.veccs.docker
+        - \Helper\Acceptance
+        - Drupal8:
+            drupal_root: web
+            site_path: sites/default

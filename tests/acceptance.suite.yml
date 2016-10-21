@@ -5,11 +5,5 @@
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 class_name: AcceptanceTester
-modules:
-    enabled:
-        - PhpBrowser:
-            url: https://veccs_test.dev
-        - \Helper\Acceptance
-        - Drupal8:
-            drupal_root: web
-            site_path: sites/test
+paths:
+  envs: tests/_envs

@@ -1,9 +1,4 @@
 <?php
-// Stub hash salt in CI/LOCAL...
-if (!defined('PANTHEON_ENVIRONMENT')) {
-  $settings['hash_salt'] = 'mmm...salty';
-}
-
 /**
  * Include the Pantheon-specific settings file.
  *

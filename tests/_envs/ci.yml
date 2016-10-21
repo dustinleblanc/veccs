@@ -1,0 +1,8 @@
+modules:
+    enabled:
+        - PhpBrowser:
+            url: http://localhost:8000
+        - \Helper\Acceptance
+        - Drupal8:
+            drupal_root: web
+            site_path: sites/default

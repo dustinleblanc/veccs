@@ -1,22 +1,20 @@
 machine:
-  php:
-    version: 7.0.4
-dependencies:
   pre:
-    - echo "memory_limit = 256M" > ~/.phpenv/versions/$(phpenv global)/etc/php.ini
-  post:
-    - cp ~/veccs/ci/drupal.conf /etc/apache2/sites-available
-    - a2ensite drupal.conf
-    - sudo service apache2 restart
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+  services:
+    - docker
+dependencies:
+  override:
+    - sudo pip install docker-compose
+    - docker-compose up -d mariadb
+    - docker-compose up -d nginx
 test:
   pre:
-    - cp ~/veccs/ci/example.settings.local.php ~/veccs/web/sites/default/settings.local.php
-    - php ~/veccs/vendor/codegyre/robo/robo install
+    - composer global require "hirak/prestissimo:^0.3"
+    - composer require "wikimedia/composer-merge-plugin:~1.3" --no-interaction
+    - composer update -n
+    - composer update -n -d ./scripts
+    - sudo chown -R 82:82 .
+    - docker-compose run --user 82 php vendor/bin/robo install
   override:
-    - php ~/veccs/vendor/codegyre/robo/robo test
-
-deployment:
-  dev:
-    branch: master
-    commands:
-     - cd ~/veccs && php vendor/codegyre/robo/robo deploy
+    - docker-compose run --user 82 php vendor/bin/robo ci:test
