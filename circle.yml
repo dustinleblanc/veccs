@@ -4,6 +4,8 @@ machine:
   services:
     - docker
 dependencies:
+  pre:
+    - rm /opt/circleci/php/$(phpenv global)/etc/conf.d/xdebug.ini
   override:
     - sudo pip install docker-compose
     - docker-compose up -d mariadb
