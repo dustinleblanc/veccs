@@ -109,6 +109,8 @@ class RoboFile extends \Robo\Tasks {
   }
 
   public function ciTest() {
+    $this->syncDb('dev');
+    $this->taskOpenBrowser('http://localhost:8000')->run();
     return $this->taskCodecept(self::CEPT_BIN)
                 ->env('ci')
                 ->run();
