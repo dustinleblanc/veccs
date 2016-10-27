@@ -11,9 +11,16 @@ class RoboFile extends \Robo\Tasks {
   const CEPT_BIN = __DIR__ . '/vendor/bin/codecept';
   const DRUSH_BIN = __DIR__ . '/vendor/bin/drush';
   const DRUPAL_ROOT = __DIR__ . '/web';
-  const DB_DUMP = __DIR__ . '/tests/_data/dump.sql';
   const TARGET_DIR = '../pantheon_veccs';
-  const PANTHEON_REPO = "ssh://codeserver.dev.66a2727f-da39-4586-a2bb-ba803695ca4a@codeserver.dev.66a2727f-da39-4586-a2bb-ba803695ca4a.drush.in:2222/~/repository.git";
+  const TERMINUS_BIN = './vendor/bin/terminus';
+
+  /**
+   * RoboFile constructor.
+   */
+  public function __construct() {
+    $dotenv = new Dotenv\Dotenv(__DIR__);
+    $dotenv->load();
+  }
 
   /**
    * Build a deployable artifact.
