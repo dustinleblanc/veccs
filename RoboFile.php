@@ -51,15 +51,6 @@ class RoboFile extends \Robo\Tasks {
          ->run();
   }
 
-  public function checkFeatures() {
-    $this->dbDump();
-    $this->syncDb('dev');
-    $this->buildDrushTask()
-         ->exec('updb --entity-updates')
-         ->exec('features-import recover core ')
-         ->run();
-  }
-
   /**
    * Cleans out target repo to replace with our build files.
    */
@@ -100,36 +91,40 @@ class RoboFile extends \Robo\Tasks {
          ->run();
   }
 
+  /**
+   *
+   */
   public function pushToTarget() {
     $this->taskGitStack()
          ->dir(self::TARGET_DIR)
-         ->push(self::PANTHEON_REPO, 'master')
+         ->push(getenv('PANTHEON_REPO'), 'master')
          ->run();
   }
 
+  /**
+   * @param string $env
+   * @param string $uri
+   */
   public function syncDb($env = 'dev', $uri = 'default') {
-    $this->_exec('./vendor/bin/terminus sites aliases');
+    $this->_exec(self::TERMINUS_BIN . ' auth login --machine-token=' . getenv('TERMINUS_TOKEN'));
+    $this->_exec(self::TERMINUS_BIN . ' sites aliases');
+    $this->buildDrushTask()
+         ->clearCache('drush')
+         ->run();
     $alias = "@pantheon.veccs.{$env}";
     $this->buildDrushTask($uri)
          ->exec("sql-sync {$alias} @self")
          ->run();
   }
 
-  public function ciTest() {
-    $this->syncDb('dev');
-    $this->taskOpenBrowser('http://localhost:8000')->run();
-    return $this->taskCodecept(self::CEPT_BIN)
-                ->env('ci')
-                ->run();
-  }
-
   /**
    * Run Test suite.
+   *
+   * @param string $env
    */
-  public function test() {
-    $this->syncDb('dev');
+  public function test($env = 'dev') {
     $this->taskCodecept(self::CEPT_BIN)
-         ->env('dev')
+         ->env("{$env}")
          ->run();
   }
 
