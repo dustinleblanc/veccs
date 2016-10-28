@@ -1,0 +1,14 @@
+uuid: be8ffb20-38a2-47d8-af39-3f942e426a39
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.domain_chair
+  module:
+    - user
+id: user_remove_role_action.domain_chair
+label: 'Remove the Domain Chair role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: domain_chair

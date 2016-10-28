@@ -1,0 +1,19 @@
+uuid: 562f9374-4fde-457a-ac5d-b84bb1fd09ee
+langcode: en
+status: true
+dependencies: {  }
+name: research_reference_entity_pubmed
+label: 'research_reference_entity pubmed validation'
+entity_type: research_reference_entity
+bundle: pubmed
+field_validation_rules:
+  3ca76901-8812-47fa-9b92-b8fd1700f545:
+    uuid: 3ca76901-8812-47fa-9b92-b8fd1700f545
+    id: unique_field_validation_rule
+    title: 'Unique Zotero Key'
+    weight: 1
+    field_name: field_zotero_item_key
+    column: value
+    error_message: 'This item has already been added to the database.'
+    data:
+      scope: entity

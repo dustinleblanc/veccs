@@ -1,0 +1,23 @@
+uuid: f4ca4327-87de-4fcf-b09f-6eed62254c26
+langcode: en
+status: true
+dependencies:
+  module:
+    - hal
+    - serialization
+    - user
+    - zotero_import
+id: entity.research_reference_entity
+plugin_id: 'entity:research_reference_entity'
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - DELETE
+    - PATCH
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - cookie

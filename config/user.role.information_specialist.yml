@@ -1,0 +1,9 @@
+uuid: 16cf2b7b-a280-45ee-a765-e9bede682c62
+langcode: en
+status: true
+dependencies: {  }
+id: information_specialist
+label: 'Information Specialist'
+weight: 5
+is_admin: null
+permissions: {  }

@@ -1,0 +1,11 @@
+uuid: 89e1cd19-4634-43ae-b178-c2fdf9bd6c97
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dDmEGvHtl0tBr5Dcmhz-W1zeVoHp7htx9Akb9Kwb6SI
+name: Domain
+vid: domain
+description: ''
+hierarchy: 0
+weight: 0

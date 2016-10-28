@@ -1,0 +1,19 @@
+uuid: c585189b-a2c1-4169-8d76-b4642283467f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+id: anonymous
+label: 'Anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access comments'
+  - 'search content'
+  - 'view published medical condition entities'
+  - 'view published outcome entities'
+  - 'view published pico question entities'
+  - 'view published species entities'
+  - 'restful get entity:node'

@@ -1,0 +1,27 @@
+uuid: f70d44c8-cd9e-4558-911b-12fbf43dc911
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: MHdvlUzUSc_D7z0qLbpSkMYJRi8Wb2RJ9lBUwq2-B9w
+id: co_chair
+label: Co-Chair
+weight: 2
+is_admin: null
+permissions:
+  - 'add medical condition entities'
+  - 'add outcome entities'
+  - 'add pico question entities'
+  - 'add species entities'
+  - 'administer medical condition entities'
+  - 'administer outcome entities'
+  - 'administer pico question entities'
+  - 'administer species entities'
+  - 'delete terms in domain'
+  - 'edit terms in domain'
+  - 'delete medical condition entities'
+  - 'delete outcome entities'
+  - 'delete pico question entities'
+  - 'delete species entities'
+  - 'administer taxonomy'
+  - 'access administration pages'

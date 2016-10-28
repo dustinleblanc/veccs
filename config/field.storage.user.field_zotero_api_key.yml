@@ -1,0 +1,23 @@
+uuid: 383a403e-8209-42f9-9f04-b1f8feb43fb0
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: 6JV30ggc2HP6SunCsKk34G66ClxKORQLjUhejMXPbl0
+id: user.field_zotero_api_key
+field_name: field_zotero_api_key
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

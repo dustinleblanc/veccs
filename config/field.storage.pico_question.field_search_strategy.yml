@@ -1,0 +1,21 @@
+uuid: cd0d83e8-379c-4962-8206-3ad2d3c32d6a
+langcode: en
+status: true
+dependencies:
+  module:
+    - recover_core
+id: pico_question.field_search_strategy
+field_name: field_search_strategy
+entity_type: pico_question
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

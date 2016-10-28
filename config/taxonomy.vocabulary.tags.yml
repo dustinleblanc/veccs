@@ -1,0 +1,9 @@
+uuid: eb73f46a-6b8b-42bb-8c31-53a4785a32b5
+langcode: en
+status: true
+dependencies: {  }
+name: Tags
+vid: tags
+description: 'General purpose Tags for content.'
+hierarchy: 0
+weight: 0

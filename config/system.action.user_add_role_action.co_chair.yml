@@ -1,0 +1,14 @@
+uuid: 299a44fd-8e0b-4dba-836c-5e8a75b60621
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.co_chair
+  module:
+    - user
+id: user_add_role_action.co_chair
+label: 'Add the Co-Chair role to the selected users'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: co_chair

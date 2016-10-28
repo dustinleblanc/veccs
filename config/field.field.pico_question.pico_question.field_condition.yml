@@ -1,0 +1,27 @@
+uuid: cfbff012-624b-4bf5-a56d-b51c20251474
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.pico_question.field_condition
+  module:
+    - recover_core
+id: pico_question.pico_question.field_condition
+field_name: field_condition
+entity_type: pico_question
+bundle: pico_question
+label: Condition
+description: 'The condition this question references.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:medical_condition'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
+field_type: entity_reference

@@ -1,0 +1,22 @@
+uuid: 928aa666-025c-4f96-ba86-4a282da10640
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_zotero_api_key
+  module:
+    - user
+_core:
+  default_config_hash: vBIqtbmBzy1Xi1PYP0fJ51nmWqgvOVxpjMUojHb5N6A
+id: user.user.field_zotero_api_key
+field_name: field_zotero_api_key
+entity_type: user
+bundle: user
+label: 'Zotero API Key'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

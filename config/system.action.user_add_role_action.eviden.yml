@@ -1,0 +1,14 @@
+uuid: 4d2e7f3b-5472-4918-8064-368a47687024
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.eviden
+  module:
+    - user
+id: user_add_role_action.eviden
+label: 'Add the Evidence Evaluator role to the selected users'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: eviden

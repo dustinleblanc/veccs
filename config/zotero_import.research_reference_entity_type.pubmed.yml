@@ -1,0 +1,6 @@
+uuid: 4dba6029-72d4-480d-bcc4-1377946d4a92
+langcode: en
+status: true
+dependencies: {  }
+id: pubmed
+label: PubMed

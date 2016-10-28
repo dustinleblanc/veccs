@@ -32,3 +32,4 @@ if (file_exists(__DIR__ . '/settings.local.php')) {
 }
 
 $settings['install_profile'] = 'recover';
+$config_directories[CONFIG_SYNC_DIRECTORY] = '../config';

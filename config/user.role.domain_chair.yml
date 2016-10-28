@@ -1,0 +1,22 @@
+uuid: 69cb443f-6965-4380-bcb3-e65b26e31569
+langcode: en
+status: true
+dependencies: {  }
+id: domain_chair
+label: 'Domain Chair'
+weight: 3
+is_admin: null
+permissions:
+  - 'add medical condition entities'
+  - 'add outcome entities'
+  - 'add pico question entities'
+  - 'add species entities'
+  - 'administer medical condition entities'
+  - 'administer outcome entities'
+  - 'administer pico question entities'
+  - 'administer species entities'
+  - 'delete medical condition entities'
+  - 'delete outcome entities'
+  - 'delete pico question entities'
+  - 'delete species entities'
+  - 'access administration pages'
