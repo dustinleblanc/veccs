@@ -1,7 +1,7 @@
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost:8000
+            url: http://nginx
         - \Helper\Acceptance
         - Drupal8:
             drupal_root: web
