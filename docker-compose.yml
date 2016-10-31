@@ -1,3 +1,5 @@
+version: "2"
+
 services:
   mariadb:
     image: wodby/drupal-mariadb
