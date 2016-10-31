@@ -7,14 +7,14 @@ dependencies:
   pre:
     - rm /opt/circleci/php/$(phpenv global)/etc/conf.d/xdebug.ini
   override:
+    - composer global require "hirak/prestissimo:^0.3"
+    - composer install --prefer-dist
+    - vendor/bin/robo setup
     - sudo pip install docker-compose
     - docker-compose up -d mariadb
     - docker-compose up -d nginx
 test:
   pre:
-    - composer global require "hirak/prestissimo:^0.3"
-    - composer install --prefer-dist
     - sudo chown -R 82:82 .
   override:
-    - docker-compose run --user 82 php vendor/bin/drush config-import
     - docker-compose run --user 82 php vendor/bin/robo test ci
