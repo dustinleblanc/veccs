@@ -13,13 +13,16 @@ class RoboFile extends \Robo\Tasks {
   const DRUPAL_ROOT = __DIR__ . '/web';
   const TARGET_DIR = '../pantheon_veccs';
   const TERMINUS_BIN = './vendor/bin/terminus';
+  const SEED_DB = __DIR__ . '/docker-runtime/mariadb-init/seed.sql.gz';
 
   /**
    * RoboFile constructor.
    */
   public function __construct() {
-    $dotenv = new Dotenv\Dotenv(__DIR__);
-    $dotenv->load();
+    if (file_exists(__DIR__ . '/.env')) {
+      $dotenv = new Dotenv\Dotenv(__DIR__);
+      $dotenv->load();
+    }
   }
 
   /**
@@ -82,6 +85,12 @@ class RoboFile extends \Robo\Tasks {
          ->run();
   }
 
+  public function setup() {
+    $this->taskFilesystemStack()
+      ->copy(__DIR__ . '/conf.d/seed.sql.gz', 'docker-runtime/mariadb-init/seed.sql.gz')
+      ->run();
+  }
+
   /**
    * Clone Pantheon repository into target directory.
    */
@@ -140,4 +149,5 @@ class RoboFile extends \Robo\Tasks {
                 ->uri($uri)
                 ->dir(self::DRUPAL_ROOT);
   }
+
 }
