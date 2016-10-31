@@ -1,0 +1,29 @@
+uuid: 48f878b7-d1d6-49f3-851f-5dba2b8167cb
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access comments'
+  - 'post comments'
+  - 'skip comment approval'
+  - 'access shortcuts'
+  - 'search content'
+  - 'view published medical condition entities'
+  - 'view published outcome entities'
+  - 'view published pico question entities'
+  - 'view published species entities'
+  - 'view unpublished medical condition entities'
+  - 'view unpublished outcome entities'
+  - 'view unpublished pico question entities'
+  - 'view unpublished species entities'
+  - 'restful delete entity:node'
+  - 'restful get entity:node'
+  - 'restful patch entity:node'
+  - 'restful post entity:node'

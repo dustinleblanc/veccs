@@ -1,0 +1,23 @@
+uuid: 876a05c0-ca82-4cb6-bcc3-3faf23b370bf
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.pico_question_discussion
+    - field.field.comment.pico_question_discussion.comment_body
+  module:
+    - text
+id: comment.pico_question_discussion.default
+targetEntityType: comment
+bundle: pico_question_discussion
+mode: default
+content:
+  comment_body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden: {  }

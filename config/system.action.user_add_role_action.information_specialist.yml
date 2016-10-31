@@ -1,0 +1,14 @@
+uuid: 3b27a13b-69d3-4fb4-b534-7fec97fbe79b
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.information_specialist
+  module:
+    - user
+id: user_add_role_action.information_specialist
+label: 'Add the Information Specialist role to the selected users'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: information_specialist

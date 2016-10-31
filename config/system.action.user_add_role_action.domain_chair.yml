@@ -1,0 +1,14 @@
+uuid: 01332851-a44f-4ed5-8dda-65cad59c8c4a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.domain_chair
+  module:
+    - user
+id: user_add_role_action.domain_chair
+label: 'Add the Domain Chair role to the selected users'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: domain_chair

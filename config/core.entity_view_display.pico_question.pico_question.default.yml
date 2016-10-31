@@ -1,0 +1,102 @@
+uuid: 6f81557d-1dc1-4448-9103-330e8b99f466
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.pico_question.pico_question.field_comments
+    - field.field.pico_question.pico_question.field_condition
+    - field.field.pico_question.pico_question.field_evidence_evaluator
+    - field.field.pico_question.pico_question.field_information_specialist
+    - field.field.pico_question.pico_question.field_intervention
+    - field.field.pico_question.pico_question.field_outcome
+    - field.field.pico_question.pico_question.field_patient_type
+    - field.field.pico_question.pico_question.field_pico_question_discussion
+    - field.field.pico_question.pico_question.field_search_strategy
+  module:
+    - comment
+    - recover_core
+    - text
+    - user
+id: pico_question.pico_question.default
+targetEntityType: pico_question
+bundle: pico_question
+mode: default
+content:
+  field_condition:
+    weight: 2
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_evidence_evaluator:
+    weight: 6
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_information_specialist:
+    weight: 7
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_intervention:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+  field_outcome:
+    weight: 4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_patient_type:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_pico_question_discussion:
+    weight: 9
+    label: above
+    settings:
+      pager_id: 0
+      view_mode: default
+    third_party_settings: {  }
+    type: comment_default
+  field_search_strategy:
+    weight: 5
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+  name:
+    label: above
+    type: string
+    weight: -4
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  question:
+    label: above
+    type: string
+    weight: -4
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  user_id:
+    label: hidden
+    type: author
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_comments: true

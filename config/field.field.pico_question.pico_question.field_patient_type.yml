@@ -1,0 +1,27 @@
+uuid: f942fc84-ffb0-4503-8e82-eef525c52d80
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.pico_question.field_patient_type
+  module:
+    - recover_core
+id: pico_question.pico_question.field_patient_type
+field_name: field_patient_type
+entity_type: pico_question
+bundle: pico_question
+label: 'Patient Type'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:species'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: name
+      direction: ASC
+    auto_create: true
+field_type: entity_reference

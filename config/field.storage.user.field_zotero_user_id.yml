@@ -1,0 +1,21 @@
+uuid: 08580a05-0ab6-4381-9619-d101ee235941
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.field_zotero_user_id
+field_name: field_zotero_user_id
+entity_type: user
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

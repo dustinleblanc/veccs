@@ -1,0 +1,20 @@
+uuid: 73109339-818c-4bef-8049-fbf4d7eb6591
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.pico_question.field_search_strategy
+  module:
+    - recover_core
+id: pico_question.pico_question.field_search_strategy
+field_name: field_search_strategy
+entity_type: pico_question
+bundle: pico_question
+label: 'Search Strategy'
+description: 'The search strategy is the search query string that is to be used for document retrieval when gathering resources for a give PICO question.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

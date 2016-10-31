@@ -1,0 +1,8 @@
+uuid: b1025765-11c2-4753-bf6e-8e90248e16e3
+langcode: en
+status: true
+dependencies: {  }
+id: pico_question_discussion
+label: 'PICO Question Discussion'
+target_entity_type_id: pico_question
+description: 'Discussions about PICO Questions'

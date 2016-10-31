@@ -1,0 +1,22 @@
+uuid: 7b4bf770-4ad6-491e-b008-07a7c3410e1d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - recover_theme
+_core:
+  default_config_hash: iggZSiUKz4mYP1YPJ8SsUfFu79HIgOTt6IDy3Up59aM
+id: recover_theme_powered
+theme: recover_theme
+region: footer
+weight: -5
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

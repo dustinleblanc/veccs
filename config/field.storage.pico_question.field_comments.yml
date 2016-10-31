@@ -1,0 +1,20 @@
+uuid: b2a77622-c864-4424-b9e9-dcf7473cb9b9
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+    - recover_core
+id: pico_question.field_comments
+field_name: field_comments
+entity_type: pico_question
+type: comment
+settings:
+  comment_type: ''
+module: comment
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

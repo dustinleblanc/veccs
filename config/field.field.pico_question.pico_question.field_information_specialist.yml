@@ -1,0 +1,30 @@
+uuid: 216be462-1b5b-487e-8d1e-b7baf15f4ef4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.pico_question.field_information_specialist
+  module:
+    - recover_core
+id: pico_question.pico_question.field_information_specialist
+field_name: field_information_specialist
+entity_type: pico_question
+bundle: pico_question
+label: 'Information Specialist'
+description: 'The users designated as Information Specialists for a given PICO question'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: false
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: name
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

@@ -1,0 +1,20 @@
+uuid: c6e28d8d-bc2d-4575-9092-5e75013564fd
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+    - recover_core
+id: pico_question.field_pico_question_discussion
+field_name: field_pico_question_discussion
+entity_type: pico_question
+type: comment
+settings:
+  comment_type: pico_question_discussion
+module: comment
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

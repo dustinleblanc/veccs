@@ -1,0 +1,14 @@
+uuid: b4621dd7-67e8-426d-a75b-1b2646b8950a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.eviden
+  module:
+    - user
+id: user_remove_role_action.eviden
+label: 'Remove the Evidence Evaluator role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: eviden

@@ -1,0 +1,33 @@
+uuid: ec45727f-ad49-434f-bf9a-2e87e9f32bba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.pico_question.field_pico_question_discussion
+  module:
+    - comment
+    - recover_core
+id: pico_question.pico_question.field_pico_question_discussion
+field_name: field_pico_question_discussion
+entity_type: pico_question
+bundle: pico_question
+label: 'PICO Question Discussion'
+description: 'Area to discuss PICO Questions'
+required: false
+translatable: false
+default_value:
+  -
+    status: 2
+    cid: 0
+    last_comment_timestamp: 0
+    last_comment_name: null
+    last_comment_uid: 0
+    comment_count: 0
+default_value_callback: ''
+settings:
+  default_mode: 1
+  per_page: 50
+  anonymous: 0
+  form_location: true
+  preview: 1
+field_type: comment

@@ -1,0 +1,20 @@
+uuid: 6ba4b4e1-5600-4912-b36e-d576a79c2be3
+langcode: en
+status: true
+dependencies:
+  theme:
+    - recover_theme
+_core:
+  default_config_hash: ffxthelqQF8xcr4GTG4HlaNNsluiHftN0pujmQpW0bQ
+id: recover_theme_local_actions
+theme: recover_theme
+region: content
+weight: -4
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

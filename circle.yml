@@ -13,10 +13,8 @@ dependencies:
 test:
   pre:
     - composer global require "hirak/prestissimo:^0.3"
-    - curl https://github.com/pantheon-systems/terminus/releases/download/0.x/terminus.phar -L -o terminus.phar && chmod +x terminus.phar
-    - php terminus.phar auth login --machine-token=$TERMINUS_TOKEN
-    - php terminus.phar sites aliases
     - composer install --prefer-dist
     - sudo chown -R 82:82 .
   override:
-    - docker-compose run --user 82 php vendor/bin/robo ci:test
+    - docker-compose run --user 82 php vendor/bin/drush config-import
+    - docker-compose run --user 82 php vendor/bin/robo test ci

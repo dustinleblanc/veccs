@@ -1,0 +1,22 @@
+uuid: 24a97270-d8b0-404f-94c1-a47cf7bf2aef
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - recover_theme
+_core:
+  default_config_hash: 9RnnTUBcn0WRWXfrGOnId2H0Q31uQUeu_F5TnDxl2yg
+id: recover_theme_messages
+theme: recover_theme
+region: content
+weight: -3
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

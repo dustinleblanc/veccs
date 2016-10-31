@@ -1,0 +1,22 @@
+uuid: b89cfc37-644b-4420-bac2-a5f52e33b409
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - recover_theme
+_core:
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: recover_theme_help
+theme: recover_theme
+region: content
+weight: -5
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

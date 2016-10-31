@@ -1,0 +1,14 @@
+uuid: ea1bbedd-7d63-43c5-8d2b-f59147b187d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.information_specialist
+  module:
+    - user
+id: user_remove_role_action.information_specialist
+label: 'Remove the Information Specialist role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: information_specialist
