@@ -5,7 +5,8 @@
  *
  * @see http://robo.li/
  */
-class RoboFile extends \Robo\Tasks {
+class RoboFile extends \Robo\Tasks
+{
   use \Boedah\Robo\Task\Drush\loadTasks;
 
   const CEPT_BIN = __DIR__ . '/vendor/bin/codecept';
@@ -18,7 +19,8 @@ class RoboFile extends \Robo\Tasks {
   /**
    * RoboFile constructor.
    */
-  public function __construct() {
+  public function __construct()
+  {
     if (file_exists(__DIR__ . '/.env')) {
       $dotenv = new Dotenv\Dotenv(__DIR__);
       $dotenv->load();
@@ -28,48 +30,51 @@ class RoboFile extends \Robo\Tasks {
   /**
    * Build a deployable artifact.
    */
-  public function buildArtifact() {
+  public function buildArtifact()
+  {
     $this->taskRsync()
-         ->fromPath(__DIR__ . "/")
-         ->toPath(self::TARGET_DIR)
-         ->excludeVcs()
-         ->exclude('vendor/')
-         ->recursive()
-         ->run();
+      ->fromPath(__DIR__ . "/")
+      ->toPath(self::TARGET_DIR)
+      ->excludeVcs()
+      ->exclude('vendor/')
+      ->recursive()
+      ->run();
     $this->taskComposerInstall()
-         ->noDev()
-         ->dir(self::TARGET_DIR)
-         ->run();
+      ->noDev()
+      ->dir(self::TARGET_DIR)
+      ->run();
 
     $this->taskGitStack()
-         ->dir(self::TARGET_DIR)
-         ->add('-A')
-         ->add('vendor -f')
-         ->add('web/core -f')
-         ->add('web/sites/default/settings.php -f')
-         ->add('web/sites/default/settings.pantheon.php -f')
-         ->add('web/themes/contrib -f')
-         ->add('web/modules/contrib -f')
-         ->commit('Compile Dependencies')
-         ->run();
+      ->dir(self::TARGET_DIR)
+      ->add('-A')
+      ->add('vendor -f')
+      ->add('web/core -f')
+      ->add('web/sites/default/settings.php -f')
+      ->add('web/sites/default/settings.pantheon.php -f')
+      ->add('web/themes/contrib -f')
+      ->add('web/modules/contrib -f')
+      ->commit('Compile Dependencies')
+      ->run();
   }
 
   /**
    * Cleans out target repo to replace with our build files.
    */
-  public function cleanTargetRepository() {
+  public function cleanTargetRepository()
+  {
     $this->taskGitStack()
-         ->dir(self::TARGET_DIR)
-         ->exec("rm -rf .")
-         ->exec("clean -fxd")
-         ->run();
+      ->dir(self::TARGET_DIR)
+      ->exec("rm -rf .")
+      ->exec("clean -fxd")
+      ->run();
 
   }
 
   /**
    * Pull Pantheon repository and build a deployable artifact
    */
-  public function deploy() {
+  public function deploy()
+  {
     $this->pullTargetRepository();
     $this->cleanTargetRepository();
     $this->buildArtifact();
@@ -79,13 +84,15 @@ class RoboFile extends \Robo\Tasks {
   /**
    * Install Drupal with our install profile.
    */
-  public function install($uri = 'default') {
+  public function install($uri = 'default')
+  {
     $this->buildDrushTask($uri)
-         ->siteInstall('recover')
-         ->run();
+      ->siteInstall('recover')
+      ->run();
   }
 
-  public function setup() {
+  public function setup()
+  {
     $this->taskFilesystemStack()
       ->copy(__DIR__ . '/conf.d/seed.sql.gz', 'docker-runtime/mariadb-init/seed.sql.gz')
       ->run();
@@ -94,36 +101,39 @@ class RoboFile extends \Robo\Tasks {
   /**
    * Clone Pantheon repository into target directory.
    */
-  public function pullTargetRepository() {
+  public function pullTargetRepository()
+  {
     $this->taskGitStack()
-         ->cloneRepo(self::PANTHEON_REPO, self::TARGET_DIR)
-         ->run();
+      ->cloneRepo(self::PANTHEON_REPO, self::TARGET_DIR)
+      ->run();
   }
 
   /**
    *
    */
-  public function pushToTarget() {
+  public function pushToTarget()
+  {
     $this->taskGitStack()
-         ->dir(self::TARGET_DIR)
-         ->push(getenv('PANTHEON_REPO'), 'master')
-         ->run();
+      ->dir(self::TARGET_DIR)
+      ->push(getenv('PANTHEON_REPO'), 'master')
+      ->run();
   }
 
   /**
    * @param string $env
    * @param string $uri
    */
-  public function syncDb($env = 'dev', $uri = 'default') {
+  public function syncDb($env = 'dev', $uri = 'default')
+  {
     $this->_exec(self::TERMINUS_BIN . ' auth login --machine-token=' . getenv('TERMINUS_TOKEN'));
     $this->_exec(self::TERMINUS_BIN . ' sites aliases');
     $this->buildDrushTask()
-         ->clearCache('drush')
-         ->run();
+      ->clearCache('drush')
+      ->run();
     $alias = "@pantheon.veccs.{$env}";
     $this->buildDrushTask($uri)
-         ->exec("sql-sync {$alias} @self")
-         ->run();
+      ->exec("sql-sync {$alias} @self")
+      ->run();
   }
 
   /**
@@ -131,10 +141,14 @@ class RoboFile extends \Robo\Tasks {
    *
    * @param string $env
    */
-  public function test($env = 'dev') {
+  public function test($env = 'dev')
+  {
+    $this->buildDrushTask()
+      ->exec('config-import')
+      ->run();
     $this->taskCodecept(self::CEPT_BIN)
-         ->env("{$env}")
-         ->run();
+      ->env("{$env}")
+      ->run();
   }
 
   /**
@@ -144,10 +158,11 @@ class RoboFile extends \Robo\Tasks {
    *
    * @return \Boedah\Robo\Task\Drush\DrushStack
    */
-  protected function buildDrushTask($uri = 'default') {
+  protected function buildDrushTask($uri = 'default')
+  {
     return $this->taskDrushStack(self::DRUSH_BIN)
-                ->uri($uri)
-                ->dir(self::DRUPAL_ROOT);
+      ->uri($uri)
+      ->dir(self::DRUPAL_ROOT);
   }
 
 }
