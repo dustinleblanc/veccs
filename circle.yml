@@ -18,3 +18,9 @@ test:
     - sudo chown -R 82:82 .
   override:
     - docker-compose run --user 82 php vendor/bin/robo test ci
+
+deployment:
+  prod:
+    branch: master
+    commands:
+      - vendor/bin/robo deploy

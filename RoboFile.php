@@ -32,6 +32,19 @@ class RoboFile extends \Robo\Tasks
    */
   public function buildArtifact()
   {
+    $buildNum = getenv('CIRCLE_BUILD_NUM') ?: '';
+    $buildUrl = getenv('CIRCLE_BUILD_URL') ?: '';
+    $pullRequests = getenv('CI_PULL_REQUESTS') ?: '';
+    $author = getenv('CIRCLE_USERNAME') ?: '';
+
+    $commitMsg = <<<EOF
+CircleCI Build number: $buildNum
+
+CircleCI Build URL: $buildUrl
+Included pull requests: $pullRequests
+Authored by: $author
+EOF;
+
     $this->taskRsync()
       ->fromPath(__DIR__ . "/")
       ->toPath(self::TARGET_DIR)
@@ -53,7 +66,7 @@ class RoboFile extends \Robo\Tasks
       ->add('web/sites/default/settings.pantheon.php -f')
       ->add('web/themes/contrib -f')
       ->add('web/modules/contrib -f')
-      ->commit('Compile Dependencies')
+      ->commit($commitMsg)
       ->run();
   }
 
@@ -93,6 +106,7 @@ class RoboFile extends \Robo\Tasks
 
   /**
    * Install Drupal with our install profile.
+   * @param string $uri
    */
   public function install($uri = 'default')
   {
@@ -114,7 +128,7 @@ class RoboFile extends \Robo\Tasks
   public function pullTargetRepository()
   {
     $this->taskGitStack()
-      ->cloneRepo(self::PANTHEON_REPO, self::TARGET_DIR)
+      ->cloneRepo(getenv('PANTHEON_REPO'), self::TARGET_DIR)
       ->run();
   }
 
