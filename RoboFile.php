@@ -58,6 +58,8 @@ EOF;
       ->run();
 
     $this->taskGitStack()
+      ->exec("config user.email " . getenv('GIT_EMAIL'))
+      ->exec("config user.name " . getenv('GIT_USERNAME'))
       ->dir(self::TARGET_DIR)
       ->add('-A')
       ->add('vendor -f')
