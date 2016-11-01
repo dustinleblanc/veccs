@@ -81,6 +81,16 @@ class RoboFile extends \Robo\Tasks
     $this->pushToTarget();
   }
 
+
+  /**
+   * Run a command in the PHP container
+   *
+   * @param string $op Command to run in PHP container.
+   */
+  public function docker($op = '') {
+    $this->taskExec("docker-compose run php vendor/bin/robo {$op}")->run();
+  }
+
   /**
    * Install Drupal with our install profile.
    */
@@ -164,5 +174,4 @@ class RoboFile extends \Robo\Tasks
       ->uri($uri)
       ->dir(self::DRUPAL_ROOT);
   }
-
 }
