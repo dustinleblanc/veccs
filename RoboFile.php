@@ -66,8 +66,8 @@ EOF;
       ->add('web/core -f')
       ->add('web/sites/default/settings.php -f')
       ->add('web/sites/default/settings.pantheon.php -f')
-      ->add('web/themes/contrib -f')
-      ->add('web/modules/contrib -f')
+      ->add('web/themes -f')
+      ->add('web/modules -f')
       ->commit($commitMsg)
       ->run();
   }
