@@ -24,7 +24,7 @@
         "drupal/features": "8.3.*",
         "drupal/page_manager": "1.0.0-alpha24",
         "drupal/panels": "3.0.0-beta5",
-        "drupal/radix": "dev-3.x",
+        "drupal/radix": "3.0.0-alpha4",
         "dustinleblanc/zotero-api": "0.0.*",
         "drupal/file_entity": "^8.2@beta",
         "drupal/field_validation": "^8.1",

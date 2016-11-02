@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "37563e04d041c0ac8f5b64efa92b5e70",
-    "content-hash": "03cd993fa10b6740fe0f471f6ad0160a",
+    "hash": "291667c6c25a4e3c72191b825f96205d",
+    "content-hash": "1a920351f1d069d974e5152fc3a05688",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1529,11 +1529,17 @@
         },
         {
             "name": "drupal/radix",
-            "version": "dev-3.x",
+            "version": "3.0.0-alpha4",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/radix",
-                "reference": "05f136622b4f6a1ee0b355506ec92ab25cd92bf9"
+                "reference": "8.x-3.0-alpha4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/radix-8.x-3.0-alpha4.zip",
+                "reference": null,
+                "shasum": "4c4c97bc63ceb0b82811a0d31693044f6c0226e4"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -1544,8 +1550,8 @@
                     "dev-3.x": "3.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-3.0-alpha3+8-dev",
-                    "datestamp": "1470940439"
+                    "version": "8.x-3.0-alpha4",
+                    "datestamp": "1465983239"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -1565,8 +1571,7 @@
             "homepage": "https://www.drupal.org/project/radix",
             "support": {
                 "source": "http://cgit.drupalcode.org/radix"
-            },
-            "time": "2016-08-11 18:33:24"
+            }
         },
         {
             "name": "dustinleblanc/zotero-api",
@@ -4524,37 +4529,6 @@
             "time": "2015-06-14 21:17:01"
         },
         {
-            "name": "drupal/bootstrap",
-            "version": "8.3.0-rc2",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/bootstrap",
-                "reference": "29fe3af2a9b01a90674abea068073c9ca3f1293f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/bootstrap-8.x-3.0-rc2.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "drupal/core": "8.*"
-            },
-            "type": "drupal-theme",
-            "extra": {
-                "branch-alias": {
-                    "dev-8.x-3.x": "8.3.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.drupal-composer.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Built to use Bootstrap, a sleek, intuitive, and powerful front-end framework for faster and easier web development.",
-            "homepage": "https://www.drupal.org/project/bootstrap",
-            "time": "2016-08-03 05:45:18"
-        },
-        {
             "name": "drupal/console",
             "version": "1.0.0-rc6",
             "source": {
@@ -7450,7 +7424,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/radix": 20,
         "drupal/file_entity": 10,
         "pantheon-systems/terminus": 0,
         "drupal/devel": 20
