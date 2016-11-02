@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "291667c6c25a4e3c72191b825f96205d",
-    "content-hash": "1a920351f1d069d974e5152fc3a05688",
+    "hash": "79d4c6976079f338753dd7853a6154af",
+    "content-hash": "a1e5b00e0858331f270479b54f057916",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -701,37 +701,6 @@
             ],
             "description": "Composer Plugin for updating the Drupal scaffold files when using drupal/core",
             "time": "2016-08-29 16:56:02"
-        },
-        {
-            "name": "drupal/adminimal_theme",
-            "version": "8.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/adminimal_theme",
-                "reference": "3aaa078e5eb5e47811861ca1c80298b413234356"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/adminimal_theme-8.x-1.2.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "drupal/core": "8.*"
-            },
-            "type": "drupal-theme",
-            "extra": {
-                "branch-alias": {
-                    "dev-8.x-1.x": "8.1.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.drupal-composer.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Drupal administration theme with modern minimalist design.",
-            "homepage": "https://www.drupal.org/project/adminimal_theme",
-            "time": "2016-10-19 08:21:39"
         },
         {
             "name": "drupal/composer_manager",

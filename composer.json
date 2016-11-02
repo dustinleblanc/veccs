@@ -20,7 +20,6 @@
         "drupal-composer/drupal-scaffold": "^2.1.0",
         "cweagans/composer-patches": "~1.0",
         "drupal/core": "~8.1",
-        "drupal/adminimal_theme": "^8.1",
         "drupal/features": "8.3.*",
         "drupal/page_manager": "1.0.0-alpha24",
         "drupal/panels": "3.0.0-beta5",
