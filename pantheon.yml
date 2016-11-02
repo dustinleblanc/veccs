@@ -2,11 +2,12 @@
 api_version: 1
 
 php_version: 7.0
-Oweb_docroot: true
+
+web_docroot: true
 
 workflows:
-  deploy:
+  sync_code:
     after:
       - type: webphp
         description: Import configuration from .yml files
-        script: private/scripts/drush_config_import/drush_config_import.php
+        script: private/scripts/drush_config_import.php
