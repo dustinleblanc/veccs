@@ -96,6 +96,15 @@ EOF;
     $this->pushToTarget();
   }
 
+  public function develop()
+  {
+    $cmd = "docker-compose -f docker-compose.yml";
+    if ($local_compose = getenv('LOCAL_COMPOSE')) {
+      $cmd .= " -f {$local_compose}";
+    }
+    $this->taskExec("{$cmd} up -d")->run();
+  }
+
 
   /**
    * Run a command in the PHP container
