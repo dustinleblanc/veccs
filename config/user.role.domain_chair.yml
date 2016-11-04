@@ -19,4 +19,3 @@ permissions:
   - 'delete outcome entities'
   - 'delete pico question entities'
   - 'delete species entities'
-  - 'access administration pages'
