@@ -68,6 +68,7 @@ EOF;
       ->add('web/sites/default/settings.pantheon.php -f')
       ->add('web/themes -f')
       ->add('web/modules -f')
+      ->add('web/profiles/recover/themes/recover_theme/bower_components -f')
       ->commit($commitMsg)
       ->run();
   }
