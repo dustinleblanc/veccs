@@ -18,6 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
  * @package Drupal\zotero_import\Controller
  */
 class ZoteroImportController extends ControllerBase {
+  /**
+   * @var \DustinLeblanc\Zotero\Client
+   */
+  protected $client;
 
   /**
    * @var Response Response object returned from Zotero API.
@@ -25,20 +29,57 @@ class ZoteroImportController extends ControllerBase {
   private $response;
 
   /**
+   * ZoteroImportController constructor.
+   *
+   * @param \DustinLeblanc\Zotero\Client $client
+   */
+  public function __construct(Client $client = null) {
+    $this->client = $client ?: new Client([
+      'apiKey' => $this->loadCurrentUser()->get('field_zotero_api_key')->value
+    ]);
+  }
+
+  /**
+   * Fetch the entire library of the current user.
+   * @return array
+   */
+  public function fetchGroups() {
+    $zotero_user_id = $this->loadCurrentUser()
+                           ->get('field_zotero_user_id')->value;
+    $this->setResponse($this->client->get("users/{$zotero_user_id}/groups"));
+    return $this->convertGroupsResponse();
+  }
+
+  /**
+   * @param $id
+   *
+   * @return AjaxResponse
+   */
+  public function fetchGroupItems(Request $request) {
+    $id = $request->query->get('group_id');
+    $this->setResponse($this->client->get("/groups/{$id}/items"));
+
+    $items            = $this->convertItemsResponse($this->getResponse());
+    $renderable_items = [
+      '#theme' => 'zotero_collection',
+      '#type' => 'element',
+      'elements' => $items,
+    ];
+    $markup           = \Drupal::service('renderer')->render($renderable_items);
+    $response         = new AjaxResponse();
+    return $response->addCommand(new ReplaceCommand('#zotero-groups', $markup));
+  }
+
+  /**
    * Fetch the entire library of the current user.
    * @return array
    */
   public function fetchLibrary() {
-    $user = $this->loadCurrentUser();
     $this->fetchItems(
-      new Client(
-        [
-          'apiKey' => $user->get('field_zotero_api_key')->value
-        ]
-      ),
-      $user->get('field_zotero_user_id')->value
+      $this->client,
+      $this->loadCurrentUser()->get('field_zotero_user_id')->value
     );
-    return $this->convertResponse($this->getResponse());
+    return $this->convertItemsResponse($this->getResponse());
   }
 
   /**
@@ -125,7 +166,7 @@ class ZoteroImportController extends ControllerBase {
    *
    * @return array
    */
-  private function convertResponse(Response $response) {
+  private function convertItemsResponse(Response $response) {
     $contents = json_decode($response->getBody()->getContents(), TRUE);
     return array_filter($contents, function ($item) {
       // We only want to return top level items, we can retrieve children manually.
@@ -224,8 +265,8 @@ class ZoteroImportController extends ControllerBase {
    */
   private function createResearchReference(array $values = []) {
     $results = \Drupal::entityQuery('research_reference_entity')
-      ->condition('zoteroKey', $values['zoteroKey'], '=')
-      ->execute();
+                      ->condition('zoteroKey', $values['zoteroKey'], '=')
+                      ->execute();
     if (!empty($results)) {
       return '<p class="alert alert-info alert-dismissable" role="alert">Zotero Item already exists.</p>';
     }
@@ -241,5 +282,21 @@ class ZoteroImportController extends ControllerBase {
         return $message;
       }
     }
+  }
+
+  /**
+   * Convert Groups API call to a renderable array.
+   * @return array
+   */
+  private function convertGroupsResponse() {
+    return array_map(
+      function($data) {
+        return [
+          'id' => $data['data']['id'],
+          'name' => $data['data']['name']
+        ];
+      },
+      json_decode($this->getResponse()->getBody()->getContents(), TRUE)
+    );
   }
 }

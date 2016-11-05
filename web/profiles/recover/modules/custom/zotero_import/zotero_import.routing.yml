@@ -22,3 +22,12 @@ zotero_import.import:
     _title: 'Import Reference'
   requirements:
     _permission: 'access content'
+
+
+zotero_import.fetch_group_items:
+  path: '/zotero_import/fetch_group_items'
+  defaults:
+    _controller: '\Drupal\zotero_import\Controller\ZoteroImportController::fetchGroupItems'
+    _title: 'Fetch group items'
+  requirements:
+    _permission: 'access content'

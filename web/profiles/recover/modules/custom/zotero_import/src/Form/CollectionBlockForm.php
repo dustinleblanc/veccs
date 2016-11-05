@@ -35,11 +35,28 @@ class CollectionBlockForm extends FormBase {
       '#type' => 'container',
     ];
 
+    $form['fetch_groups'] = [
+      '#description' => $this->t('Fetch the groups the user has access to'),
+      '#title' => $this->t('Fetch groups'),
+      '#type' => 'button',
+      '#value' => $this->t('Fetch groups'),
+      '#ajax' => [
+        'callback' => [$this, 'fetchGroupsAjax'],
+        'wrapper' => 'edit-zotero-items',
+        'event' => 'mousedown',
+        'prevent' => 'click',
+        'progress' => [
+          'type' => 'throbber',
+          'message' => t('Fetching Zotero groups...'),
+        ]
+      ],
+    ];
+
     $form['fetch_all'] = [
       '#description' => $this->t('Fetch all items for User&#039;s Zotero library'),
-      '#title' => $this->t('Fetch Zotero library'),
+      '#title' => $this->t('Fetch personal Zotero library'),
       '#type' => 'button',
-      '#value' => t('Fetch Zotero library'),
+      '#value' => $this->t('Fetch Zotero library'),
       '#ajax' => [
         'callback' => [$this, 'fetchLibraryAjax'],
         'wrapper' => 'edit-zotero-items',
@@ -86,4 +103,17 @@ class CollectionBlockForm extends FormBase {
     return $response;
   }
 
+  public function fetchGroupsAjax(array &$form, FormStateInterface $form_state) {
+    $controller = new ZoteroImportController();
+    $items = $controller->fetchGroups();
+    $renderable_items = [
+      '#theme' => 'zotero_groups',
+      '#type' => 'element',
+      'elements' => $items,
+    ];
+    $markup = \Drupal::service('renderer')->render($renderable_items);
+    $response = new AjaxResponse();
+    $response->addCommand(new ReplaceCommand('#edit-zotero-items', $markup));
+    return $response;
+  }
 }
