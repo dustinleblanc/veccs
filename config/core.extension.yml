@@ -61,7 +61,6 @@ module:
   recover: 1000
 theme:
   stable: 0
-  bootstrap: 0
   classy: 0
   seven: 0
   radix: 0
