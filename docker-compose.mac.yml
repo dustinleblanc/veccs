@@ -1,6 +1,9 @@
 version: "2"
 
 services:
+  mariadb:
+    ports:
+      - "3307:3306"
   nginx:
     environment:
       VIRTUAL_HOST: veccs.docker
