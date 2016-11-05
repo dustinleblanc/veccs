@@ -62,6 +62,7 @@ EOF;
       ->exec("config user.name " . getenv('GIT_USERNAME'))
       ->dir(self::TARGET_DIR)
       ->add('-A')
+      ->add('config -f')
       ->add('vendor -f')
       ->add('web/core -f')
       ->add('web/sites/default/settings.php -f')
