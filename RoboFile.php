@@ -56,6 +56,9 @@ EOF;
       ->noDev()
       ->dir(self::TARGET_DIR)
       ->run();
+    $this->taskBowerInstall()
+         ->dir(self::TARGET_DIR . '/web/profiles/recover/themes/recover_theme')
+         ->run();
 
     $this->taskGitStack()
       ->exec("config user.email " . getenv('GIT_EMAIL'))
