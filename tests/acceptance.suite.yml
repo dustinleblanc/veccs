@@ -5,5 +5,14 @@
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 class_name: AcceptanceTester
-paths:
-  envs: tests/_envs
+modules:
+  enabled:
+    - WebDriver:
+        url: 'http://nginx'
+        host: 'phantomjs'
+        browser: phantomjs
+
+    - \Helper\Acceptance
+    - Drupal8:
+        drupal_root: web
+        site_path: sites/default

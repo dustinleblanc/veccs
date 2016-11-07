@@ -13,7 +13,6 @@ class CoChairManageDomainsCest
 
     public function _after(AcceptanceTester $I)
     {
-        $I->logout();
     }
 
     // tests
@@ -30,6 +29,6 @@ class CoChairManageDomainsCest
     {
         $I->loginAsAuthenticated();
         $I->amOnPage('/admin/structure/taxonomy/manage/domain/add');
-        $I->seeResponseCodeIs(403);
+        $I->see('Access Denied');
     }
 }
