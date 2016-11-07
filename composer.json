@@ -40,6 +40,8 @@
         "drupal/devel":"dev-8.x-1.x",
         "dustinleblanc/codeception-drupal-8": "0.0.*",
         "fzaninotto/faker": "^1.6",
+        "php-vcr/php-vcr": "*",
+        "php-vcr/phpunit-testlistener-vcr": "1.1.*",
         "drupal/console": "~1.0"
     },
     "conflict": {
