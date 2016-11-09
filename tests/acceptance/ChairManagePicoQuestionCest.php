@@ -1,32 +1,43 @@
 <?php
 
+/**
+ * @file
+ */
 
-use Step\Acceptance\CoChair;
+use Faker\Factory;
 
-class ChairManagePicoQuestionCest
-{
+/**
+ *
+ */
+class ChairManagePicoQuestionCest {
   /**
    * @var Faker\Generator
    */
   protected $faker;
 
-  public function _before(CoChair $I)
-    {
-      $this->faker = Faker\Factory::create();
-    }
+  /**
+   * @param \AcceptanceTester $I
+   */
+  public function _before(\AcceptanceTester $I) {
+    $this->faker = Factory::create();
+    $I->loginAs('co_chair');
+  }
 
-    public function _after(CoChair $I)
-    {
-    }
+  /**
+   * @param \AcceptanceTester $I
+   */
+  public function _after(\AcceptanceTester $I) {
+    $I->logout();
+  }
 
-    // tests
-    public function testCoChairCanManageSpecies(CoChair $I)
-    {
-        $species = $this->faker->text(60);
-        $I->loginAsCoChair();
-        $I->amOnPage('/admin/structure/species/add');
-        $I->fillField('#edit-name-0-value', $species);
-        $I->click('#edit-submit');
-        $I->see("Created the {$species} Species.");
-    }
+  /**
+   * @param \AcceptanceTester $I
+   */
+  public function testCoChairCanManageSpecies(AcceptanceTester $I) {
+    $species = $this->faker->text(30);
+    $I->amOnPage('/admin/structure/species/add');
+    $I->fillField('#edit-name-0-value', $species);
+    $I->click('#edit-submit');
+    $I->see("Created the {$species} Species.");
+  }
 }

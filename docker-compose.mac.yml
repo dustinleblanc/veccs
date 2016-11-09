@@ -11,3 +11,10 @@ services:
   php:
     environment:
       PHP_HOST_NAME: veccs.docker
+  testnginx:
+    environment:
+      VIRTUAL_HOST: test.veccs.docker
+      VIRTUAL_PORT: 80
+  testphp:
+    environment:
+      PHP_HOST_NAME: test.veccs.docker

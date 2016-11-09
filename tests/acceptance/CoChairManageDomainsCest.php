@@ -1,34 +1,51 @@
 <?php
 
+/**
+ * @file
+ */
 
-use Step\Acceptance\Authenticated;
-use Step\Acceptance\CoChair;
+/**
+ *
+ */
+class CoChairManageDomainsCest {
+  /**
+   * @var Faker\Generator
+   */
+  protected $faker;
 
-class CoChairManageDomainsCest
-{
+  /**
+   * @param \AcceptanceTester $I
+   */
+  public function _before(AcceptanceTester $I) {
+    $this->faker = Faker\Factory::create();
+  }
 
-    public function _before(CoChair $I)
-    {
-    }
+  /**
+   *
+   */
+  public function _after(AcceptanceTester $I) {
+  }
 
-    public function _after(AcceptanceTester $I)
-    {
-    }
+  /**
+   * @param \AcceptanceTester $I
+   */
+  public function testCoChairCanManageDomains(AcceptanceTester $I) {
+    $term = $this->faker->text(60);
+    $I->loginAs('co_chair');
+    $I->amOnPage('/admin/structure/taxonomy/manage/domain/add');
+    $I->fillField('#edit-name-0-value', $term);
+    $I->click('#edit-submit');
+    $I->see("Created new term {$term}.");
+    $I->logout();
+  }
 
-    // tests
-    public function testCoChairCanManageDomains(CoChair $I)
-    {
-        $I->loginAsCoChair();
-        $I->amOnPage('/admin/structure/taxonomy/manage/domain/add');
-        $I->fillField('#edit-name-0-value', 'Basic Life Support');
-        $I->click('#edit-submit');
-        $I->see('Created new term Basic Life Support.');
-    }
+  /**
+   * @param \AcceptanceTester $I
+   */
+  public function testAuthenticatedCantManageDomains(AcceptanceTester $I) {
+    $I->loginAs('authenticated');
+    $I->amOnPage('/admin/structure/taxonomy/manage/domain/add');
+    $I->see('Access Denied');
+  }
 
-    public function testAuthenticatedCantManageDomains(Authenticated $I)
-    {
-        $I->loginAsAuthenticated();
-        $I->amOnPage('/admin/structure/taxonomy/manage/domain/add');
-        $I->see('Access Denied');
-    }
 }

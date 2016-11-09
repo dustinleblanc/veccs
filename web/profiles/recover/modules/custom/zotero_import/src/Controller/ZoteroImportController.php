@@ -274,7 +274,7 @@ class ZoteroImportController extends ControllerBase {
       $entity = ResearchReferenceEntity::create($values);
       if ($entity->validate()) {
         $entity->save();
-        $message = '<p class="alert alert-success alert-dismissable" role="alert">Item successfully imported!</p>';
+        $message = '<p id="success-zotero-' . $values['zoteroKey'] . '" class="alert alert-success alert-dismissable" role="alert">Item successfully imported!</p>';
         return $message;
       }
       else {

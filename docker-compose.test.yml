@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  mariadb:
+  testdb:
     image: wodby/drupal-mariadb
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 1
@@ -10,16 +10,15 @@ services:
       MYSQL_PASSWORD: drupal
 #    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
     volumes:
-      - ./docker-runtime/mariadb:/var/lib/mysql
-      - ./docker-runtime/mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
-  php:
+      - ./docker-runtime/testdb:/var/lib/mysql
+      - ./docker-runtime/testdb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+  testphp:
     image: wodby/drupal-php:7.0 # Allowed: 7.0, 5.6.
     environment:
-      PHP_SITE_NAME: dev
-      PHP_HOST_NAME: localhost:8000
+      PHP_SITE_NAME: test
+      PHP_HOST_NAME: localhost:8001
       PHP_DOCROOT: web
-      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
-      PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"mariadb","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
+      PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"testdb","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
       PANTHEON_ENVIRONMENT: local
       DRUPAL_HASH_SALT: mmm...salty
       # PHP_XDEBUG_ENABLED: 1
@@ -30,14 +29,26 @@ services:
       - ./:/var/www/html
 
 
-  nginx:
+  testnginx:
     image: wodby/drupal-nginx
     environment:
       NGINX_SERVER_NAME: localhost
-      NGINX_UPSTREAM_NAME: php
+      NGINX_UPSTREAM_NAME: testphp
       NGINX_DOCROOT: web
       DRUPAL_VERSION: 8 # Allowed: 7, 8.
     volumes_from:
-      - php
+      - testphp
     ports:
-      - "8000:80"
+      - "8001:80"
+
+  phantomjs:
+    image: cmfatih/phantomjs
+    volumes_from:
+      - testphp
+    links:
+      - testnginx
+    ports:
+      - 4444
+    entrypoint: phantomjs
+    command: "--webdriver=4444"
+
