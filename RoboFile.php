@@ -53,7 +53,7 @@ EOF;
          ->noDev()
          ->dir(self::TARGET_DIR)
          ->run();
-    $this->taskBowerInstall()
+    $this->taskBowerInstall('bower')
          ->dir(self::TARGET_DIR . '/web/profiles/recover/themes/recover_theme')
          ->run();
 
