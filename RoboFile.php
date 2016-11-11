@@ -43,35 +43,35 @@ Authored by: $author
 EOF;
 
     $this->taskRsync()
-         ->fromPath(__DIR__ . "/")
-         ->toPath(self::TARGET_DIR)
-         ->excludeVcs()
-         ->exclude('vendor/')
-         ->recursive()
-         ->run();
+      ->fromPath(__DIR__ . "/")
+      ->toPath(self::TARGET_DIR)
+      ->excludeVcs()
+      ->exclude('vendor/')
+      ->recursive()
+      ->run();
     $this->taskComposerInstall()
-         ->noDev()
-         ->dir(self::TARGET_DIR)
-         ->run();
+      ->noDev()
+      ->dir(self::TARGET_DIR)
+      ->run();
     $this->taskBowerInstall('bower')
-         ->dir(self::TARGET_DIR . '/web/profiles/recover/themes/recover_theme')
-         ->run();
+      ->dir(self::TARGET_DIR . '/web/profiles/recover/themes/recover_theme')
+      ->run();
 
     $this->taskGitStack()
-         ->exec("config user.email " . getenv('GIT_EMAIL'))
-         ->exec("config user.name " . getenv('GIT_USERNAME'))
-         ->dir(self::TARGET_DIR)
-         ->add('-A')
-         ->add('config -f')
-         ->add('vendor -f')
-         ->add('web/core -f')
-         ->add('web/sites/default/settings.php -f')
-         ->add('web/sites/default/settings.pantheon.php -f')
-         ->add('web/themes -f')
-         ->add('web/modules -f')
-         ->add('web/profiles/recover/themes/recover_theme/bower_components -f')
-         ->commit($commitMsg)
-         ->run();
+      ->exec("config user.email " . getenv('GIT_EMAIL'))
+      ->exec("config user.name " . getenv('GIT_USERNAME'))
+      ->dir(self::TARGET_DIR)
+      ->add('-A')
+      ->add('config -f')
+      ->add('vendor -f')
+      ->add('web/core -f')
+      ->add('web/sites/default/settings.php -f')
+      ->add('web/sites/default/settings.pantheon.php -f')
+      ->add('web/themes -f')
+      ->add('web/modules -f')
+      ->add('web/profiles/recover/themes/recover_theme/bower_components -f')
+      ->commit($commitMsg)
+      ->run();
   }
 
   /**
@@ -79,10 +79,10 @@ EOF;
    */
   public function cleanTargetRepository() {
     $this->taskGitStack()
-         ->dir(self::TARGET_DIR)
-         ->exec("rm -rf .")
-         ->exec("clean -fxd")
-         ->run();
+      ->dir(self::TARGET_DIR)
+      ->exec("rm -rf .")
+      ->exec("clean -fxd")
+      ->run();
 
   }
 
@@ -121,15 +121,17 @@ EOF;
    */
   public function install($uri = 'default') {
     $this->buildDrushTask($uri)
-         ->siteInstall('recover')
-         ->run();
+      ->siteInstall('recover')
+      ->run();
   }
 
   public function setup() {
     $this->taskFilesystemStack()
-         ->copy(__DIR__ . '/conf.d/seed.sql.gz',
-           'docker-runtime/mariadb-init/seed.sql.gz')
-         ->run();
+      ->copy(__DIR__ . '/docker/seed.sql',
+        'docker-runtime/mariadb-init/seed.sql')
+      ->copy(__DIR__ . '/docker/seed.sql',
+        'docker-runtime/testdb-init/seed.sql')
+      ->run();
   }
 
   /**
@@ -137,8 +139,8 @@ EOF;
    */
   public function pullTargetRepository() {
     $this->taskGitStack()
-         ->cloneRepo(getenv('PANTHEON_REPO'), self::TARGET_DIR)
-         ->run();
+      ->cloneRepo(getenv('PANTHEON_REPO'), self::TARGET_DIR)
+      ->run();
   }
 
   /**
@@ -146,9 +148,9 @@ EOF;
    */
   public function pushToTarget() {
     $this->taskGitStack()
-         ->dir(self::TARGET_DIR)
-         ->push(getenv('PANTHEON_REPO'), 'master')
-         ->run();
+      ->dir(self::TARGET_DIR)
+      ->push(getenv('PANTHEON_REPO'), 'master')
+      ->run();
   }
 
   /**
@@ -159,12 +161,12 @@ EOF;
     $this->_exec(self::TERMINUS_BIN . ' auth login --machine-token=' . getenv('TERMINUS_TOKEN'));
     $this->_exec(self::TERMINUS_BIN . ' sites aliases');
     $this->buildDrushTask()
-         ->clearCache('drush')
-         ->run();
+      ->clearCache('drush')
+      ->run();
     $alias = "@pantheon.veccs.{$env}";
     $this->buildDrushTask($uri)
-         ->exec("sql-sync {$alias} @self")
-         ->run();
+      ->exec("sql-sync {$alias} @self")
+      ->run();
   }
 
   /**
@@ -174,11 +176,11 @@ EOF;
    */
   public function test($env = 'dev') {
     $this->buildDrushTask()
-         ->exec('config-import')
-         ->run();
+      ->exec('config-import')
+      ->run();
     $this->taskCodecept(self::CEPT_BIN)
-         ->env("{$env}")
-         ->run();
+      ->env("{$env}")
+      ->run();
   }
 
   /**
@@ -190,7 +192,7 @@ EOF;
    */
   protected function buildDrushTask($uri = 'default') {
     return $this->taskDrushStack(self::DRUSH_BIN)
-                ->uri($uri)
-                ->dir(self::DRUPAL_ROOT);
+      ->uri($uri)
+      ->dir(self::DRUPAL_ROOT);
   }
 }
