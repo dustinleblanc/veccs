@@ -1,3 +1,5 @@
+# This file includes services for a DEV installation and a TEST installation.
+# This is NOT for production use and is based on Wodby's Docker4Drupal.
 version: "2"
 
 services:
@@ -41,3 +43,54 @@ services:
       - php
     ports:
       - "8000:80"
+
+  testdb:
+    image: wodby/drupal-mariadb
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+#    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
+    volumes:
+      - ./docker-runtime/testdb:/var/lib/mysql
+      - ./docker-runtime/mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+  testphp:
+    image: wodby/drupal-php:7.0 # Allowed: 7.0, 5.6.
+    environment:
+      PHP_SITE_NAME: test
+      PHP_HOST_NAME: localhost:8001
+      PHP_DOCROOT: web
+      PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"testdb","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
+      PANTHEON_ENVIRONMENT: local
+      DRUPAL_HASH_SALT: mmm...salty
+      # PHP_XDEBUG_ENABLED: 1
+      # PHP_XDEBUG_AUTOSTART: 1
+      # PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
+      # PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
+    volumes:
+      - ./:/var/www/html
+
+
+  testnginx:
+    image: wodby/drupal-nginx
+    environment:
+      NGINX_SERVER_NAME: localhost
+      NGINX_UPSTREAM_NAME: testphp
+      NGINX_DOCROOT: web
+      DRUPAL_VERSION: 8 # Allowed: 7, 8.
+    volumes_from:
+      - testphp
+    ports:
+      - "8001:80"
+
+  phantomjs:
+    image: cmfatih/phantomjs
+    volumes_from:
+      - testphp
+    links:
+      - testnginx
+    ports:
+      - 4444
+    entrypoint: phantomjs
+    command: "--webdriver=4444"
