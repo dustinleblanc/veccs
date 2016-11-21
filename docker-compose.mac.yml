@@ -1,3 +1,5 @@
+# Useful overrides for development on a Mac using Dinghy (D4M is too slow)
+# Copy this file to docker-compose.override.yml to have it autoloaded.
 version: "2"
 
 services:
@@ -18,3 +20,6 @@ services:
   testphp:
     environment:
       PHP_HOST_NAME: test.veccs.docker
+  testdb:
+    ports:
+      - "3308:3306"

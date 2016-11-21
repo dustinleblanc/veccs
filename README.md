@@ -1,107 +1,34 @@
-# Composer template for Drupal projects
+# Recover CPR Initiative
+[![CircleCI](https://circleci.com/gh/dustinleblanc/veccs/tree/master.svg?style=svg)](https://circleci.com/gh/dustinleblanc/veccs/tree/master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/eda4584d-e7ae-4a0c-97f4-8ec284909625/mini.png)](https://insight.sensiolabs.com/projects/eda4584d-e7ae-4a0c-97f4-8ec284909625)
 
-[![Build Status](https://travis-ci.org/drupal-composer/drupal-project.svg?branch=8.x)](https://travis-ci.org/drupal-composer/drupal-project)
+The Recover CPR initiative is a project of the Veterinary Emergency Critical Care Society. This project exists to assist in the process of evaluating academic literature around treatment of veterinary patients for emergency medical needs in order to foster a greater knowledge around effective treatments for these populations.
+## Getting set up to develop:
 
-This project template should provide a kickstart for managing your site
-dependencies with [Composer](https://getcomposer.org/).
+1. Make sure you have [Composer](https://getcomposer.org/doc/00-intro.md) installed
+2. Make sure you have Docker and [Docker-Compose](https://docs.docker.com/compose/) available. Docker for Mac runs super slow with Symfony/Drupal 8 apps so if developing on a Mac, consider using something like Dinghy to speed things up.
+3. Run `./vendor/bin/robo setup` to copy the seed files into place.
+4. Run `./vendor/bin/robo develop` to start the dev/test containers. You can also just run `docker-compose up -d` if you don't need to run any custom add-ons.
+5. Optionally, if you need to include any local overrides, use a `docker-compose.override.yml` file to override them. An example override file for using Dinghy on a mac is included, copy it over to the override file if you need it and feel free to modify the copy.
+6. Interacting with Drupal is done from within the `php` or `testphp` containers: `docker-compose run php sh` will get you a bash shell inside the container. This is the easiest way to run the test suite.
+7. To run tests: `docker-compose run testphp sh` and then once inside the container `./vendor/bin/robo test`. At this point, some tests might fail. We're using Codeception and the database seed might need some better scrubbing to avoid data pollution.
 
-If you want to know how to use it as replacement for
-[Drush Make](https://github.com/drush-ops/drush/blob/master/docs/make.md) visit
-the [Documentation on drupal.org](https://www.drupal.org/node/2471553).
+## Tests
 
-## Usage
+Currently a very limited Acceptance test suite exists with a handful of tests. The Test runner is [Codeception](http://codeception.com/) and we are using PhantomJS via WebDriver to allow for some Javascript/Ajax interaction. This should be added to and extended. PHP-VCR is installed but not yet working. This is particularly important for testing functionality of the Zotero Import module. Other tests should be added as time allows.
 
-First you need to [install composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+## Hosting
 
-> Note: The instructions below refer to the [global composer installation](https://getcomposer.org/doc/00-intro.md#globally).
-You might need to replace `composer` with `php composer.phar` (or similar) 
-for your setup.
+Hosting is currently on Pantheon for development and is expected for Production.
 
-After that you can create the project:
+## CI and CD
 
-```
-composer create-project drupal-composer/drupal-project:8.x-dev some-dir --stability dev --no-interaction
-```
+CI and CD are setup through CircleCI. The entire test suite is run within the same Docker setup as development. CircleCI will deploy all passing commits to master to the development environment on Pantheon. Individual developers should not be deploying to Pantheon unless under extreme duress (hotfix for critical issue, etc).
 
-With `composer require ...` you can download new dependencies to your 
-installation.
+Deployment scripts are all run through Robo, if the deployment needs to be modified, check the Robofile for modifications.
 
-```
-cd some-dir
-composer require drupal/devel:8.*
-```
+## General helpers
 
-The `composer create-project` command passes ownership of all files to the 
-project that is created. You should create a new git repository, and commit 
-all files not excluded by the .gitignore file.
+Dev scripts are written using the [Robo task runner](http://robo.li/). New scripts should be added to the `Robofile.php` file at the root of the repository as public methods. Some are already there, many of them outdated as the project has evolved.
 
-## What does the template do?
-
-When installing the given `composer.json` some tasks are taken care of:
-
-* Drupal will be installed in the `web`-directory.
-* Autoloader is implemented to use the generated composer autoloader in `vendor/autoload.php`,
-  instead of the one provided by Drupal (`web/vendor/autoload.php`).
-* Modules (packages of type `drupal-module`) will be placed in `web/modules/contrib/`
-* Theme (packages of type `drupal-theme`) will be placed in `web/themes/contrib/`
-* Profiles (packages of type `drupal-profile`) will be placed in `web/profiles/contrib/`
-* Creates default writable versions of `settings.php` and `services.yml`.
-* Creates `sites/default/files`-directory.
-* Latest version of drush is installed locally for use at `vendor/bin/drush`.
-* Latest version of DrupalConsole is installed locally for use at `vendor/bin/drupal`.
-
-## Updating Drupal Core
-
-This project will attempt to keep all of your Drupal Core files up-to-date; the 
-project [drupal-composer/drupal-scaffold](https://github.com/drupal-composer/drupal-scaffold) 
-is used to ensure that your scaffold files are updated every time drupal/core is 
-updated. If you customize any of the "scaffolding" files (commonly .htaccess), 
-you may need to merge conflicts if any of your modfied files are updated in a 
-new release of Drupal core.
-
-Follow the steps below to update your core files.
-
-1. Run `composer update drupal/core`.
-1. Run `git diff` to determine if any of the scaffolding files have changed. 
-   Review the files for any changes and restore any customizations to 
-  `.htaccess` or `robots.txt`.
-1. Commit everything all together in a single commit, so `web` will remain in
-   sync with the `core` when checking out branches or running `git bisect`.
-1. In the event that there are non-trivial conflicts in step 2, you may wish 
-   to perform these steps on a branch, and use `git merge` to combine the 
-   updated core files with your customized files. This facilitates the use 
-   of a [three-way merge tool such as kdiff3](http://www.gitshah.com/2010/12/how-to-setup-kdiff-as-diff-tool-for-git.html). This setup is not necessary if your changes are simple; 
-   keeping all of your modifications at the beginning or end of the file is a 
-   good strategy to keep merges easy.
-
-## Generate composer.json from existing project
-
-With using [the "Composer Generate" drush extension](https://www.drupal.org/project/composer_generate)
-you can now generate a basic `composer.json` file from an existing project. Note
-that the generated `composer.json` might differ from this project's file.
-
-
-## FAQ
-
-### Should I commit the contrib modules I download
-
-Composer recommends **no**. They provide [argumentation against but also 
-workrounds if a project decides to do it anyway](https://getcomposer.org/doc/faqs/should-i-commit-the-dependencies-in-my-vendor-directory.md).
-
-### How can I apply patches to downloaded modules?
-
-If you need to apply patches (depending on the project being modified, a pull 
-request is often a better solution), you can do so with the 
-[composer-patches](https://github.com/cweagans/composer-patches) plugin.
-
-To add a patch to drupal module foobar insert the patches section in the extra 
-section of composer.json:
-```json
-"extra": {
-    "patches": {
-        "drupal/foobar": {
-            "Patch description": "URL to patch"
-        }
-    }
-}
-```
+## Issues / Stories
+Issues/Stories are currently tracked through Github issues. The project is open source so there are currently no plans to make development planning private.

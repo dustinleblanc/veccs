@@ -17,7 +17,7 @@ test:
   pre:
     - sudo chown -R 82:82 .
   override:
-    - docker-compose -f docker-compose.test.yml run --user 82 testphp vendor/bin/robo test
+    - docker-compose run --user 82 testphp vendor/bin/robo test
 
 deployment:
   prod:
