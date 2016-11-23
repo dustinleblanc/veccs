@@ -25,15 +25,10 @@
         "drupal/panels": "3.0.0-beta5",
         "drupal/radix": "3.0.0-alpha4",
         "dustinleblanc/zotero-api": "0.0.*",
-        "drupal/file_entity": "^8.2@beta",
-        "drupal/field_validation": "^8.1",
-        "drupal/mandrill": "1.0.0-alpha1",
         "drupal/config_update": "^1.2"
     },
     "require-dev": {
         "codeception/codeception": "^2.1",
-        "codeception/specify": "0.4.*",
-        "codeception/verify": "0.3.*",
         "drush/drush": "8.*",
         "boedah/robo-drush": "2.2.*",
         "pantheon-systems/terminus": "@stable",
@@ -41,7 +36,6 @@
         "dustinleblanc/codeception-drupal-8": "0.0.*",
         "fzaninotto/faker": "^1.6",
         "php-vcr/php-vcr": "*",
-        "php-vcr/phpunit-testlistener-vcr": "1.1.*",
         "drupal/console": "~1.0"
     },
     "conflict": {

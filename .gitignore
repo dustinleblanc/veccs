@@ -21,3 +21,5 @@ web/sites/test
 *.dump.sql
 npm-debug.log
 docker-runtime
+docker-compose.override.yml
+console/log
