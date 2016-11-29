@@ -1,9 +1,12 @@
 <?php
 namespace Drupal\zotero_import\Controller;
 
+use Drupal\Console\Bootstrap\Drupal;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\Render\Element\StatusMessages;
 use Drupal\user\Entity\User;
 use Drupal\zotero_import\Entity\ResearchAuthor;
 use Drupal\zotero_import\Entity\ResearchReferenceEntity;
@@ -18,11 +21,12 @@ use Symfony\Component\HttpFoundation\Request;
  * @package Drupal\zotero_import\Controller
  */
 class ZoteroImportController extends ControllerBase {
+  protected $contents;
   /**
    * @var \DustinLeblanc\Zotero\Client
    */
   protected $client;
-
+  protected $prefix;
   /**
    * @var Response Response object returned from Zotero API.
    */
@@ -51,13 +55,14 @@ class ZoteroImportController extends ControllerBase {
   }
 
   /**
-   * @param $id
+   * @param Request $request
    *
-   * @return AjaxResponse
+   * @return \Drupal\Core\Ajax\AjaxResponse
    */
   public function fetchGroupItems(Request $request) {
     $id = $request->query->get('group_id');
-    $this->setResponse($this->client->get("/groups/{$id}/items"));
+    $this->setPrefix("/groups/$id");
+    $this->fetchItems($this->client);
 
     $items            = $this->convertItemsResponse($this->getResponse());
     $renderable_items = [
@@ -75,10 +80,9 @@ class ZoteroImportController extends ControllerBase {
    * @return array
    */
   public function fetchLibrary() {
-    $this->fetchItems(
-      $this->client,
-      $this->loadCurrentUser()->get('field_zotero_user_id')->value
-    );
+    $id = $this->loadCurrentUser()->get('field_zotero_user_id')->value;
+    $this->setPrefix("/users/{$id}");
+    $this->fetchItems($this->client);
     return $this->convertItemsResponse($this->getResponse());
   }
 
@@ -91,14 +95,17 @@ class ZoteroImportController extends ControllerBase {
    * @return \Drupal\Core\Ajax\AjaxResponse
    */
   public function importItem(Request $request) {
-    $data            = $request->query->get('item')['data'];
-    $authors         = $this->extractAuthors($data);
+    $data            = $request->query->get('item');
+
+    $authors         = $this->extractAuthors($data['data']);
+    $children = $this->client->get($data['links']['self']['href'] . '/children')->getBody()->getContents();
     $author_entities = array_map([$this, 'findOrCreateResearchAuthor'], $authors);
     // Once we've pulled the authors we don't want them clogging up the data.
     unset($data['creators']);
 
-    $values                   = $this->fieldify($data, $author_entities);
-    $message                  = $this->createResearchReference($values);
+    $values                   = $this->fieldify($data['data'], $author_entities);
+    $message                  = $this->createResearchReference($values, json_decode($children, TRUE));
+
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand("#zotero-item-{$values['zoteroKey']} .zotero-item__import",
       $message));
@@ -127,6 +134,23 @@ class ZoteroImportController extends ControllerBase {
   }
 
   /**
+   * @param mixed $prefix
+   *
+   * @return ZoteroImportController
+   */
+  public function setPrefix($prefix) {
+    $this->prefix = $prefix;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getPrefix() {
+    return $this->prefix;
+  }
+
+  /**
    * Fetch a User's entire Zotero library.
    *
    * @param Client $client
@@ -134,8 +158,9 @@ class ZoteroImportController extends ControllerBase {
    *
    * @return \Drupal\zotero_import\Controller\ZoteroImportController
    */
-  private function fetchItems(Client $client, $zotero_user_id = '') {
-    return $this->setResponse($client->get("users/{$zotero_user_id}/items"));
+  private function fetchItems(Client $client) {
+    $prefix = $this->getPrefix();
+    return $this->setResponse($client->get("{$prefix}/items"));
   }
 
   /**
@@ -167,8 +192,8 @@ class ZoteroImportController extends ControllerBase {
    * @return array
    */
   private function convertItemsResponse(Response $response) {
-    $contents = json_decode($response->getBody()->getContents(), TRUE);
-    return array_filter($contents, function ($item) {
+    $this->contents = json_decode($response->getBody()->getContents(), TRUE);
+    return array_filter($this->contents, function ($item) {
       // We only want to return top level items, we can retrieve children manually.
       if (!isset($item['data']['parentItem']) || $this->needsImport($item)) {
         return $item;
@@ -263,25 +288,16 @@ class ZoteroImportController extends ControllerBase {
    *
    * @return string
    */
-  private function createResearchReference(array $values = []) {
-    $results = \Drupal::entityQuery('research_reference_entity')
-                      ->condition('zoteroKey', $values['zoteroKey'], '=')
-                      ->execute();
-    if (!empty($results)) {
-      return '<p class="alert alert-info alert-dismissable" role="alert">Zotero Item already exists.</p>';
-    }
-    else {
+  private function createResearchReference(array $values = [], array $children = []) {
+    try {
       $entity = ResearchReferenceEntity::create($values);
-      if ($entity->validate()) {
-        $entity->save();
-        $message = '<p id="success-zotero-' . $values['zoteroKey'] . '" class="alert alert-success alert-dismissable" role="alert">Item successfully imported!</p>';
-        return $message;
-      }
-      else {
-        $message = '<p class="alert alert-danger alert-dismissable" role="alert">Unable to import!</p>';
-        return $message;
-      }
+      $entity->save();
+      $title = $entity->getTitle();
+      drupal_set_message("{$title} imported!", 'status');
+    } catch (EntityStorageException $e) {
+      drupal_set_message($e->getMessage(), 'error');
     }
+    return StatusMessages::renderMessages(NULL);
   }
 
   /**
@@ -292,11 +308,19 @@ class ZoteroImportController extends ControllerBase {
     return array_map(
       function($data) {
         return [
-          'id' => $data['data']['id'],
-          'name' => $data['data']['name']
+          '#id' => $data['data']['id'],
+          '#name' => $data['data']['name']
         ];
       },
       json_decode($this->getResponse()->getBody()->getContents(), TRUE)
+    );
+  }
+
+  private function fetchChildren($id) {
+    $prefix = $this->getPrefix();
+    return json_decode(
+      $this->client->get("{$prefix}/items/{$id}/children"),
+      TRUE
     );
   }
 }
