@@ -82,11 +82,7 @@ class CollectionBlockForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Display result.
-    foreach ($form_state->getValues() as $key => $value) {
-      drupal_set_message($key . ': ' . $value);
-    }
-
+    return $form;
   }
 
   public function fetchLibraryAjax(array &$form, FormStateInterface $form_state) {
@@ -108,7 +104,6 @@ class CollectionBlockForm extends FormBase {
     $items = $controller->fetchGroups();
     $renderable_items = [
       '#theme' => 'zotero_groups',
-      '#type' => 'element',
       'elements' => $items,
     ];
     $markup = \Drupal::service('renderer')->render($renderable_items);

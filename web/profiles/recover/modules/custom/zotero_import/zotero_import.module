@@ -44,7 +44,6 @@ function zotero_import_theme() {
   ];
   $theme['zotero_groups'] = [
     'render element' => 'elements',
-    'template' => 'zotero_groups',
   ];
   return $theme;
 }

@@ -2,9 +2,9 @@
   <ul class="zotero-groups list-group">
     {% for group in elements['elements'] %}
       <li class="zotero-group list-group-item" id="zotero-group-">
-        <h4 class="list-group-item-heading">{{ group['name'] }}</h4>
+        <h4 class="list-group-item-heading">{{ group['#name'] }}</h4>
         <p class="list-group-item-text">
-          <a href="{{ path('zotero_import.fetch_group_items', {group_id: group['id'] }) }}" class="use-ajax">Fetch group items</a>
+          <a href="{{ path('zotero_import.fetch_group_items', {group_id: group['#id'] }) }}" class="use-ajax">Fetch group items</a>
         </p>
       </li>
     {% endfor %}
