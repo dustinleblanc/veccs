@@ -14,8 +14,6 @@ dependencies:
     - vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
     - composer setup
 test:
-  pre:
-    - sudo chown -R 82:82 .
   override:
     - composer test
 
