@@ -15,6 +15,7 @@ dependencies:
     - vendor/bin/terminus env:wake veccs.dev
     - composer setup:test
     - cp ci/settings.local.php web/sites/default/settings.local.php
+    - sudo chmod 777 tests/_output
 test:
   override:
     - composer test
