@@ -15,15 +15,6 @@ class RoboFile extends \Robo\Tasks {
   const TERMINUS_BIN = './vendor/bin/terminus';
   const SEED_DB = __DIR__ . '/docker-runtime/mariadb-init/seed.sql.gz';
 
-  /**
-   * RoboFile constructor.
-   */
-  public function __construct() {
-    if (file_exists(__DIR__ . '/.env')) {
-      $dotenv = new Dotenv\Dotenv(__DIR__);
-      $dotenv->load();
-    }
-  }
 
   /**
    * Build a deployable artifact.

@@ -13,6 +13,10 @@
     {
       "type": "composer",
       "url": "https://packages.drupal.org/8"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/greg-1-anderson/robo-drush"
     }
   ],
   "require": {
@@ -33,7 +37,9 @@
     "drupal/devel":"dev-8.x-1.x",
     "dustinleblanc/codeception-drupal-8": "0.0.*",
     "fzaninotto/faker": "^1.6",
-    "php-vcr/php-vcr": "*"
+    "php-vcr/php-vcr": "*",
+    "drush/drush": "~8.0",
+    "boedah/robo-drush": "dev-master"
   },
   "conflict": {
     "drupal/drupal": "*"
