@@ -22,13 +22,10 @@ services:
       PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"testdb","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
       PANTHEON_ENVIRONMENT: local
       DRUPAL_HASH_SALT: mmm...salty
-      # PHP_XDEBUG_ENABLED: 1
-      # PHP_XDEBUG_AUTOSTART: 1
-      # PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
-      # PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
+      TEST_ZOTERO_USER_ID: ${TEST_ZOTERO_USER_ID}
+      TEST_ZOTERO_API_KEY: ${TEST_ZOTERO_API_KEY}
     volumes:
       - ./:/var/www/html
-
 
   testnginx:
     image: wodby/drupal-nginx

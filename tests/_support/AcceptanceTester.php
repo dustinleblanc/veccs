@@ -31,18 +31,6 @@ class AcceptanceTester extends \Codeception\Actor {
   protected $userName;
 
   /**
-   * AcceptanceTester constructor.
-   *
-   * @param \Codeception\Scenario $scenario
-   */
-  public function __construct(Scenario $scenario) {
-    parent::__construct($scenario);
-    $dotenv = new \Dotenv\Dotenv(dirname(__DIR__, 2));
-    $dotenv->load();
-
-  }
-
-  /**
    * Login as a test user.
    *
    * @param string $role
