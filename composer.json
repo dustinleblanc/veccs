@@ -69,7 +69,7 @@
     ],
     "setup:test": [
       "@get:backup",
-      "sudo mkdir -p docker-runtime/testdb-init && cp dump.sql.gz docker-runtime/testdb-init"
+      "sudo mkdir -p docker-runtime/testdb-init && sudo cp dump.sql.gz docker-runtime/testdb-init"
     ],
     "test": [
       "docker-compose -f docker-compose.test.yml up -d",
