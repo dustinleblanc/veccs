@@ -29,14 +29,11 @@
     },
     "require-dev": {
         "codeception/codeception": "^2.1",
-        "drush/drush": "8.*",
-        "boedah/robo-drush": "2.2.*",
-        "pantheon-systems/terminus": "@stable",
+        "pantheon-systems/terminus": "dev-master",
         "drupal/devel":"dev-8.x-1.x",
         "dustinleblanc/codeception-drupal-8": "0.0.*",
         "fzaninotto/faker": "^1.6",
-        "php-vcr/php-vcr": "*",
-        "drupal/console": "~1.0"
+        "php-vcr/php-vcr": "*"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -63,7 +60,15 @@
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ],
         "cbf": "phpcbf --standard=Drupal .",
-        "cs": "phpcs --standard=Drupal --severity=1 ."
+        "cs": "phpcs --standard=Drupal --severity=1 .",
+        "develop": "docker-compose up -d",
+        "get:backup": "terminus backup:create --element=db veccs.dev && wget `terminus backup:get veccs.dev` -O dump.sql.gz",
+        "setup": [
+          "@get:backup",
+          "mkdir -p docker-runtime/mariadb-init && mv dump.sql.gz docker-runtime/mariadb-init",
+          "@develop"
+        ],
+        "test": "docker-compose run testphp ./vendor/bin/codecept run"
     },
     "extra": {
         "installer-paths": {
