@@ -11,7 +11,7 @@ dependencies:
     - npm install -g bower
     - composer global require "hirak/prestissimo:^0.3"
     - composer install --prefer-dist
-    - composer exec terminus login --machine-token=$TERMINUS_TOKEN
+    - vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
     - composer setup
 test:
   pre:
