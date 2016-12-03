@@ -13,9 +13,9 @@ dependencies:
     - composer install --prefer-dist
     - vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
     - vendor/bin/terminus env:wake veccs.dev
-    - composer setup:test
 test:
   override:
+    - composer setup:test
     - composer test
 
 deployment:
