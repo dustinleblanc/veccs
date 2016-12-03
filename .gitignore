@@ -18,7 +18,7 @@ tests/_output/*
 .env*
 web/sites/test
 
-*.dump.sql
+dump.sql.gz
 npm-debug.log
 docker-runtime
 docker-compose.override.yml

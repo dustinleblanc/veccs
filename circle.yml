@@ -15,7 +15,7 @@ dependencies:
     - composer setup:test
 test:
   override:
-    - composer ci
+    - composer test
 
 deployment:
   prod:

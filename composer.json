@@ -72,12 +72,11 @@
       "@get:backup",
       "mkdir -p docker-runtime/testdb-init && cp dump.sql.gz docker-runtime/testdb-init"
     ],
-    "ci": [
+    "test": [
       "docker-compose -f docker-compose.test.yml up -d",
-      "docker-compose -f docker-compose.test.yml down",
-      "docker-compose -f docker-compose.test.yml up -d",
-      "curl -I localhost:8100",
-      "docker-compose -f docker-compose.test.yml run testphp ./vendor/bin/codecept run"
+      "until $(curl --output /dev/null --silent --head --fail http://localhost:8100); do     printf '.';     sleep 1; done",
+      "docker-compose -f docker-compose.test.yml run testphp ./vendor/bin/codecept run",
+      "docker-compose -f docker-compose.test.yml down"
       ]
   },
   "extra": {
