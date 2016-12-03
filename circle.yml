@@ -14,6 +14,7 @@ dependencies:
     - vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
     - vendor/bin/terminus env:wake veccs.dev
     - composer setup:test
+    - echo "<?php $settings['hash_salt'] = 'mmm...salty';" >> web/sites/default/settings.local.php
 test:
   override:
     - composer test
@@ -22,4 +23,5 @@ deployment:
   prod:
     branch: master
     commands:
+      - rm web/sites/default/settings.local.php
       - vendor/bin/robo deploy
