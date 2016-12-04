@@ -77,7 +77,7 @@
       "sudo mkdir -p docker-runtime/testdb-init && sudo cp dump.sql.gz docker-runtime/testdb-init"
     ],
     "test": [
-      "docker-compose up -d testdb testnginx",
+      "docker-compose up -d testdb testnginx phantomjs",
       "until $(curl --output /dev/null --silent --head --fail http://localhost:8100); do     printf '.';     sleep 1; done",
       "docker-compose run testphp ./vendor/bin/robo test"
     ]
