@@ -87,44 +87,6 @@ EOF;
     $this->pushToTarget();
   }
 
-  public function develop() {
-    $cmd = "docker-compose -f docker-compose.yml -f docker-compose.test.yml";
-    if ($local_compose = getenv('LOCAL_COMPOSE')) {
-      $cmd .= " -f {$local_compose}";
-    }
-    $this->taskExec("{$cmd} up -d")->run();
-  }
-
-
-  /**
-   * Run a command in the PHP container
-   *
-   * @param string $op Command to run in PHP container.
-   */
-  public function docker($op = '') {
-    $this->taskExec("docker-compose run php vendor/bin/robo {$op}")->run();
-  }
-
-  /**
-   * Install Drupal with our install profile.
-   *
-   * @param string $uri
-   */
-  public function install($uri = 'default') {
-    $this->buildDrushTask($uri)
-      ->siteInstall('recover')
-      ->run();
-  }
-
-  public function setup() {
-    $this->taskFilesystemStack()
-      ->copy(__DIR__ . '/docker/seed.sql',
-        'docker-runtime/mariadb-init/seed.sql')
-      ->copy(__DIR__ . '/docker/seed.sql',
-        'docker-runtime/testdb-init/seed.sql')
-      ->run();
-  }
-
   /**
    * Clone Pantheon repository into target directory.
    */
@@ -144,34 +106,11 @@ EOF;
       ->run();
   }
 
-  /**
-   * @param string $env
-   * @param string $uri
-   */
-  public function syncDb($env = 'dev', $uri = 'default') {
-    $this->_exec(self::TERMINUS_BIN . ' auth login --machine-token=' . getenv('TERMINUS_TOKEN'));
-    $this->_exec(self::TERMINUS_BIN . ' sites aliases');
+  public function test() {
     $this->buildDrushTask()
-      ->clearCache('drush')
+      ->exec("config-import")
       ->run();
-    $alias = "@pantheon.veccs.{$env}";
-    $this->buildDrushTask($uri)
-      ->exec("sql-sync {$alias} @self")
-      ->run();
-  }
-
-  /**
-   * Run Test suite.
-   *
-   * @param string $env
-   */
-  public function test($env = 'dev') {
-    $this->buildDrushTask()
-      ->exec('config-import')
-      ->run();
-    $this->taskCodecept(self::CEPT_BIN)
-      ->env("{$env}")
-      ->run();
+    $this->taskCodecept(self::CEPT_BIN)->run();
   }
 
   /**
