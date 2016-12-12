@@ -5,7 +5,7 @@ namespace Drupal\zotero_import\Form;
 use Drupal\Core\Entity\ContentEntityDeleteForm;
 
 /**
- * Provides a form for deleting Research Attachment entities.
+ * Provides a form for deleting Research attachment entity entities.
  *
  * @ingroup zotero_import
  */

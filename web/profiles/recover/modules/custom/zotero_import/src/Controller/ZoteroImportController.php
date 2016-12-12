@@ -5,9 +5,14 @@ use Drupal\Console\Bootstrap\Drupal;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\Entity;
 use Drupal\Core\Entity\EntityStorageException;
 use Drupal\Core\Render\Element\StatusMessages;
+use Drupal\media_entity\Entity\Media;
+use Drupal\migrate\Plugin\migrate\process\MachineName;
+use Drupal\system\MachineNameController;
 use Drupal\user\Entity\User;
+use Drupal\zotero_import\Entity\ResearchAttachmentEntity;
 use Drupal\zotero_import\Entity\ResearchAuthor;
 use Drupal\zotero_import\Entity\ResearchReferenceEntity;
 use DustinLeblanc\Zotero\Client;
@@ -225,7 +230,9 @@ class ZoteroImportController extends ControllerBase {
    * @return array
    */
   private function fieldify(array $values = [], array $author_entities = []) {
-    $rekeyed_values = ['type' => 'pubmed'];
+    MachineName
+    $type =
+    $rekeyed_values = ['type' => $type];
     foreach ($values as $key => $value) {
       $rekeyed_values['zotero' . ucfirst($key)] = $value;
     }
@@ -284,7 +291,10 @@ class ZoteroImportController extends ControllerBase {
 
   /**
    * Create a research reference.
+   *
    * @param array $values
+   *
+   * @param array $children
    *
    * @return string
    */
@@ -293,6 +303,12 @@ class ZoteroImportController extends ControllerBase {
       $entity = ResearchReferenceEntity::create($values);
       $entity->save();
       $title = $entity->getTitle();
+      $attachments = array_map(
+        function ($child) {
+          return Media::create()
+        },
+        $children
+      );
       drupal_set_message("{$title} imported!", 'status');
     } catch (EntityStorageException $e) {
       drupal_set_message($e->getMessage(), 'error');

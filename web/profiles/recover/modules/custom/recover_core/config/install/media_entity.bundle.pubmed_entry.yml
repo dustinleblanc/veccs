@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: pubmed_entry
+label: 'PubMed Entry'
+description: ''
+type: generic
+queue_thumbnail_downloads: false
+new_revision: false
+type_configuration: {  }
+field_map: {  }

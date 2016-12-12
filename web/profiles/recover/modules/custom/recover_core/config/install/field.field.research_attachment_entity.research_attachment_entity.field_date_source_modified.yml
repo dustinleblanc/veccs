@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.research_attachment_entity.field_date_source_modified
+  module:
+    - datetime
+    - zotero_import
+id: research_attachment_entity.research_attachment_entity.field_date_source_modified
+field_name: field_date_source_modified
+entity_type: research_attachment_entity
+bundle: research_attachment_entity
+label: 'Date source modified'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

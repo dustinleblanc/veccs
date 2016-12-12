@@ -37,7 +37,7 @@ class ResearchAttachmentEntitySettingsForm extends FormBase {
   }
 
   /**
-   * Defines the settings form for Research Attachment entities.
+   * Defines the settings form for Research attachment entity entities.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -48,7 +48,7 @@ class ResearchAttachmentEntitySettingsForm extends FormBase {
    *   Form definition array.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['ResearchAttachmentEntity_settings']['#markup'] = 'Settings form for Research Attachment entities. Manage field settings here.';
+    $form['ResearchAttachmentEntity_settings']['#markup'] = 'Settings form for Research attachment entity entities. Manage field settings here.';
     return $form;
   }
 

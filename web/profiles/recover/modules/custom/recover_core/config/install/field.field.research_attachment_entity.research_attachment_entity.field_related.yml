@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.research_attachment_entity.field_related
+  module:
+    - zotero_import
+id: research_attachment_entity.research_attachment_entity.field_related
+field_name: field_related
+entity_type: research_attachment_entity
+bundle: research_attachment_entity
+label: Related
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings: {  }
+field_type: entity_reference

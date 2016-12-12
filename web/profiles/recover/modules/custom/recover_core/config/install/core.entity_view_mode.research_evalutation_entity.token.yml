@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - recover_core
+id: research_evalutation_entity.token
+label: Token
+targetEntityType: research_evalutation_entity
+cache: true

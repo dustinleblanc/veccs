@@ -8,7 +8,7 @@ use Drupal\Core\Routing\LinkGeneratorTrait;
 use Drupal\Core\Url;
 
 /**
- * Defines a class to build a listing of Research Attachment entities.
+ * Defines a class to build a listing of Research attachment entity entities.
  *
  * @ingroup zotero_import
  */
@@ -20,7 +20,7 @@ class ResearchAttachmentEntityListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Research Attachment ID');
+    $header['id'] = $this->t('Research attachment entity ID');
     $header['name'] = $this->t('Name');
     return $header + parent::buildHeader();
   }

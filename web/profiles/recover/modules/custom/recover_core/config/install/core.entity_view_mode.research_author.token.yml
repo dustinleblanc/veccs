@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - zotero_import
+id: research_author.token
+label: Token
+targetEntityType: research_author
+cache: true

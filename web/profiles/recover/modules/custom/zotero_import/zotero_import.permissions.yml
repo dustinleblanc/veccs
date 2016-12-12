@@ -64,3 +64,36 @@ view published research author entities:
 
 view unpublished research author entities:
   title: 'View unpublished Research Author entities'
+add research attachment entity entities:
+  title: 'Create new Research attachment entity entities'
+
+administer research attachment entity entities:
+  title: 'Administer Research attachment entity entities'
+  description: 'Allow to access the administration form to configure Research attachment entity entities.'
+  restrict access: true
+
+delete research attachment entity entities:
+  title: 'Delete Research attachment entity entities'
+
+edit research attachment entity entities:
+  title: 'Edit Research attachment entity entities'
+
+access research attachment entity overview:
+  title: 'Access the Research attachment entity overview page'
+
+view published research attachment entity entities:
+  title: 'View published Research attachment entity entities'
+
+view unpublished research attachment entity entities:
+  title: 'View unpublished Research attachment entity entities'
+
+view all research attachment entity revisions:
+  title: 'View all Research attachment entity revisions'
+
+revert all research attachment entity revisions:
+  title: 'Revert all Research attachment entity revisions'
+  description: 'Role requires permission <em>view Research attachment entity revisions</em> and <em>edit rights</em> for research attachment entity entities in question or <em>administer research attachment entity entities</em>.'
+
+delete all research attachment entity revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Research attachment entity revisions</em> and <em>delete rights</em> for research attachment entity entities in question or <em>administer research attachment entity entities</em>.'

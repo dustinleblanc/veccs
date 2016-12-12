@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.research_attachment_entity.field_attachment_file
+  module:
+    - file
+    - zotero_import
+id: research_attachment_entity.research_attachment_entity.field_attachment_file
+field_name: field_attachment_file
+entity_type: research_attachment_entity
+bundle: research_attachment_entity
+label: 'Attachment file'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: research_attachments
+  file_extensions: 'txt pdf odt xls csv'
+  max_filesize: ''
+  description_field: true
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

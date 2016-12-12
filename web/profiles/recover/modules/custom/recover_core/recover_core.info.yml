@@ -3,21 +3,28 @@ description: 'Provides core components required by other features.'
 type: module
 core: 8.x
 dependencies:
+  - block
   - block_content
   - comment
+  - contact
   - datetime
   - field
   - file
   - image
   - link
+  - media_entity
+  - media_entity_document
+  - menu_link_content
   - menu_ui
   - node
   - page_manager
+  - panels
   - path
   - recover_core
   - shortcut
   - taxonomy
   - text
+  - tour
   - user
   - zotero_import
 version: 8.0.4

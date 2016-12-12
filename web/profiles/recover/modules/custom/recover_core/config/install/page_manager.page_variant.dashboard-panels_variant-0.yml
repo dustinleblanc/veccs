@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.dashboard
+  module:
+    - panels
+    - zotero_import
+id: dashboard-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    d0011d33-d9f0-452f-8a01-2afbd3982937:
+      id: user_zotero_collections_block
+      label: 'Zotero Collections'
+      provider: zotero_import
+      label_display: visible
+      context_mapping: {  }
+      region: middle
+      uuid: d0011d33-d9f0-452f-8a01-2afbd3982937
+      weight: 1
+  id: panels_variant
+  uuid: ca0e68f0-e763-44bf-a2af-83b51da94566
+  label: null
+  weight: 0
+  layout: onecol
+  layout_settings: {  }
+  page_title: Dashboard
+  storage_type: page_manager
+  storage_id: dashboard-panels_variant-0
+  builder: ipe
+page: dashboard
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - recover_core
+id: medical_condition.token
+label: Token
+targetEntityType: medical_condition
+cache: true

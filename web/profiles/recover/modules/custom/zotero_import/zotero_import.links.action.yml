@@ -19,3 +19,8 @@ entity.research_author.add_form:
   title: 'Add Research Author'
   appears_on:
     - entity.research_author.collection
+entity.research_attachment_entity.add_form:
+  route_name: entity.research_attachment_entity.add_form
+  title: 'Add Research attachment entity'
+  appears_on:
+    - entity.research_attachment_entity.collection
