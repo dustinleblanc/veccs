@@ -43,5 +43,5 @@ application:
     generate-inline: false
     generate-chain: false
 ##    yes: false
-    composer: true
+#composer: true
     root: 'web'

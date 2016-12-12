@@ -4584,7 +4584,7 @@
                 "terminus",
                 "wordpress"
             ],
-            "time": "2017-01-27T22:06:01+00:00"
+            "time": "2017-01-27 22:06:01"
         },
         {
             "name": "pear/console_table",
