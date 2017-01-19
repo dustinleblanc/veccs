@@ -13,8 +13,7 @@ dependencies:
     - composer install --prefer-dist
     - vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
     - vendor/bin/terminus env:wake veccs.dev
-    - composer setup:test
-    - cp ci/settings.local.php web/sites/default/settings.local.php
+    - composer setup
     - sudo chmod 777 tests/_output
 test:
   override:
