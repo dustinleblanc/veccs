@@ -6,11 +6,11 @@ The Recover CPR initiative is a project of the Veterinary Emergency Critical Car
 
 1. Make sure you have [Composer](https://getcomposer.org/doc/00-intro.md) installed
 2. Make sure you have Docker and [Docker-Compose](https://docs.docker.com/compose/) available. Docker for Mac runs super slow with Symfony/Drupal 8 apps so if developing on a Mac, consider using something like Dinghy to speed things up.
-3. Run `./vendor/bin/robo setup` to copy the seed files into place.
-4. Run `./vendor/bin/robo develop` to start the dev/test containers. You can also just run `docker-compose up -d` if you don't need to run any custom add-ons.
-5. Optionally, if you need to include any local overrides, use a `docker-compose.override.yml` file to override them. An example override file for using Dinghy on a mac is included, copy it over to the override file if you need it and feel free to modify the copy.
-6. Interacting with Drupal is done from within the `php` or `testphp` containers: `docker-compose run php sh` will get you a bash shell inside the container. This is the easiest way to run the test suite.
-7. To run tests: `docker-compose run testphp sh` and then once inside the container `./vendor/bin/robo test`. At this point, some tests might fail. We're using Codeception and the database seed might need some better scrubbing to avoid data pollution.
+3. Run `composer setup` to copy the seed files into place.
+4. Run `docker-compose up -d`
+5. Optionally, if you need to include any local overrides, use a `docker-compose.override.yml` file to override them.
+6. Interacting with Drupal is done from within the `php` or `testphp` containers: `docker-compose run php sh` will get you a bash shell inside the container. Drush can be run this way.
+7. To run tests: `composer test`
 
 ## Tests
 
