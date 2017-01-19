@@ -1,5 +1,4 @@
-version: "2"
-
+version: '2'
 services:
   mariadb:
     image: wodby/drupal-mariadb:1.0.0
@@ -28,8 +27,8 @@ services:
       # PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
       # PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
     volumes:
-      - ./:/var/www/html
-#      - d4d-unison-sync:/var/www/html:rw # Replace volume to this to use docker-sync for macOS users
+#      - ./:/var/www/html
+      - d4d-unison-sync:/var/www/html:rw # Replace volume to this to use docker-sync for macOS users
 
   nginx:
     image: wodby/drupal-nginx:1.10-1.1.0
@@ -81,8 +80,8 @@ services:
       TEST_ZOTERO_USER_ID: ${TEST_ZOTERO_USER_ID}
       TEST_ZOTERO_API_KEY: ${TEST_ZOTERO_API_KEY}
     volumes:
-      - ./:/var/www/html
-#      - d4d-unison-sync:/var/www/html:rw # Replace volume to this to use docker-sync for macOS users
+#      - ./:/var/www/html
+      - d4d-unison-sync:/var/www/html:rw # Replace volume to this to use docker-sync for macOS users
   testnginx:
     image: wodby/drupal-nginx:1.10-1.1.0
     environment:
@@ -131,6 +130,6 @@ services:
 #      - "8004:6081" # HTTP Proxy
 #      - "8005:6082" # Control terminal
 
-#volumes:
-#  d4d-unison-sync:
-#    external: true
+volumes:
+  d4d-unison-sync:
+    external: true

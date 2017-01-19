@@ -1,6 +1,0 @@
-# This file includes services for a DEV installation and a TEST installation.
-# This is NOT for production use and is based on Wodby's Docker4Drupal.
-version: "2"
-
-services:
-
