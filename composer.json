@@ -68,13 +68,10 @@
     "cbf": "phpcbf --standard=Drupal .",
     "cs": "phpcs --standard=Drupal --severity=1 .",
     "get:backup": "terminus backup:create --element=db veccs.dev && wget `terminus backup:get veccs.dev` -O dump.sql.gz",
-    "setup:dev": [
+    "setup": [
       "@get:backup",
-      "sudo mkdir -p docker-runtime/mariadb-init && sudo cp dump.sql.gz docker-runtime/mariadb-init"
-    ],
-    "setup:test": [
-      "@get:backup",
-      "sudo mkdir -p docker-runtime/testdb-init && sudo cp dump.sql.gz docker-runtime/testdb-init"
+      "cp dump.sql.gz mariadb-init",
+      "cp ci/settings.local.php web/sites/default"
     ],
     "test": [
       "docker-compose up -d testdb testnginx phantomjs",
