@@ -6,10 +6,9 @@
  * @see http://robo.li/
  */
 class RoboFile extends \Robo\Tasks {
-  use \Boedah\Robo\Task\Drush\loadTasks;
+  use DigipolisGent\Robo\Task\DrupalConsole\loadTasks;
 
   const CEPT_BIN = __DIR__ . '/vendor/bin/codecept';
-  const DRUSH_BIN = __DIR__ . '/vendor/bin/drush';
   const DRUPAL_ROOT = __DIR__ . '/web';
   const TARGET_DIR = '../pantheon_veccs';
   const TERMINUS_BIN = './vendor/bin/terminus';
@@ -107,22 +106,9 @@ EOF;
   }
 
   public function test() {
-    $this->buildDrushTask()
-      ->exec("config-import")
+    $this->_exec('vendor/bin/drush --root=web cim');
+    $this->_exec('vendor/bin/drush --root=web updb');
+    $this->taskCodecept(self::CEPT_BIN)
       ->run();
-    $this->taskCodecept(self::CEPT_BIN)->run();
-  }
-
-  /**
-   * Stub out Drush tasks with common arguments.
-   *
-   * @param string $uri
-   *
-   * @return \Boedah\Robo\Task\Drush\DrushStack
-   */
-  protected function buildDrushTask($uri = 'default') {
-    return $this->taskDrushStack(self::DRUSH_BIN)
-      ->uri($uri)
-      ->dir(self::DRUPAL_ROOT);
   }
 }

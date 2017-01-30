@@ -1,91 +1,88 @@
 {
-  "name": "dustinleblanc/recoverdrupal",
-  "description": "Drupal 8 site for RECOVER project",
-  "type": "project",
-  "license": "GPL-2.0+",
-  "authors": [
-    {
-      "name": "Dustin LeBlanc<dustin.m.leblanc@gmail.com",
-      "role": "Developer"
-    }
-  ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://packages.drupal.org/8"
+    "name": "dustinleblanc/recoverdrupal",
+    "description": "Drupal 8 site for RECOVER project",
+    "type": "project",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Dustin LeBlanc<dustin.m.leblanc@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.0.20",
+        "drupal-composer/drupal-scaffold": "^2.1.0",
+        "cweagans/composer-patches": "~1.0",
+        "drupal/core": "8.*",
+        "drupal/features": "3.*",
+        "drupal/page_manager": "1.0.0-alpha24",
+        "drupal/panels": "3.0.0-beta5",
+        "drupal/radix": "3.0.0-alpha4",
+        "dustinleblanc/zotero-api": "0.0.*",
+        "drupal/config_update": "^1.2",
+        "drupal/field_validation": "~1.0"
     },
-    {
-      "type": "vcs",
-      "url": "https://github.com/greg-1-anderson/robo-drush"
+    "require-dev": {
+        "codeception/codeception": "~2.2",
+        "pantheon-systems/terminus": "~1.0",
+        "drupal/devel":"dev-8.x-1.x",
+        "dustinleblanc/codeception-drupal-8": "0.0.*",
+        "fzaninotto/faker": "^1.6",
+        "php-vcr/php-vcr": "*",
+        "drush/drush": "~8.0",
+        "drupal/console": "~1.0"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ]
+    },
+    "scripts": {
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "cbf": "phpcbf --standard=Drupal .",
+        "cs": "phpcs --standard=Drupal --severity=1 .",
+        "get:backup": "terminus backup:create --element=db veccs.dev && wget `terminus backup:get veccs.dev` -O dump.sql.gz",
+        "setup": [
+            "@get:backup",
+            "cp dump.sql.gz mariadb-init",
+            "cp ci/settings.local.php web/sites/default"
+        ],
+        "test": [
+            "docker-compose up -d testdb testnginx phantomjs",
+            "until $(curl --output /dev/null --silent --head --fail http://localhost:8100); do     printf '.';     sleep 1; done",
+            "docker-compose run testphp ./vendor/bin/robo test"
+        ]
+    },
+    "extra": {
+        "installer-paths": {
+            "web/core": ["type:drupal-core"],
+            "web/modules/contrib/{$name}": ["type:drupal-module"],
+            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "web/themes/contrib/{$name}": ["type:drupal-theme"],
+            "drush/contrib/{$name}": ["type:drupal-drush"]
+        }
     }
-  ],
-  "require": {
-    "composer/installers": "^1.0.20",
-    "drupal-composer/drupal-scaffold": "^2.1.0",
-    "cweagans/composer-patches": "~1.0",
-    "drupal/core": "8.*",
-    "drupal/features": "3.*",
-    "drupal/page_manager": "1.0.0-alpha24",
-    "drupal/panels": "3.0.0-beta5",
-    "drupal/radix": "3.0.0-alpha4",
-    "dustinleblanc/zotero-api": "0.0.*",
-    "drupal/config_update": "^1.2"
-  },
-  "require-dev": {
-    "codeception/codeception": "~2.2",
-    "pantheon-systems/terminus": "dev-master",
-    "drupal/devel":"dev-8.x-1.x",
-    "dustinleblanc/codeception-drupal-8": "0.0.*",
-    "fzaninotto/faker": "^1.6",
-    "php-vcr/php-vcr": "*",
-    "drush/drush": "~8.0",
-    "boedah/robo-drush": "dev-master"
-  },
-  "conflict": {
-    "drupal/drupal": "*"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "autoload": {
-    "classmap": [
-      "scripts/composer/ScriptHandler.php"
-    ]
-  },
-  "scripts": {
-    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-    "pre-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ],
-    "pre-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-    ],
-    "post-install-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-    ],
-    "post-update-cmd": [
-      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-    ],
-    "cbf": "phpcbf --standard=Drupal .",
-    "cs": "phpcs --standard=Drupal --severity=1 .",
-    "get:backup": "terminus backup:create --element=db veccs.dev && wget `terminus backup:get veccs.dev` -O dump.sql.gz",
-    "setup": [
-      "@get:backup",
-      "cp dump.sql.gz mariadb-init",
-      "cp ci/settings.local.php web/sites/default"
-    ],
-    "test": [
-      "docker-compose up -d testdb testnginx phantomjs",
-      "until $(curl --output /dev/null --silent --head --fail http://localhost:8100); do     printf '.';     sleep 1; done",
-      "docker-compose run testphp ./vendor/bin/robo test"
-    ]
-  },
-  "extra": {
-    "installer-paths": {
-      "web/core": ["type:drupal-core"],
-      "web/modules/contrib/{$name}": ["type:drupal-module"],
-      "web/profiles/contrib/{$name}": ["type:drupal-profile"],
-      "web/themes/contrib/{$name}": ["type:drupal-theme"],
-      "drush/contrib/{$name}": ["type:drupal-drush"]
-    }
-  }
 }
