@@ -6,14 +6,15 @@ application:
   develop: 'false'
   command: 'about'
   checked: 'false'
+  clear: 'false'
   remote:
-    user: 'root'
+    user: 'drupal'
+#    password: 'drupal'
     port: '22'
-    console: '/usr/local/bin/drupal'
-    keys:
-      public: '~/.ssh/id_rsa.pub'
-      private: '~/.ssh/id_rsa'
-      passphrase: '~/.ssh/passphrase.txt'
+#    keys:
+#      public: '~/.ssh/id_rsa.pub'
+#      private: '~/.ssh/id_rsa'
+#      passphrase: '~/.ssh/passphrase.txt'
   composer:
     create-project:
       default:
@@ -42,6 +43,3 @@ application:
 #    uri: miltisite.dev
     generate-inline: false
     generate-chain: false
-##    yes: false
-#composer: true
-    root: 'web'
