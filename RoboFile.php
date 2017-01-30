@@ -6,7 +6,6 @@
  * @see http://robo.li/
  */
 class RoboFile extends \Robo\Tasks {
-  use DigipolisGent\Robo\Task\DrupalConsole\loadTasks;
 
   const CEPT_BIN = __DIR__ . '/vendor/bin/codecept';
   const DRUPAL_ROOT = __DIR__ . '/web';
