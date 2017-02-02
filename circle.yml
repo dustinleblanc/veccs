@@ -1,14 +1,13 @@
 machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
-  environment:
-    PATH: $PATH:~/bin
 dependencies:
   pre:
     - rm /opt/circleci/php/$(phpenv global)/etc/conf.d/xdebug.ini
   override:
-    - curl -L https://github.com/docker/compose/releases/download/1.10.0/run.sh > ~/bin/docker-compose
-    - chmod +x ~/bin/docker-compose
+    - sudo pip install docker-compose
     - npm install -g bower
     - composer global require "hirak/prestissimo:^0.3"
     - composer install --prefer-dist
