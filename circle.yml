@@ -5,6 +5,8 @@ dependencies:
   pre:
     - rm /opt/circleci/php/$(phpenv global)/etc/conf.d/xdebug.ini
   override:
+    - curl -L https://github.com/docker/compose/releases/download/1.10.0/run.sh > /usr/local/bin/docker-compose
+    - chmod +x /usr/local/bin/docker-compose
     - npm install -g bower
     - composer global require "hirak/prestissimo:^0.3"
     - composer install --prefer-dist
