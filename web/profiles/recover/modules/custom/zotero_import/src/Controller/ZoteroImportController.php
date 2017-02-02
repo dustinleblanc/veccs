@@ -230,8 +230,7 @@ class ZoteroImportController extends ControllerBase {
    * @return array
    */
   private function fieldify(array $values = [], array $author_entities = []) {
-    MachineName
-    $type =
+    $type = 'pubmed'; // @todo: make this dynamic.
     $rekeyed_values = ['type' => $type];
     foreach ($values as $key => $value) {
       $rekeyed_values['zotero' . ucfirst($key)] = $value;
@@ -305,7 +304,7 @@ class ZoteroImportController extends ControllerBase {
       $title = $entity->getTitle();
       $attachments = array_map(
         function ($child) {
-          return Media::create()
+//          return Media::create(); // @todo: write code to create child items.
         },
         $children
       );
