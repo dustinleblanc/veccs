@@ -41,9 +41,6 @@ dependencies:
   - user
   - views
   - views_ui
-themes:
-  - adminimal_theme
-  - bootstrap
 package: Recover
 distribution:
   name: Recover

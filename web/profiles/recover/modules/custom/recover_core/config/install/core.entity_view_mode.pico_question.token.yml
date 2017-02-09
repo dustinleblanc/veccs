@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - recover_core
-id: pico_question.token
-label: Token
-targetEntityType: pico_question
-cache: true
