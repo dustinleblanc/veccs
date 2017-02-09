@@ -1,8 +1,8 @@
 name: recover_theme
 description: A theme based on Radix.
 screenshot: screenshot.png
-core: 8.x
-version: VERSION
+# core: 8.x
+# version: VERSION
 engine: twig
 type: theme
 base theme: radix
@@ -17,3 +17,13 @@ regions:
 
 libraries:
   - recover_theme/base
+
+libraries-override:
+  radix/bootstrap: false
+  radix/style: false
+
+# Information added by Drupal.org packaging script on 2017-02-02
+version: '8.x-3.1'
+core: '8.x'
+project: 'radix'
+datestamp: 1486028890
