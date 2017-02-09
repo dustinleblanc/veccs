@@ -1,88 +1,103 @@
 {
-    "name": "dustinleblanc/recoverdrupal",
-    "description": "Drupal 8 site for RECOVER project",
-    "type": "project",
-    "license": "GPL-2.0+",
-    "authors": [
-        {
-            "name": "Dustin LeBlanc<dustin.m.leblanc@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        }
-    ],
-    "require": {
-        "composer/installers": "^1.0.20",
-        "drupal-composer/drupal-scaffold": "^2.1.0",
-        "cweagans/composer-patches": "~1.0",
-        "drupal/core": "8.*",
-        "drupal/features": "3.*",
-        "drupal/page_manager": "1.0.0-alpha24",
-        "drupal/panels": "3.0.0-beta5",
-        "drupal/radix": "3.0.0-alpha4",
-        "dustinleblanc/zotero-api": "0.0.*",
-        "drupal/config_update": "^1.2",
-        "drupal/field_validation": "~1.0"
-    },
-    "require-dev": {
-        "codeception/codeception": "~2.2",
-        "pantheon-systems/terminus": "~1.0",
-        "drupal/devel":"dev-8.x-1.x",
-        "dustinleblanc/codeception-drupal-8": "0.0.*",
-        "fzaninotto/faker": "^1.6",
-        "php-vcr/php-vcr": "*",
-        "drush/drush": "~8.0",
-        "drupal/console": "~1.0"
-    },
-    "conflict": {
-        "drupal/drupal": "*"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload": {
-        "classmap": [
-            "scripts/composer/ScriptHandler.php"
-        ]
-    },
-    "scripts": {
-        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-        "pre-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "pre-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "cbf": "phpcbf --standard=Drupal .",
-        "cs": "phpcs --standard=Drupal --severity=1 .",
-        "get:backup": "terminus backup:create --element=db veccs.dev && wget `terminus backup:get veccs.dev` -O dump.sql.gz",
-        "setup": [
-            "@get:backup",
-            "cp dump.sql.gz mariadb-init",
-            "cp ci/settings.local.php web/sites/default"
-        ],
-        "test": [
-            "docker-compose up -d testdb testnginx phantomjs",
-            "until $(curl --output /dev/null --silent --head --fail http://localhost:8100); do     printf '.';     sleep 1; done",
-            "docker-compose run testphp ./vendor/bin/robo test"
-        ]
-    },
-    "extra": {
-        "installer-paths": {
-            "web/core": ["type:drupal-core"],
-            "web/modules/contrib/{$name}": ["type:drupal-module"],
-            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
-            "web/themes/contrib/{$name}": ["type:drupal-theme"],
-            "drush/contrib/{$name}": ["type:drupal-drush"]
-        }
+  "name": "dustinleblanc/recoverdrupal",
+  "description": "Drupal 8 site for RECOVER project",
+  "type": "project",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Dustin LeBlanc<dustin.m.leblanc@gmail.com",
+      "role": "Developer"
     }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.0.20",
+    "drupal-composer/drupal-scaffold": "^2.0.1",
+    "cweagans/composer-patches": "~1.0",
+    "drupal/core": "~8",
+    "drupal/console": "^1.0.0-rc8",
+    "drush/drush": "~8",
+    "drupal/config_direct_save": "^1.0",
+    "drupal/features": "3.*",
+    "drupal/page_manager": "1.0.0-alpha24",
+    "drupal/panels": "3.0.0-beta5",
+    "drupal/radix": "3.*",
+    "dustinleblanc/zotero-api": "0.0.*",
+    "drupal/media_entity_document": "~1.0",
+    "drupal/media": "1.*"
+  },
+  "require-dev": {
+    "mikey179/vfsstream": "~1.2",
+    "behat/behat": "3.*",
+    "behat/mink": "~1.7",
+    "behat/mink-extension": "*",
+    "behat/mink-goutte-driver": "~1.2",
+    "boedah/robo-drush": "~3",
+    "jcalderonzumba/gastonjs": "~1.0.2",
+    "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+    "drupal/drupal-extension": "*",
+    "drush-ops/behat-drush-endpoint": "*",
+    "phpunit/phpunit": "~4.8",
+    "symfony/css-selector": "~2.8",
+    "drupal/devel": "1.*"
+  },
+  "conflict": {
+      "drupal/drupal": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "classmap": [
+      "scripts/composer/ScriptHandler.php"
+    ]
+  },
+  "scripts": {
+    "build-assets": [
+      "./scripts/composer/install-or-update"
+    ],
+    "drupal-unit-tests": "cd web/core && ../../vendor/bin/phpunit --testsuite=unit --exclude-group Composer,DependencyInjection,PageCache",
+    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+    "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
+    "post-install-cmd": [
+      "@drupal-scaffold",
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+    ],
+    "post-update-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+    ],
+    "post-create-project-cmd": [
+      "@drupal-scaffold",
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+    ],
+    "cbf": "phpcbf --standard=Drupal .",
+    "cs": "phpcs --standard=Drupal --severity=1 .",
+    "get:backup": "terminus backup:create --element=db veccs.dev && wget `terminus backup:get veccs.dev` -O dump.sql.gz",
+    "setup": [
+      "@get:backup",
+      "cp web/sites/example.settings.local.php web/sites/default/settings.local.php",
+      "@site:install"
+    ],
+    "site:install": "drush si -r web"
+  },
+  "extra": {
+    "installer-paths": {
+      "web/core": ["type:drupal-core"],
+      "web/modules/contrib/{$name}": ["type:drupal-module"],
+      "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+      "web/themes/contrib/{$name}": ["type:drupal-theme"],
+      "drush/contrib/{$name}": ["type:drupal-drush"]
+    },
+    "drupal-scaffold": {
+      "source": "https://raw.githubusercontent.com/pantheon-systems/drops-8/{version}/{path}",
+      "includes": [
+        "sites/default/default.services.pantheon.preproduction.yml",
+        "sites/default/settings.pantheon.php"
+      ]
+    }
+  }
 }
