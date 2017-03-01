@@ -6,7 +6,6 @@ dependencies:
   - block
   - block_content
   - comment
-  - contact
   - datetime
   - field
   - file
