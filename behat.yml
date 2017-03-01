@@ -2,22 +2,26 @@
 # behat.yml file for testing on Pantheon.
 #
 default:
+  autoload:
+    '': %paths.base%/tests/acceptance/features/bootstrap
   suites:
     default:
       paths:
-        - %paths.base%/features
-        - %paths.base%/installer-features
-        - %paths.base%/pantheon-features
-        - %paths.base%/site-features
+        - %paths.base%/tests/acceptance/features
       contexts:
         - FeatureContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
+
   extensions:
     Behat\MinkExtension:
       goutte: ~
-      selenium2: ~
+      selenium2:
+        wd_host: 'http://nginx'
       files_path: './data-files'
+      base_url: http://nginx
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drush'
+      drush:
+        root: './web'
