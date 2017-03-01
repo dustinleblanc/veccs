@@ -81,9 +81,11 @@
     "setup": [
       "@get:backup",
       "cp web/sites/example.settings.local.php web/sites/default/settings.local.php",
-      "@site:install"
+      "gunzip dump.sql.gz",
+      "mv dump.sql mariadb-init"
     ],
-    "site:install": "drush si -r web"
+    "site:install": "drush si -r web",
+    "test": "docker-compose run testphp ./vendor/bin/behat"
   },
   "extra": {
     "installer-paths": {
