@@ -5,11 +5,12 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Drupal\DrupalExtension\Context\DrupalContext;
 use Behat\Behat\Hook\Scope\AfterStepScope;
+use Drupal\DrupalExtension\Context\RawDrupalContext;
 
 /**
  * Define application features from the specific context.
  */
-class FeatureContext extends DrupalContext implements Context, SnippetAcceptingContext {
+class FeatureContext extends RawDrupalContext implements Context, SnippetAcceptingContext {
   /**
    * Initializes context.
    * Every scenario gets its own context object.
