@@ -85,7 +85,7 @@
       "cp web/sites/example.settings.local.php web/sites/default/settings.local.php"
     ],
     "site:install": "drush si -r web",
-    "test": "docker-compose run testphp ./vendor/bin/behat"
+    "test": "docker-compose run testphp ./vendor/bin/behat --colors"
   },
   "extra": {
     "installer-paths": {
