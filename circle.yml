@@ -54,6 +54,7 @@ dependencies:
     - git config --global user.email "$GIT_EMAIL"
     - git config --global user.name "Circle CI"
   override:
+    - sudo pip install docker-compose
     - composer global require -n "hirak/prestissimo:^0.3"
     - composer global require -n "consolidation/cgr"
     - cgr "pantheon-systems/terminus:~1" --stability beta
