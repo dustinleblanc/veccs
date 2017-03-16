@@ -72,7 +72,7 @@ dependencies:
     - terminus build-env:create -n "$TERMINUS_SITE.dev" "$TERMINUS_ENV" --yes --notify="$NOTIFY"
 test:
   override:
-    - ./vendor/bin/behat
+    - vendor/bin/behat
 deployment:
   build-assets:
     branch: master
