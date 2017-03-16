@@ -34,7 +34,7 @@ machine:
     ### The name of the site to be used when installing Drupal through Behat.
     # TEST_SITE_NAME: My Site Name
     # These variables do not need to change with each copy of the repo.
-    BRANCH: $(echo $CIRCLE_BRANCH | grep -v '^\(master\|[0-9]\+.x\)$')
+    BRANCH: $(echo $CIRCLE_BRANCH | grep -v '^\(master\|[0-9]\+.x\)$') | sed 's/_/-/g'
     PR_LABEL: ${BRANCH:+pr-$BRANCH}
     CI_LABEL: ci-$CIRCLE_BUILD_NUM
     TERMINUS_ENV: $(echo ${PR_LABEL:-$CI_LABEL} | cut -c -11 | sed 's/-$//')
