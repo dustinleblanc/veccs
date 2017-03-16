@@ -15,11 +15,9 @@ default:
 
   extensions:
     Behat\MinkExtension:
-      base_url: http://testnginx
       browser_name: phantomjs
       goutte: ~
       selenium2:
-        wd_host: 'http://phantomjs:4444/wd/hub'
         capabilities:
           version: ''
       files_path: './data-files'
