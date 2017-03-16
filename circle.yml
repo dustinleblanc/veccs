@@ -59,11 +59,10 @@ dependencies:
     - composer global require -n "hirak/prestissimo:^0.3"
     - composer global require -n "consolidation/cgr"
     - cgr "pantheon-systems/terminus:~1" --stability beta
-    - terminus --version
-    - cgr "drush/drush:~8"
     - mkdir -p ~/.terminus/plugins
     - composer create-project -n -d ~/.terminus/plugins pantheon-systems/terminus-build-tools-plugin:~1
-    - composer create-project -n -d ~/.terminus/plugins pantheon-systems/terminus-secrets-plugin:~1
+    - composer create-project -n -d ~/.terminus/plugins pantheon-systems/terminus-composer-plugin:~1
+    - composer install
   post:
     - terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
     - terminus build-env:delete:ci -n "$TERMINUS_SITE" --keep=2 --yes
@@ -73,6 +72,8 @@ dependencies:
 test:
   override:
     - vendor/bin/behat
+  post:
+    - terminus composer $TERMINUS_SITE.TERMINUS_ENV -- install --no-dev
 deployment:
   build-assets:
     branch: master
