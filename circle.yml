@@ -66,12 +66,13 @@ dependencies:
     - composer install
   post:
     - terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
-    - terminus aliases
     - terminus build-env:delete:ci -n "$TERMINUS_SITE" --keep=2 --yes
     - composer -n build-assets
     - terminus env:wake -n "$TERMINUS_SITE.dev"
     - terminus build-env:create -n "$TERMINUS_SITE.dev" "$TERMINUS_ENV" --yes --notify="$NOTIFY"
 test:
+  pre:
+    - terminus aliases
   override:
     - vendor/bin/behat
   post:
