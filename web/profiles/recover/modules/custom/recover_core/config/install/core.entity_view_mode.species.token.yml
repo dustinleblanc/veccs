@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - recover_core
-id: species.token
-label: Token
-targetEntityType: species
-cache: true

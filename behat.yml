@@ -1,0 +1,26 @@
+#
+# behat.yml file for testing on Pantheon.
+#
+default:
+  autoload:
+    '': %paths.base%/tests/acceptance/features/bootstrap
+  suites:
+    default:
+      paths:
+        - %paths.base%/tests/acceptance/features
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+
+  extensions:
+    Behat\MinkExtension:
+      browser_name: phantomjs
+      goutte: ~
+      selenium2:
+        capabilities:
+          version: ''
+      files_path: './data-files'
+    Drupal\DrupalExtension:
+      blackbox: ~
+      api_driver: 'drush'
