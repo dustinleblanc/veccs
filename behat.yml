@@ -24,5 +24,3 @@ default:
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drush'
-      drush:
-        root: './web'
