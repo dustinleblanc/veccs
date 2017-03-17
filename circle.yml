@@ -76,7 +76,7 @@ test:
   override:
     - vendor/bin/behat
   post:
-    - terminus composer $TERMINUS_SITE.TERMINUS_ENV -- install --no-dev
+    - terminus composer $TERMINUS_SITE.$TERMINUS_ENV -- install --no-dev
 deployment:
   build-assets:
     branch: master
