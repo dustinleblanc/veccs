@@ -96,7 +96,7 @@ services:
       - "8100:80"
 
   phantomjs:
-    image: cmfatih/phantomjs
+    image: wernight/phantomjs
     volumes_from:
       - testphp
     links:
