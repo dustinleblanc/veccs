@@ -40,7 +40,7 @@ machine:
     TERMINUS_ENV: $CI_LABEL
     NOTIFY: 'scripts/github/add-commit-comment {project} {sha} "Created multidev environment [{site}#{env}]({dashboard-url})." {site-url}'
     PATH: $PATH:~/.composer/vendor/bin:~/.config/composer/vendor/bin:tests/scripts
-    BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "https://$CI_LABEL-$TERMINUS_SITE.pantheonsite.io/"}}}'
+    BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "http://$CI_LABEL-$TERMINUS_SITE.pantheonsite.io/"}}}'
 
 dependencies:
   cache_directories:
