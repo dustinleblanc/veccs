@@ -1,86 +1,31 @@
-# https://circleci.com/docs/configuration#machine
 machine:
   pre:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
     - pip install docker-compose==1.8.0
   services:
     - docker
-  timezone:
-    America/Chicago
+
   php:
     # https://circleci.com/docs/build-image-trusty/#php
     version: 7.0.11
-  environment:
-    # This repository requires environmental variables that are likely to change
-    # as it is copied for different websites. Those variables can be defined
-    # in the CircleCI UI which can keep the values of variables hidden.
-    # That functionality is important for variables like these:
-    ### The password to be used for Drupal's user 1 account.
-    # ADMIN_PASSWORD: xxxxxxxxxxxxxxx
-    ### Generate from https://dashboard.pantheon.io/users/#account/tokens/
-    ### Allows Terminus, the Pantheon CLI to authenticate with Pantheon.
-    # TERMINUS_TOKEN: xxxxxxxxxxxxxxx
-    ### Allows Pantheon to post back comments to Github pull requests.
-    ### Generate from https://github.com/settings/tokens
-    # GITHUB_TOKEN: xxxxxxxxxxxxxxx
-    # Some required variables are not necessarily sensitive pieces of
-    # information and could be defined here in the circle.yml or in the UI.
-    ### The email address to be used for Drupal's user 1 account.
-    # ADMIN_EMAIL: testing@example.com
-    ### The email address used for the user making git commits in CircleCI.
-    GIT_EMAIL: deploybot@rapbot.io
-    ### The machine name of the site on Pantheon to which code is pushed.
-    TERMINUS_SITE: veccs
-    ### The name of the site to be used when installing Drupal through Behat.
-    # TEST_SITE_NAME: My Site Name
-    # These variables do not need to change with each copy of the repo.
-    BRANCH: $(echo $CIRCLE_BRANCH | grep -v '^\(master\|[0-9]\+.x\)$') | sed 's/_/-/g'
-    PR_LABEL: ${BRANCH:+pr-$BRANCH}
-    CI_LABEL: ci-$CIRCLE_BUILD_NUM
-    TERMINUS_ENV: $CI_LABEL
-    NOTIFY: 'scripts/github/add-commit-comment {project} {sha} "Created multidev environment [{site}#{env}]({dashboard-url})." {site-url}'
-    PATH: $PATH:~/.composer/vendor/bin:~/.config/composer/vendor/bin:tests/scripts
-    BEHAT_PARAMS: '{"extensions" : {"Behat\\\MinkExtension" : {"base_url" : "http://$CI_LABEL-$TERMINUS_SITE.pantheonsite.io/"}, "Drupal\\\DrupalExtension" : {"drush" : {"alias" : "pantheon.$TERMINUS_SITE.$CI_LABEL"}}}}'
-
 dependencies:
-  cache_directories:
-    - ~/.composer/cache
   pre:
-    - echo "Begin build for $CI_LABEL${PR_LABEL:+ for }$PR_LABEL. Pantheon test environment is $TERMINUS_SITE.$TERMINUS_ENV"
-    # Avoid ssh prompting when connecting to new ssh hosts
-    - echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
-    - |
-      if [ -n "$GITHUB_TOKEN" ] ; then
-        composer config --global github-oauth.github.com $GITHUB_TOKEN
-      fi
-    - git config --global user.email "$GIT_EMAIL"
-    - git config --global user.name "Circle CI"
+    - rm /opt/circleci/php/$(phpenv global)/etc/conf.d/xdebug.ini
   override:
-    - composer global require -n "hirak/prestissimo:^0.3"
-    - composer global require -n "consolidation/cgr"
-    - cgr "pantheon-systems/terminus:~1" --stability beta
-    - cgr "drush/drush:~8" --stability beta
-    - mkdir -p ~/.terminus/plugins
-    - composer create-project -n -d ~/.terminus/plugins pantheon-systems/terminus-build-tools-plugin:~1
-    - composer create-project -n -d ~/.terminus/plugins pantheon-systems/terminus-composer-plugin:~1
-    - composer install
-  post:
-    - terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
-    - terminus build-env:delete:ci -n "$TERMINUS_SITE" --keep=2 --yes
-    - composer -n build-assets
-    - terminus env:wake -n "$TERMINUS_SITE.dev"
-    - terminus build-env:create -n "$TERMINUS_SITE.dev" "$TERMINUS_ENV" --yes --notify="$NOTIFY"
+    - curl -L https://github.com/docker/compose/releases/download/1.10.1/docker-compose-`uname -s`-`uname -m` >../bin/docker-compose && chmod +x ../bin/docker-compose
+    - composer global require "hirak/prestissimo:^0.3"
+    - composer install --prefer-dist
+    - vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
+    - vendor/bin/terminus env:wake veccs.dev
+    - composer setup
+    - sudo chmod 777 tests/_output
 test:
-  pre:
-    - terminus aliases
   override:
-    - vendor/bin/behat
-  post:
-    - terminus composer $TERMINUS_SITE.$TERMINUS_ENV -- install --no-dev
+    - composer test
+
 deployment:
-  build-assets:
+  prod:
     branch: master
     commands:
-      - terminus build-env:merge -n "$TERMINUS_SITE.$TERMINUS_ENV" --yes
-      - terminus drush -n $TERMINUS_SITE.dev -- updatedb --yes
-      - terminus build-env:delete:pr -n "$TERMINUS_SITE" --yes
+      - rm web/sites/default/settings.local.php
+      - vendor/bin/robo deploy

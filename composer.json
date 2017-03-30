@@ -44,7 +44,8 @@
     "drush-ops/behat-drush-endpoint": "*",
     "phpunit/phpunit": "~4.8",
     "symfony/css-selector": "~2.8",
-    "drupal/devel": "1.*"
+    "drupal/devel": "1.*",
+    "pantheon-systems/terminus": "^1.0"
   },
   "conflict": {
       "drupal/drupal": "*"
