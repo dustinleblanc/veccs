@@ -1,0 +1,22 @@
+- name: composer_install
+  service: php
+  command: composer install --prefer-dist
+- name: terminus_auth
+  service: php
+  command: vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
+- name: terminus_wake_dev
+  service: php
+  command:  vendor/bin/terminus env:wake veccs.dev
+- name: composer_setup
+  service: php
+  command: composer setup
+- name: run_tests
+  service: php
+  command: vendor/bin/behat --colors
+- name: cleanup
+  service: php
+  command: rm web/sites/default/settings.local.php
+- name: deploy_dev
+  tag: master
+  service: php
+  command: vendor/bin/robo deploy
