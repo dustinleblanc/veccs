@@ -87,7 +87,7 @@
     ],
     "site:install": "drush si -r web",
     "test": [
-      "until $(curl --output /dev/null --silent --head --fail http://test.veccs.dev:8000); do     printf '.';     sleep 1; done",
+      "until $(curl --output /dev/null --silent --head --fail http://localhost:8100); do     printf '.';     sleep 1; done",
       "docker-compose run testphp ./vendor/bin/behat --colors"
     ]
   },

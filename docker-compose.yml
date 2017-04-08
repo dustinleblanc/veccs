@@ -34,12 +34,10 @@ services:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
       DRUPAL_HASH_SALT: mmm...salty
+    ports:
+      - "8000:80"
     volumes:
       - ./:/var/www/html
-    labels:
-      - 'traefik.backend=nginx'
-      - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:veccs.dev'
 
   testdb:
     image: wodby/mariadb:10.1-2.0.0
@@ -73,27 +71,10 @@ services:
       NGINX_BACKEND_HOST: testphp
       NGINX_SERVER_ROOT: /var/www/html/web
       DRUPAL_HASH_SALT: mmm...salty
+    ports:
+      - "8100:80"
     volumes:
       - ./:/var/www/html
-    labels:
-      - 'traefik.backend=testnginx'
-      - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:test.veccs.dev'
-#  varnish:
-#    image: wodby/drupal-varnish:4.1-2.0.0
-#    depends_on:
-#      - nginx
-#    environment:
-#      VARNISH_SECRET: secret
-#      VARNISH_BACKEND_HOST: nginx
-#      VARNISH_BACKEND_PORT: 80
-#    labels:
-#      - 'traefik.backend=varnish'
-#      - 'traefik.port=6081'
-#      - 'traefik.frontend.rule=Host:varnish.drupal.docker.localhost'
-
-  redis:
-    image: wodby/redis:3.2-2.0.1
 
   pma:
     image: phpmyadmin/phpmyadmin
@@ -103,28 +84,11 @@ services:
       PMA_PASSWORD: drupal
       PHP_UPLOAD_MAX_FILESIZE: 1G
       PHP_MAX_INPUT_VARS: 1G
-    labels:
-      - 'traefik.backend=pma'
-      - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:pma.drupal.docker.localhost'
 
   mailhog:
     image: mailhog/mailhog
-    labels:
-      - 'traefik.backend=mailhog'
-      - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.drupal.docker.localhost'
 
 
-  traefik:
-    image: traefik
-    restart: unless-stopped
-    command: -c /dev/null --web --docker --logLevel=INFO
-    ports:
-      - '8000:80'
-      - '8080:8080'
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
   phantomjs:
     image: jribar/node-phantomjs

@@ -20,7 +20,7 @@ dependencies:
     - composer setup
 test:
   pre:
-    - docker-compose up -d testnginx testphp testdb phantomjs traefik
+    - docker-compose up -d testnginx testphp testdb phantomjs
   override:
     - composer test
 
