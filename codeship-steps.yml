@@ -4,6 +4,15 @@
 - name: seed_db
   service: php
   command: composer db:seed
+- name: settings_stub
+  service: php
+  command: cp web/sites/example.settings.local.php web/sites/default/settings.local.php
+- name: npm_install
+  service: build
+  command: npm --prefix=./web/profiles/recover/themes/recover_theme install ./web/profiles/recover/themes/recover_theme
+- name: bower_install
+  service: build
+  command: bower install
 - name: run_tests
   service: php
   command: vendor/bin/behat --colors
