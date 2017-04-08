@@ -105,4 +105,4 @@ $settings['rebuild_access'] = TRUE;
  * directory.
  */
 $settings['skip_permissions_hardening'] = TRUE;
-$settings['hash_salt'] = 'mmm...salty';
+$settings['hash_salt'] = "mmm...salty";

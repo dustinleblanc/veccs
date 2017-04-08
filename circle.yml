@@ -18,8 +18,9 @@ dependencies:
     - vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
     - vendor/bin/terminus env:wake veccs.dev
     - composer setup
-    - sudo chmod 777 tests/_output
 test:
+  pre:
+    - docker-compose up -d testnginx testphp testdb phantomjs traefik
   override:
     - composer test
 

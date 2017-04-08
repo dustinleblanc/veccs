@@ -34,12 +34,13 @@ services:
     environment:
       NGINX_BACKEND_HOST: php
       NGINX_SERVER_ROOT: /var/www/html/web
+      DRUPAL_HASH_SALT: mmm...salty
     volumes:
       - ./:/var/www/html
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:web.veccs.localhost'
+      - 'traefik.frontend.rule=Host:veccs.dev'
 
   testdb:
     image: wodby/mariadb:10.1-2.0.0
@@ -73,12 +74,13 @@ services:
     environment:
       NGINX_BACKEND_HOST: testphp
       NGINX_SERVER_ROOT: /var/www/html/web
+      DRUPAL_HASH_SALT: mmm...salty
     volumes:
       - ./:/var/www/html
     labels:
       - 'traefik.backend=testnginx'
       - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:test.web.veccs.localhost'
+      - 'traefik.frontend.rule=Host:test.veccs.dev'
 #  varnish:
 #    image: wodby/drupal-varnish:4.1-2.0.0
 #    depends_on:
