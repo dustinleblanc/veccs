@@ -20,13 +20,15 @@ php:
   volumes:
     - ./:/var/www/html
   cached: true
+  depends_on:
+    - nginx
+    - phantomjs
+    - db
 
 nginx:
   image: wodby/drupal-nginx:8-1.10-2.0.0
-  depends_on:
-    - testphp
   environment:
-    NGINX_BACKEND_HOST: testphp
+    NGINX_BACKEND_HOST: php
     NGINX_SERVER_ROOT: /var/www/html/web
     DRUPAL_HASH_SALT: mmm...salty
   ports:
