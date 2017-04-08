@@ -13,6 +13,12 @@
 - name: bower_install
   service: build
   command: bower install
+- name: db_up
+  service: db
+  command: echo "db is up"
+- name: nginx_up
+  service: nginx
+  command: echo "nginx is up"
 - name: run_tests
   service: php
   command: vendor/bin/behat --colors

@@ -108,6 +108,10 @@ EOF;
      */
     public function dbSeed()
     {
+        if (!file_exists(__DIR__ . '/dump.sql.gz')) {
+            $this->say("You dont have a database dump, pull a backup from Pantheon before seeding the database.");
+            exit(1);
+        }
         $this->_exec('gunzip dump.sql.gz');
         $this->taskFilesystemStack()
             ->mkdir('mariadb-init')
@@ -116,6 +120,9 @@ EOF;
             ->run();
     }
 
+    /**
+     * Export Terminus token to the environment if not already and authenticate with Terminus.
+     */
     public function terminusLogin()
     {
         if (!getenv('TERMINUS_TOKEN')) {

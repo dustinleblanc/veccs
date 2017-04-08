@@ -20,13 +20,11 @@ php:
   volumes:
     - ./:/var/www/html
   cached: true
-  depends_on:
-    - nginx
-    - phantomjs
-    - db
 
 nginx:
   image: wodby/drupal-nginx:8-1.10-2.0.0
+  depends_on:
+    - php
   environment:
     NGINX_BACKEND_HOST: php
     NGINX_SERVER_ROOT: /var/www/html/web
@@ -38,11 +36,9 @@ nginx:
   cached: true
 
 phantomjs:
-  image: jribar/node-phantomjs
+  image: wernight/phantomjs
   volumes_from:
-    - testphp
-  links:
-    - testnginx
+    - php
   ports:
     - "4444"
   entrypoint: phantomjs
