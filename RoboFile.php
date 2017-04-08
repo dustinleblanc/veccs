@@ -102,45 +102,12 @@ EOF;
             ->run();
     }
 
-    /**
-     * Run Test suite.
-     */
-    public function test()
-    {
-        $this->taskBehat(self::BEHAT_BIN)->run();
-    }
-
-    /**
-     * Run the Drush webserver.
-     */
-    public function serve()
-    {
-        $this->buildDrushTask()
-            ->exec('rs')
-            ->run();
-    }
-
-    /**
-     * Install Drupal with simple config.
-     */
-    public function siteInstall()
-    {
-        $this->buildDrushTask()
-            ->siteName('Recover Drupal')
-            ->siteMail('site-mail@example.com')
-            ->locale('en')
-            ->accountMail('mail@example.com')
-            ->accountName('admin')
-            ->accountPass('pw')
-            ->disableUpdateStatusModule()
-            ->siteInstall('recover')
-            ->run();
-    }
 
     /**
      * Provision the database seed for Docker.
      */
     public function dbSeed()
+    public function terminusLogin()
     {
         $this->_exec('gunzip dump.sql.gz');
         $this->taskFilesystemStack()
@@ -149,18 +116,17 @@ EOF;
             ->rename('dump.sql', 'mariadb-init/dump.sql')
             ->run();
     }
+        if (!getenv('TERMINUS_TOKEN')) {
+            putenv('TERMINUS_TOKEN=' . $this->ask(
+                    'Please insert your Terminus Machine Token (https://dashboard.pantheon.io/machine-token/create)',
+                    true
+                )
+            );
+        }
+        $token = getenv('TERMINUS_TOKEN');
+        $this->_exec(self::TERMINUS_BIN . " login --machine-token={$token}");
 
-    public function build()
-    {
-        $this->taskNpmInstall()
-            ->dir(self::THEME_DIR)
-            ->run();
-        $this->taskBowerInstall()
-            ->dir(self::THEME_DIR)
-            ->run();
-        $this->say('Theme assets built!');
     }
-
     private function buildDrushTask()
     {
         return $this->taskDrushStack(self::DRUSH_BIN)
