@@ -17,7 +17,6 @@ services:
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
       PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"mariadb","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
       PANTHEON_ENVIRONMENT: local
-      DRUPAL_HASH_SALT: mmm...salty
       # PHP_XDEBUG: 1
       # PHP_XDEBUG_DEFAULT_ENABLE: 1
       # PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
@@ -58,7 +57,6 @@ services:
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
       PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"testdb","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
       PANTHEON_ENVIRONMENT: local
-      DRUPAL_HASH_SALT: mmm...salty
       TEST_ZOTERO_USER_ID: ${TEST_ZOTERO_USER_ID}
       TEST_ZOTERO_API_KEY: ${TEST_ZOTERO_API_KEY}
       BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "http://testnginx/", "selenium2": { "wd_host": "http://phantomjs:4444/wd/hub"}}, "Drupal\\DrupalExtension" : {"drush" : {"root" : "./web"}}}}'
@@ -129,7 +127,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   phantomjs:
-    image: wernight/phantomjs
+    image: jribar/node-phantomjs
     volumes_from:
       - testphp
     links:
