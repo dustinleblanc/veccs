@@ -1,15 +1,9 @@
 - name: composer_install
   service: php
   command: composer install --prefer-dist
-- name: terminus_auth
+- name: seed_db
   service: php
-  command: vendor/bin/terminus login --machine-token=$TERMINUS_TOKEN
-- name: terminus_wake_dev
-  service: php
-  command:  vendor/bin/terminus env:wake veccs.dev
-- name: composer_setup
-  service: php
-  command: composer setup
+  command: composer db:seed
 - name: run_tests
   service: php
   command: vendor/bin/behat --colors

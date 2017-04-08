@@ -107,7 +107,6 @@ EOF;
      * Provision the database seed for Docker.
      */
     public function dbSeed()
-    public function terminusLogin()
     {
         $this->_exec('gunzip dump.sql.gz');
         $this->taskFilesystemStack()
@@ -116,6 +115,9 @@ EOF;
             ->rename('dump.sql', 'mariadb-init/dump.sql')
             ->run();
     }
+
+    public function terminusLogin()
+    {
         if (!getenv('TERMINUS_TOKEN')) {
             putenv('TERMINUS_TOKEN=' . $this->ask(
                     'Please insert your Terminus Machine Token (https://dashboard.pantheon.io/machine-token/create)',

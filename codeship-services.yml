@@ -14,9 +14,9 @@ php:
   encrypted_env_file: env.encrypted
   environment:
     PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
-    PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"testdb","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
-    PANTHEON_ENVIRONMENT: local
-    BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "http://testnginx/", "selenium2": { "wd_host": "http://phantomjs:4444/wd/hub"}}, "Drupal\\DrupalExtension" : {"drush" : {"root" : "./web"}}}}'
+    PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"db","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
+    PANTHEON_ENVIRONMENT: ci
+    BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "http://nginx/", "selenium2": { "wd_host": "http://phantomjs:4444/wd/hub"}}, "Drupal\\DrupalExtension" : {"drush" : {"root" : "./web"}}}}'
   volumes:
     - ./:/var/www/html
   cached: true
