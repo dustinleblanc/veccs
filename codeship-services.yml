@@ -1,0 +1,52 @@
+db:
+  image: wodby/mariadb:10.1-2.0.0
+  environment:
+    MYSQL_ROOT_PASSWORD: password
+    MYSQL_DATABASE: drupal
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: drupal
+  volumes:
+    - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+  cached: true
+
+php:
+  image: wodby/drupal-php:7.0-2.0.0
+  encrypted_env_file: env.encrypted
+  environment:
+    PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+    PRESSFLOW_SETTINGS: '{"databases":{"default":{"default":{"database":"drupal","username":"drupal","password":"drupal","host":"db","port":"3306","driver":"mysql","prefix":"","collation":"utf8mb4_general_ci"}}}}'
+    PANTHEON_ENVIRONMENT: ci
+    BEHAT_PARAMS: '{"extensions" : {"Behat\\MinkExtension" : {"base_url" : "http://nginx/", "selenium2": { "wd_host": "http://phantomjs:4444/wd/hub"}}, "Drupal\\DrupalExtension" : {"drush" : {"root" : "./web"}}}}'
+  volumes:
+    - ./:/var/www/html
+  cached: true
+
+nginx:
+  image: wodby/drupal-nginx:8-1.10-2.0.0
+  depends_on:
+    - php
+  environment:
+    NGINX_BACKEND_HOST: php
+    NGINX_SERVER_ROOT: /var/www/html/web
+    DRUPAL_HASH_SALT: mmm...salty
+  ports:
+    - "8100:80"
+  volumes:
+    - ./:/var/www/html
+  cached: true
+
+phantomjs:
+  image: wernight/phantomjs
+  volumes_from:
+    - php
+  ports:
+    - "4444"
+  entrypoint: phantomjs
+  command: "--webdriver=4444"
+build:
+  image: fusengine/docker-bower-gulp-browserify
+  environment:
+    BOWER_CWD: './web/profiles/recover/themes/recover_theme'
+  volumes:
+    - ./:/data
+  cached: true

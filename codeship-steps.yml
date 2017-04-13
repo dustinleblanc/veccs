@@ -1,0 +1,31 @@
+- name: composer_install
+  service: php
+  command: composer install --prefer-dist
+- name: seed_db
+  service: php
+  command: composer db:seed
+- name: settings_stub
+  service: php
+  command: cp web/sites/example.settings.local.php web/sites/default/settings.local.php
+- name: npm_install
+  service: build
+  command: npm --prefix=./web/profiles/recover/themes/recover_theme install ./web/profiles/recover/themes/recover_theme
+- name: bower_install
+  service: build
+  command: bower install
+- name: db_up
+  service: db
+  command: echo "db is up"
+- name: nginx_up
+  service: nginx
+  command: echo "nginx is up"
+- name: run_tests
+  service: php
+  command: vendor/bin/behat --colors
+- name: cleanup
+  service: php
+  command: rm web/sites/default/settings.local.php
+- name: deploy_dev
+  tag: master
+  service: php
+  command: vendor/bin/robo deploy
